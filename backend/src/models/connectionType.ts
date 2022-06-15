@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const {v4 : uuidv4} = require('uuid')
+const { v4 : uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
 const connectionTypeSchema = new Schema({
 
-  ConnectionTypeId: {   
+  connectionTypeId: {   
     type: String,
     default: uuidv4 
   },

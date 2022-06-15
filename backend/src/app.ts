@@ -1,30 +1,21 @@
-// require("dotenv").config();
 import 'reflect-metadata';
 import express from 'express';
-import mongoose from 'mongoose';
-import { getMetadataArgsStorage, useExpressServer, createExpressServer } from 'routing-controllers';
-import { TestController } from './controllers/TestController';
-import { ConnectionController } from 'controllers/ConnectionController';
+import { useExpressServer } from 'routing-controllers';
+import { ConnectionController } from "./controllers"
 import './database/mongoose';
-import path from "path"
-
-import cors from "cors";
 import bodyParser from 'body-parser'; 
-
-const { json, urlencoded } = bodyParser
+import { PORT } from "constants/environment"
 
 const app = express();
 
-
-
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 useExpressServer(app, 
   {
     cors: true,
-    controllers: [TestController, ConnectionController],
+    controllers: [ConnectionController],
   }
 )
 
-app.listen(5000, () => console.log("App running on PORT", 4000));
+app.listen(PORT, () => console.log("App running on PORT", PORT));
