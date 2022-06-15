@@ -1,7 +1,6 @@
 import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
 import ConnectionType from 'models/connectionType';
 import Connection from 'models/connection';
-
  
 @Controller('/api')
 export class ConnectionController {
@@ -11,18 +10,16 @@ export class ConnectionController {
     const newConnectionType = new ConnectionType(body);
     const result = await newConnectionType.save();
 
-    if(result) {
-        return {
-          success: true,
-          message: "Connection type is added."
-        };
+    if(!result) 
+      return {
+        success: false,
+        message: "Connection type could not be added. Please try after some time."
       }
-      else {
-        return {
-            success: false,
-          message: "Connection type could not be added. Please try after some time."
-        }
-      }
+
+    return {
+      success: true,
+      message: "Connection type is added."
+    };
    }
 
   @Post('/add-connection')
@@ -30,17 +27,15 @@ export class ConnectionController {
     const newConnection = new Connection(body);
     const result = await newConnection.save();
 
-    if(result) {
-        return {
-          success: true,
-          message: "Connection is added."
-        };
+    if(!result) 
+      return {
+        success: false,
+        message: "Connection could not be added. Please try after some time."
       }
-      else {
-        return {
-            success: false,
-          message: "Connection could not be added. Please try after some time."
-        }
-      }
+
+    return {
+      success: true,
+      message: "Connection is added."
+    };
    }
 }

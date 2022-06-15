@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
+import { MONGO_URI } from "constants/environment"
 
-mongoose.connect('mongodb://localhost:27017/Np-app', () => {
-
-});
+//@ts-ignore
+mongoose.connect(MONGO_URI, () => console.log("Database Connected Successfully"));

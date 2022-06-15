@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const {v4 : uuidv4} = require('uuid')
+const { v4 : uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
 const connectionSchema = new Schema({
