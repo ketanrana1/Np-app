@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import Layout from './components/layout/layout';
+import LoginLayout from './components/layout/LoginLayout';
 import NotFound from './pages/NotFound';
 import Connection from './pages/Connection';
 import AddConnection from './components/connection/AddConnection';
@@ -17,30 +18,31 @@ import EditSchedule from './components/schedule/EditSchedule';
 import Task from './pages/Task';
 import AddTask from './components/task/AddTask';
 import EditTask from './components/task/EditTask';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <Layout>
+    
       <Routes>
-        <Route path='/' element={<Navigate replace to='/connection' />} />
-        <Route path='/connection-type' element={<ConnectionType />} />
-        <Route path='/connection-type/:add-connection-type' element={<AddConnectionType />} />
-        <Route path='/connection-type/:edit-connection-type' element={<EditConnectionType />} />
-        <Route path='/connection' element={<Connection />} />
-        <Route path='/connection/:add-connection' element={<AddConnection />} />
-        <Route path='/connection/:edit-connection' element={<EditConnection />} />
-        <Route path='/task' element={<Task />} />
-        <Route path='/task/:add-task' element={<AddTask />} />
-        <Route path='/task/:edit-task' element={<EditTask />} />
-        <Route path='/flow' element={<Flow />} />
-        <Route path='/flow/:add-flow' element={<AddFlow />} />
-        <Route path='/flow/:edit-flow' element={<EditFlow />} />
-        <Route path='/schedule' element={<Schedule />} />
-        <Route path='/schedule/:add-schedule' element={<AddSchedule />} />
-        <Route path='/schedule/:edit-schedule' element={<EditSchedule />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path='/' element={<Layout><Navigate replace to='/connection' /></Layout>} />
+        <Route path='/connection-type' element={<Layout><ConnectionType /></Layout>} />
+        <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
+        <Route path='/connection-type/:edit-connection-type' element={<Layout><EditConnectionType /></Layout>} />
+        <Route path='/connection' element={<Layout><Connection /></Layout>} />
+        <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
+        <Route path='/connection/:edit-connection' element={<Layout><EditConnection /></Layout>} />
+        <Route path='/task' element={<Layout><Task /></Layout>} />
+        <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
+        <Route path='/task/:edit-task' element={<Layout><EditTask /></Layout>} />
+        <Route path='/flow' element={<Layout><Flow /></Layout>} />
+        <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
+        <Route path='/flow/:edit-flow' element={<Layout><EditFlow /></Layout>} />
+        <Route path='/schedule' element={<Layout><Schedule /></Layout>} />
+        <Route path='/schedule/:add-schedule' element={<Layout><AddSchedule /></Layout>} />
+        <Route path='/schedule/:edit-schedule' element={<Layout><EditSchedule /></Layout>} />
+        <Route path='*' element={<Layout><NotFound /></Layout>} />
+        <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
       </Routes>
-    </Layout>
   );
 }
 

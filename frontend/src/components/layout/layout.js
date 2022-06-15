@@ -1,10 +1,10 @@
 
 import { Fragment } from 'react';
-
 import MainNavigation from './MainNavigation';
 
 const Layout = (props) => {
   return (
+
     <Fragment>
     <header>
           <div className="top-bar"><h2 className="px-1">Logo</h2></div>

@@ -1,0 +1,77 @@
+.login-form-cont {
+    max-width: 700px;
+    padding: 2% 4%;
+    margin: 0 auto;
+    background-color:white;
+}
+
+.login-layout {
+    background-color: #0055FF;
+    min-height: 100vh;
+    padding: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.logo-text {
+    font: normal normal normal 26px/34px DM Sans;
+    font-family: DM Sans;
+    letter-spacing: 0px;
+    color: #707070;
+    font-family: 'DM Sans', sans-serif;
+    text-align: Center;
+    margin-bottom: 29px;
+}
+
+.login-form-cont {
+    padding: 2% 4%;
+    margin: 0 auto;
+    background-color: white;
+    width: 35%;
+    border-radius: 5px;
+}
+
+.login-form-cont input {
+    border:none;
+    background-color:#F8F9FA;
+}
+
+.login-form-cont input {
+    padding: 15px 30px;
+    height: unset;
+}
+
+.login-form-cont input[type="email"] {
+    margin-bottom:20px;
+}
+
+.form-group.frgt-pssw-cont {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.form-group.frgt-pssw-cont p{
+    color: #0055FF;
+}
+
+.submit-cont input[type="submit"] {
+    font: normal normal normal 18px/22px DM Sans;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: #0055FF;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 5px;
+}
+
+.submit-cont {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
