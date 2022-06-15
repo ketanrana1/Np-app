@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const Connection = () => {
+const Task = () => {
   return (
     <div>
-      <h1 className="page-head">Connection </h1>
+      <h1 className="page-head">Task </h1>
      <div className="inner-body-cont">
       <div className="btn-bloat-right">
-         <Link className="commn-btn" to="/connection/add-connection">Create New</Link>
+         <Link className="commn-btn" to="/task/add-task">Create New</Link>
       </div>
        
        <div className="commn-table-cont table-responsive-md">
@@ -53,4 +53,4 @@ const Connection = () => {
   )
 }
 
-export default Connection
+export default Task

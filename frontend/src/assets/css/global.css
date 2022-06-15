@@ -1,9 +1,9 @@
-.ktr {
-    font-size:100px;
-}
-
 body {
     background-color: #F8F9FA;
+}
+
+html, body {
+    font-family: 'DM Sans', sans-serif;
 }
 
 .content-cont {
@@ -48,7 +48,7 @@ header {
 
 }
 
-.navbar ul li a {
+.main-nav.navbar ul li a {
     font: normal normal normal 18px/22px DM Sans;
     letter-spacing: 0px;
     color: #707070;
@@ -58,11 +58,11 @@ header {
 }
 
 
-.navbar ul li a:hover {
+.main-nav.navbar ul li a:hover {
     text-decoration: none;
 }
 
-.nav-item  {
+.main-nav .nav-item  {
     display: flex;
     flex-wrap: wrap;
     padding: 5px 0;
@@ -70,34 +70,34 @@ header {
     flex-direction: column;
 }
 
-.nav-item  a.active{
+.main-nav .nav-item  a.active{
 color:#75A2D0;
 }
-.nav-item img {
+.main-nav .nav-item img {
     display: inline-block;
     padding-right: 15px;
     width: 40px;
 }
 
-.navbar-nav a{
+.main-nav .navbar-nav a{
     padding: 10px 25px;
     max-width:280px;
 }
 
-.navbar-nav {
+.main-nav.navbar-nav {
     margin-top: 30px;
     width:100%;
 }
 
 
-.navbar-nav a.active{
+.main-nav.navbar-nav a.active{
     background:#EBF0FC;
     border-top-right-radius:25px;
     border-bottom-right-radius: 25px;
 }
 
 
-.navbar {
+.main-nav.navbar {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -130,3 +130,77 @@ a.commn-btn {
     flex-wrap: wrap;
     justify-content: flex-end;
 }
+
+/*connection table starts here*/
+.commn-table-cont {
+    margin-top:30px;
+}
+
+.commn-table-cont table {
+    border: 1px solid #CFCFCF;
+}
+
+.commn-table-cont table thead {
+    background-color: #F8F9FA
+}
+
+.commn-table-cont table .first-row {
+    width: 16%;
+}
+
+.commn-table-cont table .second-row {
+width: 22%;
+}
+
+
+.commn-table-cont table .third-row {
+width: 20%;
+}
+
+.commn-table-cont table .fourth-row {
+width: 20%;
+}
+
+.commn-table-cont table .fourth-row a {
+    color: #0055FF;
+}
+
+.commn-table-cont table .fourth-row a.view-link {
+    color: #0055FF;
+    display: inline-block;
+    margin-right: 25px;
+    margin-top: 0;
+}
+
+.commn-table-cont table .fourth-row a.delete-link img{
+    width:20px;
+}
+
+
+.commn-table-cont table .third-row p {
+    display: inline-block;
+    background-color: #EBF0FC;
+    padding: 9px 25px;
+    border-radius: 25px;
+  }
+
+.commn-table-cont .table thead th {
+vertical-align: bottom;
+border-bottom: 0 solid #dee2e6;
+}
+
+.commn-table-cont tbody th {
+    font-weight: 500;
+}
+.commn-table-cont thead th {
+    font-weight: 700;
+}
+
+.commn-table-cont.flow-table .first-row {
+    width:10%;
+}
+
+.commn-table-cont.flow-table .second-row {
+    width:30%;
+}
+/*connection table ends here*/
