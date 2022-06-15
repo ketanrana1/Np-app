@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const connectionTypeSchema = new Schema({
 
-  ConnectionTypeId: {   
+  connectionTypeId: {   
     type: String,
     default: uuidv4 
   },

@@ -24,6 +24,26 @@ export class ConnectionController {
 
   @Post('/add-connection')
   async addConnection( @Body() body: any ) {
+    const { connectionTypeId, connectionTypeAttributes } = body;
+    const findConnectionType = await ConnectionType.aggregate([
+      {
+        '$match': {
+          'connectionTypeId': connectionTypeId
+        }
+      }
+    ])
+    if(findConnectionType.length === 0) return {
+      success: false,
+      message: "Connection could not be added as Connection Type does not exist"
+    }
+
+    if(findConnectionType[0].attributes.length !== connectionTypeAttributes.length) {
+      return {
+        success: false,
+        message: "Contection Type Attributes length should match Connection Attributes length"
+      }
+    }
+
     const newConnection = new Connection(body);
     const result = await newConnection.save();
 
