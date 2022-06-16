@@ -1,62 +1,38 @@
-import React, { useState } from 'react'
-import { useFormik } from "formik";
-import schemas from "../../Schema_JSON/schema.json";
-import options from "../../Schema_JSON/option.json";
-import FormElementContainer from "../../components/FormElementContainer";
-import * as yup from "yup";
-import { Button, InputLabel } from "@mui/material";
+import React from 'react';
 
-
-const AddConnection = () => {
-
-
-  const formik = useFormik({
-    initialValues: {
-    },
-    onSubmit: values => {
-      let data = {};
-      let connection = [];
-      for (const key in values) {
-        if (Object.hasOwnProperty.call(values, key)) {
-          const element = values[key];
-          if (Array.isArray(element)) {
-            if (element.length != 0) {
-              connection.push(key)
-            }
-          }
-          else {
-            data[key] = element;
-          }
-        }
-      }
-      data["connection"] = connection;
-      console.log(data);      
-    },
-  });
+export const AddConnection = () => {
 
   return (
     <div>
-      <h1 className="page-head">Add Connection</h1>
-      <div className="inner-body-cont">
-        <div className="flow-form-cont cont-form-all">
-        <form onSubmit={formik.handleSubmit}>
-            <InputLabel htmlFor="bootstrap-input" color="info">
-              {schemas.myForm.formLabel}
-            </InputLabel>
-            <FormElementContainer
-              config={schemas.myForm.fields}
-              formTitle={schemas.myForm.formLabel}
-              formik={formik}
-              optionsDetails={options.myFormOptions.optionsList}
-            />
-            <div>
-              <Button variant="contained" type="submit">Submit</Button>
-            </div>
-          </form>
-        </div>
-        </div>
+    <div>
+      <label>Name</label>
+      <input type={"text"} />
     </div>
-    
+    <div>
+      <label>Description</label>
+      <textarea type={"text"} />
+    </div>
+    <div>
+      <label>Type</label>
+      <select>
+        <option value="actual value 1">Display Text 1</option>
+        <option value="actual value 2">Display Text 2</option>
+        <option value="actual value 3">Display Text 3</option>
+      </select>
+    </div>
+    <div>
+      <label>User</label>
+      <input type={"text"} />
+      <label>Password</label>
+      <input type={"text"} />
+    </div>
+    <div>
+      <label>URL</label>
+      <input type={"text"} />
+    </div>
+    <button>Save</button>
+
+  </div>
   )
 }
   export default AddConnection;

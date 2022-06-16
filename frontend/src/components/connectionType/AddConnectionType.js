@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios'; 
+import axios from 'axios';
+import { REACT_APP_BACKEND_URL } from '../common/environment';
 
-
+const initialResponseState = [];
 
 const AddConnectionType = () => {
 
-    const initialResponseState = []; 
-    const [responseState, setResponseState] = useState(initialResponseState);
+  const [responseState, setResponseState] = useState(initialResponseState);
+  const [connectionType, setConnectionType] = useState([]);
+
+  useEffect(() => {
+    const getConnectionType = async() => {
+      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
+      setConnectionType(response.data)
+    }
+    getConnectionType();
+  },[])
+
+  console.log("connectionType", connectionType)
 
     return (
         <>
@@ -31,7 +42,6 @@ const AddConnectionType = () => {
   
         onSubmit={async (values) => {
           await new Promise((r) => setTimeout(r, 500));
-          console.log("VALUES", values)
           alert(JSON.stringify(values, null, 2));
   
   
@@ -48,7 +58,6 @@ const AddConnectionType = () => {
             }            
             });
             setResponseState(request); 
-            console.log("REQUEST", request, responseState);
         } catch (error) {
             console.log(error)  
         }
