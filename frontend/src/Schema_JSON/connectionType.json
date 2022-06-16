@@ -1,0 +1,63 @@
+{
+    "myForm": {
+      "formLabel": "Connection Type",
+      "fields": [
+        {
+          "id": "connection_type",
+          "name": "connection_type",
+          "label": "Connection Type Name",
+          "type": "string",
+          "screenElement": "TextBox",
+          "isRequired": "Yes",
+          "validationMessage": "Please enter Connection Type."
+        },
+        {
+            "id": "attribute_1",
+            "name": "attribute_1",
+            "label": "Attribute 1 Name",
+            "type": "string",
+            "screenElement": "TextBox",
+            "isRequired": "Yes",
+            "validationMessage": "Please enter Attribute 1 Name."
+        },
+        {
+            "id": "attribute_2",
+            "name": "attribute_2",
+            "label": "Attribute 2 Name",
+            "type": "string",
+            "screenElement": "TextBox",
+            "isRequired": "Yes",
+            "validationMessage": "Please enter Attribute 2 Name."
+        },
+        {
+            "id": "attribute_3",
+            "name": "attribute_3",
+            "label": "Attribute 3 Name",
+            "type": "string",
+            "screenElement": "TextBox",
+            "isRequired": "Yes",
+            "validationMessage": "Please enter Attribute 3 Name."
+        },
+        
+        {
+            "id": "attribute_4",
+            "name": "attribute_4",
+            "label": "Attribute 4 Name",
+            "type": "string",
+            "screenElement": "TextBox",
+            "isRequired": "Yes",
+            "validationMessage": "Please enter Attribute 4 Name."
+        }, 
+        {
+            "id": "attribute_5",
+            "name": "attribute_5",
+            "label": "Attribute 5 Name",
+            "type": "string",
+            "screenElement": "TextBox",
+            "isRequired": "Yes",
+            "validationMessage": "Please enter Attribute 5 Name."
+        }
+        
+      ]
+    }
+  }

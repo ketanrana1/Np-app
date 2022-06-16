@@ -1,0 +1,74 @@
+{
+    "myFormOptions": {
+        "optionsList": [
+            {
+                "id": "partner_connection",
+                "screenElement": "DropDown",
+                "option": [
+                    {
+                        "label": "Connection 1",
+                        "value": 1,
+                        "id": 1
+                    },
+                    {
+                        "label": "Connection 2",
+                        "value": 2,
+                        "id": 2
+                    },
+                    {
+                        "label": "Connection 3",
+                        "value": 3,
+                        "id": 3
+                    },
+                    {
+                        "label": "Connection 4",
+                        "value": 4,
+                        "id": 4
+                    }
+                ]
+            },
+            {
+                "id": "active_connection",
+                "screenElement": "CheckBox",
+                "option": [
+                    {
+                        "label": "Connection 1",
+                        "id": 1,
+                        "value": 1                        
+                    },
+                    {
+                        "label": "Connection 2",
+                        "id": 2,
+                        "value": 2                        
+                    },
+                    {
+                        "label": "Connection 3",
+                        "id": 3,
+                        "value": 3
+                    },
+                    {
+                        "label": "Connection 4",
+                        "id": 4,
+                        "value": 4
+                    }
+                ]
+            },
+            {
+                "id": "connection_status",
+                "screenElement": "Radio",
+                "option": [
+                    {
+                        "label": "Active",
+                        "id": 1,
+                        "value": "active"            
+                    },
+                    {
+                        "label": "Inactive",
+                        "id": 2,
+                        "value": "inactive"                        
+                    }
+                ]
+            }
+        ]
+    }
+}

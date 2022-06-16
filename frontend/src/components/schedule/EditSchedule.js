@@ -2,7 +2,11 @@ import React from 'react'
 
 export const EditSchedule = () => {
   return (
-    <div>EditSchedule</div>
+    <div>
+      <h1 className="page-head">Edit Schedule</h1>
+      <div className="inner-body-cont">
+      </div>
+    </div>
   )
 }
 

@@ -7,7 +7,6 @@ html, body {
 }
 
 .content-cont {
-    /* max-width:1850px; */
     margin:0 auto;
     margin-top:30px;
     
@@ -15,7 +14,6 @@ html, body {
 
 
 header .top-bar{
-    /* max-width:1850px; */
     padding: 10px 25px;
     margin: 0 auto;
 }
@@ -204,3 +202,73 @@ border-bottom: 0 solid #dee2e6;
     width:30%;
 }
 /*connection table ends here*/
+
+
+/*flow form starts*/
+
+.cont-form-all {
+    padding: 10px 40px;
+}
+.cont-form-all .submit-cont {
+    justify-content:flex-start;
+    margin-top:50px;
+}
+
+
+.cont-form-all .all-form-fl-w-ip {
+    border:none;
+    background: #F8F9FA;
+    padding: 12px 15px;
+    color:#707070;
+}
+
+.cont-form-all .form-control {
+    height:unset;
+}
+
+
+.cont-form-all .label-input-cont {
+    display: Flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cont-form-all .label-input-cont p {
+    width: 12%;
+    margin-bottom:0;
+}
+
+.cont-form-all .label-input-cont .all-form-fl-w-ip {
+    width: 86%;
+}
+
+.cont-form-all .label-input-cont {
+margin-bottom: 30px;
+}
+
+.cont-form-all .dropdown-response-cont .label-input-cont p {
+    width:21%;
+}
+
+.cont-form-all .dropdown-response-cont .label-input-cont .all-form-fl-w-ip {
+    width:71%;
+}
+
+.cont-form-all .all-form-fl-w-ip.chk-bx {
+    background:none;
+}
+
+@media only screen and (max-width:992px) {
+    .cont-form-all .label-input-cont p {
+        width: 100%
+    }
+    
+    .cont-form-all .label-input-cont input {
+        width: 100%;
+    }
+    .cont-form-all, .inner-body-cont {
+        padding: 10px;
+    }
+}
+/*flow form ends*/

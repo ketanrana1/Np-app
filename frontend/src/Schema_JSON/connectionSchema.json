@@ -1,0 +1,34 @@
+{
+    "myForm": {
+      "formLabel": "Connection",
+      "fields": [
+        {
+          "id": "connection_name",
+          "name": "connection_name",
+          "label": "Name",
+          "type": "string",
+          "screenElement": "TextBox",
+          "isRequired": "Yes",
+          "validationMessage": "Please enter name."
+        },
+        {
+          "id": "description",
+          "name": "ddescription",
+          "label": "Description",
+          "type": "string",
+          "screenElement": "TextArea",
+          "isRequired": "Yes",
+          "validationMessage": "Please enter description."
+        },
+        {
+            "id": "connection_type",
+            "name": "connection_type",
+            "label": "Type",
+            "type": "number",
+            "screenElement": "DropDown",
+            "isRequired": "Yes",
+            "validationMessage": "Please select type."
+          }
+      ]
+    }
+  }

@@ -12,7 +12,7 @@ const Login = () => {
         <input type="password" className="form-control" placeholder="Password" />
       </div>
       <div className="form-group frgt-pssw-cont">
-        <p>Forgot Password</p>
+        <a href="">Forgot Password</a>
       </div>
       <div className="form-group form-check">
         <input type="checkbox" className="form-check-input" />
@@ -21,9 +21,7 @@ const Login = () => {
       <div className="submit-cont">
          <input type="submit" value="Login" />
       </div>
-     
     </form>
-
     </div>
     )  
 }

@@ -2,7 +2,11 @@ import React from 'react'
 
 const EditTask = () => {
   return (
-    <div>EditTask</div>
+    <div>
+      <h1 className="page-head">Edit task</h1>
+      <div className="inner-body-cont">
+      </div>
+    </div>
   )
 }
 
