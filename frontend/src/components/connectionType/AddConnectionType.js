@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
-import { useFormik } from "formik";
-import schemas from "../../Schema_JSON/schema.json";
-import options from "../../Schema_JSON/option.json";
-import FormElementContainer from "../../components/FormElementContainer";
-import * as yup from "yup";
-import { Button, InputLabel } from "@mui/material";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios'; 
 
 
 
 const AddConnectionType = () => {
 
-    
+    const initialResponseState = []; 
     const [responseState, setResponseState] = useState(initialResponseState);
 
     return (
