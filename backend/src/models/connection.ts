@@ -14,7 +14,7 @@ const connectionSchema = new Schema({
     type: String,
     ref: 'ConnectionType' 
   },
-  connectionTypeAttributes: [Object] 
+  connectionTypeAttributes: Object
 },
 {timestamps: true}
 );

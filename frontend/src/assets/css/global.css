@@ -259,6 +259,25 @@ margin-bottom: 30px;
     background:none;
 }
 
+.cont-form-all .add-conne-type-btn {
+    display:flex;
+    flex-wrap:Wrap;
+    justify-content: flex-end;
+    width: 100%;
+}
+.cont-form-all .add-conne-type-btn button{
+    font: normal normal normal 18px/22px DM Sans;
+    font-family: DM Sans;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  display: inline-block;
+  padding: 15px 35px;
+  background-color: #0055FF;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 5px;
+}
+
 @media only screen and (max-width:992px) {
     .cont-form-all .label-input-cont p {
         width: 100%

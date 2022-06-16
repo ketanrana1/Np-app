@@ -1,14 +1,45 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { REACT_APP_BACKEND_URL } from '../components/common/environment';
+import { toast } from 'react-toastify';
 
 const Connection = () => {
+
+  let navigate = useNavigate()
+  const [connection, setConnection] = useState([]);
+
+  useEffect(() => {
+    const getConnectionType = async() => {
+      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection`)
+      console.log("sdfa", response.data)
+      setConnection(response.data)
+    }
+    getConnectionType();
+  },[])
+
+  const handleDeleteClick = async (connectionId) => {
+    //alert(connectionId)
+    const payload = {
+      connectionId: connectionId
+    }
+    try {    
+      const result = await axios.get(`${REACT_APP_BACKEND_URL}/delete-connection`, payload)
+      return toast(result.data.message);  
+    } catch (error) {
+      return toast(error?.message)      
+    }
+  }
+
+
   return (
     <div>
       <h1 className="page-head">Connection </h1>
      <div className="inner-body-cont">
       <div className="btn-bloat-right">
          <Link className="commn-btn" to="/connection/add-connection">Create New</Link>
-      </div>
+      </div> 
        
        <div className="commn-table-cont table-responsive-md">
        <table className="table">
@@ -21,30 +52,21 @@ const Connection = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th className="first-row" scope="row">SF01</th>
-            <td className="second-row" >Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-            <td className="third-row"><p>SALESFORCE</p></td>
-            <td className="fourth-row"><a href="" className="view-link">View</a> <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
-          </tr>
-          <tr>
-            <th className="first-row" scope="row">SF01</th>
-            <td  className="second-row" >Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-            <td className="third-row" ><p>SALESFORCE</p></td>
-            <td className="fourth-row"><a href="" className="view-link">View</a> <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
-          </tr>
-          <tr>
-            <th className="first-row" scope="row">SF01</th>
-            <td className="second-row" >Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-            <td className="third-row" ><p>SALESFORCE</p></td>
-            <td className="fourth-row"><a href="" className="view-link">View</a> <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
-          </tr>
-          <tr>
-            <th className="first-row" scope="row">SF01</th>
-            <td className="second-row" >Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-            <td className="third-row" ><p>SALESFORCE</p></td>
-            <td className="fourth-row"><a href="" className="view-link">View</a> <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
-          </tr>
+        {
+            connection.map((item, index) => {
+            return <tr> 
+                      <th className="first-row" scope="row">{item.connectionName}</th>
+                      <td className="second-row" >{item.description}</td>
+                      <td className="third-row"><p>{item.connectionName}</p></td>
+                      <td className="fourth-row">
+                        {/* <a href="" className="view-link">View</a> */}
+                        <a onClick={handleDeleteClick(item.connectionId)} className="delete-link">
+                          <img src={require('../assets/images/delete.png')} alt="delete" />
+                        </a>
+                      </td>
+                    </tr>
+            })
+          }
         </tbody>
       </table>
        </div>

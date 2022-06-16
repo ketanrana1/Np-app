@@ -22,6 +22,30 @@ export class ConnectionController {
     ]);
    }
 
+   @Get('/get-connection')
+   async getConnection() {
+     return await Connection.aggregate([
+      {
+        '$lookup': {
+          'from': 'connectiontypes', 
+          'localField': 'connectionTypeId', 
+          'foreignField': 'connectionTypeId', 
+          'as': 'connectionType'
+        }
+      }, {
+        '$project': {
+          '_id': 0, 
+          'name': 1, 
+          'description': 1, 
+          'connectionName': {
+            '$first': '$connectionType.name'
+          },
+          'connectionId': 1
+        }
+      }
+    ]);
+    }
+
    @Get('/get-connection/:id')
    async getConnectionById(@Param('id') id: string) {
      return await Connection.aggregate([
@@ -32,6 +56,17 @@ export class ConnectionController {
        },
      ]);
     }
+
+    @Get('/get-connection-type/:id')
+    async getConnectionTypeById(@Param('id') id: string) {
+      return await ConnectionType.aggregate([
+        {
+           '$match': {
+             'connectionTypeId': id
+           }
+        },
+      ]);
+     }
 
     @Post('/update-connection')
     async updateConnectionById( @Body() body: any ) {
@@ -101,12 +136,12 @@ export class ConnectionController {
       message: "Connection could not be added as Connection Type does not exist"
     }
 
-    if(findConnectionType[0].attributes.length !== connectionTypeAttributes.length) {
-      return {
-        success: false,
-        message: "Contection Type Attributes length should match Connection Attributes length"
-      }
-    }
+    // if(findConnectionType[0].attributes.length !== connectionTypeAttributes.length) {
+    //   return {
+    //     success: false,
+    //     message: "Contection Type Attributes length should match Connection Attributes length"
+    //   }
+    // }
 
     const newConnection = new Connection(body);
     const result = await newConnection.save();

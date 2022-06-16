@@ -1,7 +1,7 @@
 import React from 'react'
 
 const AddFlow = () => {
-  return (
+  return ( 
     <div>
       <h1 className="page-head">Add Flow</h1>
       <div className="inner-body-cont">
