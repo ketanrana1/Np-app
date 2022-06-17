@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import firebaseConfig from "../firebase-config"
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 
@@ -9,19 +9,18 @@ const DEFAULT_STATE = {
   password: ''
 }
 
-const Login = () => {
+const Register = () => {
 
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState(DEFAULT_STATE);
 
-  const loginButtonHandler = async () => {
+  const registerButtonHandler = async () => {
     const { email, password } = formState
     try {
-      const response = await signInWithEmailAndPassword(getAuth(firebaseConfig),email, password); 
-      sessionStorage.setItem('Auth key', response._tokenResponse.refreshToken);
-      navigate('/connection')
-      return toast("Logged in Successfully")
+      await createUserWithEmailAndPassword(getAuth(firebaseConfig),email, password); 
+      toast("User Registered Successfully")
+      return navigate('/login')
     } catch (error) {
       return toast(error?.message);  
     }
@@ -38,19 +37,12 @@ const Login = () => {
       <div className="form-group">
         <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler}/>
       </div>
-      <div className="form-group frgt-pssw-cont">
-        <a href="">Forgot Password</a>
-      </div>
-      <div className="form-group form-check">
-        <input type="checkbox" className="form-check-input" />
-        <label className="form-check-label" for="exampleCheck1">Remember</label>
-      </div>
       <div className="submit-cont">
-         <input type="submit" value="Login" onClick={loginButtonHandler}/>
+         <input type="submit" value="Register" onClick={registerButtonHandler}/>
       </div>
     </div>
     )  
 }
 
 
-export default Login
+export default Register

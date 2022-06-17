@@ -19,8 +19,15 @@ import Task from './pages/Task';
 import AddTask from './components/task/AddTask';
 import EditTask from './components/task/EditTask';
 import Login from './pages/Login';
+import { useEffect } from 'react';
+import Register from './pages/register';
 
 function App() {
+
+  useEffect(() => {
+    if(!sessionStorage.getItem('Auth key') && window.location.pathname !== "/login") return window.location.href = "/login"
+  },[])
+
   return (
     
       <Routes>
@@ -42,6 +49,7 @@ function App() {
         <Route path='/schedule/:edit-schedule' element={<Layout><EditSchedule /></Layout>} />
         <Route path='*' element={<Layout><NotFound /></Layout>} />
         <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
+        <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />
       </Routes>
   );
 }
