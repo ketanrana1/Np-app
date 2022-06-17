@@ -102,10 +102,12 @@ export class TaskController {
           message: "Task could not be deleted. Please try after some time."
         }
       }
-    }
+    } 
 
   @Post('/add-task-type')
   async addTaskType( @Body() body: any ) {
+
+    console.log("BODY", body)
     const newTaskType = new TaskType(body);
     const result = await newTaskType.save();
 

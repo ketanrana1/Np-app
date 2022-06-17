@@ -7,38 +7,30 @@ import { toast } from 'react-toastify';
 const AddTaskType = () => {
 
   const [taskType, setConnectionType] = useState([]);
-  // const [checking, setChecking] = useState(0);
-
 
   const onSubmitHandler = async (values, { resetForm }) => {
-
-    console.log("VALUES", values)
+    const check = []
     taskType.map((item, index) => {
-      const payload = {
-          attribute: {
+       const payload = {
           name: values[`attribute_${index + 1}`],
           fieldRequired: typeof values[`fieldRequired_${index + 1}`] === "undefined" ? false : true,
           inputField: values[`inputField_${index + 1}`]?.split('_')[0] 
-        }, 
       }
-      console.log("payload", payload)
-    })
+      check.push(payload)
+    }) 
 
-    // const payload = {
-    //   name: values.name,
-    //   attributes: Array.from(taskType.map((item, index) => values[`attribute_${index+1}`]))
-    // }
-    // try {    
-    //   const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection-type`, payload)
-    //   toast(result.data.message);  
-    //   setConnectionType([])
-    //   resetForm({})
-    // } catch (error) {
-    //   return toast(error?.message)      
-    // }
+    try {    
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-task-type`, { 
+        name: values.name,
+        attributes: check
+      })
+      toast(result.data.message);  
+      setConnectionType([])
+      resetForm({})
+    } catch (error) {
+      return toast(error?.message)      
+    }
   }
-
-  console.log("taskType",taskType.length)
 
   return (
     <div>
