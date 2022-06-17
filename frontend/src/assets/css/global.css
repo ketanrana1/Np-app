@@ -175,6 +175,10 @@ width: 20%;
 }
 
 
+.commn-table-cont table .fourth-row a.delete-link {
+    cursor:pointer;
+}
+
 .commn-table-cont table .third-row p {
     display: inline-block;
     background-color: #EBF0FC;
@@ -276,6 +280,10 @@ margin-bottom: 30px;
   color: white;
   font-family: 'DM Sans', sans-serif;
   border-radius: 5px;
+}
+
+.task-type-checkbox input[type="checkbox"], .task-type-checkbox input[type="radio"] {
+    margin-right:15px;
 }
 
 @media only screen and (max-width:992px) {

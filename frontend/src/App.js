@@ -21,6 +21,7 @@ import EditTask from './components/task/EditTask';
 import Login from './pages/Login';
 import { useEffect } from 'react';
 import Register from './pages/register';
+import AddTaskType from './components/taskType/AddTaskType';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
         <Route path='/task' element={<Layout><Task /></Layout>} />
         <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
         <Route path='/task/:edit-task' element={<Layout><EditTask /></Layout>} />
+        <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
         <Route path='/flow/:edit-flow' element={<Layout><EditFlow /></Layout>} />
