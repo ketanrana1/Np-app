@@ -1,84 +1,83 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../common/environment';
-
-const initialResponseState = [];
+import { toast } from 'react-toastify';
 
 const AddConnectionType = () => {
 
-  const [responseState, setResponseState] = useState(initialResponseState);
   const [connectionType, setConnectionType] = useState([]);
 
-  useEffect(() => {
-    const getConnectionType = async() => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
-      setConnectionType(response.data)
-    }
-    getConnectionType();
-  },[])
+  // useEffect(() => {
+  //   const getConnectionType = async() => {
+  //     const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
+  //     setConnectionType(response.data)
+  //   }
+  //   getConnectionType();
+  // },[])
 
-  console.log("connectionType", connectionType)
+
+  const onSubmitHandler = async (values) => {
+    const payload = {
+      name: values.name,
+      attributes: Array.from(connectionType.map((item, index) => values[`attribute_${index+1}`]))
+    }
+    try {    
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection-type`, payload)
+      return toast(result.data.message);  
+    } catch (error) {
+      return toast(error?.message)      
+    }
+  }
 
     return (
-        <>
       <div>
-      <h1 className="page-head">Add Connection Type</h1>
-       <div className="inner-body-cont">
- 
-      <Formik
-  
-        initialValues={{ name: '', attributes: '' }}
-        validate={values => {
-          const errors = {};
-          if (!values.name) {
-  
-            errors.name = 'Name is Required';
-  
-          }
-          return errors;
-  
-        }}
-  
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
-  
-  
-          try {
-            
-            const request = await axios({
-            method: 'post',    
-            url: 'http://localhost:5000/api/add-connection-type',
-            data: values,
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': `${sessionStorage.getItem('token')}`
-  
-            }            
-            });
-            setResponseState(request); 
-        } catch (error) {
-            console.log(error)  
-        }
-  
-        }}
-
-      >
-      <Form>
-          <Field type="name" name="name" placeholder="Enter Connection Name" />
-          <ErrorMessage name="name" component="div" />
-  
-          <Field type="text-area" name="attributes" placeholder="Enter comma seprated atrribute names" />
-          <ErrorMessage name="attributes" component="div" />
-          <br/><button type="submit" >
-          Submit
-          </button>
-      </Form>
-      </Formik>
+        <h1 className="page-head">Add Type</h1>
+        <div className="inner-body-cont">
+          <div className="flow-form-cont cont-form-all">
+            <Formik
+              initialValues={{ name: '', attribute_1: '' }}
+              validate={values => {
+                const errors = {};
+                if (!values.name) {
+                  errors.name = 'Name is Required';
+                }
+                return errors;
+              }}
+              onSubmit={onSubmitHandler}
+            >   
+              <Form>
+                <div className="row">
+                  <div className="form-group col-12">
+                      <div className="label-input-cont">
+                      <p>Connection Type Name</p>
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
+                      <ErrorMessage name="name" component="div" />    
+                    </div>
+                  </div>
+                    {
+                      connectionType.map((item, index) => {
+                      return <div className="form-group col-12">
+                                <div className="label-input-cont">
+                                <p>Connection Name</p>
+                                <Field className="form-control all-form-fl-w-ip" type="name" name={`attribute_${index + 1}`} required placeholder={`Enter Attribute ${index + 1} Name`} />
+                                <ErrorMessage name={`attribute_${index+1}`} component="div" />     
+                              </div>
+                            </div>
+                      })
+                    }
+                  <div className="add-conne-type-btn">
+                    <button onClick={() => setConnectionType([...connectionType, 1])}>Add Attribute</button>
+                  </div>
+                  <div className="submit-cont">
+                    <input type="submit" value="Save" />
+                  </div>
+                </div>
+              </Form>
+            </Formik>
+          </div>
+        </div>
       </div>
-    </div>
-    </>
     )
 
 }

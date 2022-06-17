@@ -5,12 +5,14 @@ import { ConnectionController } from "./controllers"
 import './database/mongoose';
 import bodyParser from 'body-parser'; 
 import { PORT } from "constants/environment"
+import cors from "cors";
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cors())
 useExpressServer(app, 
   {
     cors: true,
