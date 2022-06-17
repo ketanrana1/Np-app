@@ -89,9 +89,9 @@ export class ConnectionController {
 
     @Post('/delete-connection')
     async deleteConnectionById( @Body() body: any ) {
-      const { connectionTypeId } = body;
+      const { connectionId } = body;
       try {
-        await Connection.findOneAndUpdate({ connectionTypeId })
+        await Connection.findOneAndDelete({ connectionId })
         return {
           success: true,
           message: "Connection deleted successfully"

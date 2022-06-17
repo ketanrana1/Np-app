@@ -175,6 +175,10 @@ width: 20%;
 }
 
 
+.commn-table-cont table .fourth-row a.delete-link {
+    cursor:pointer;
+}
+
 .commn-table-cont table .third-row p {
     display: inline-block;
     background-color: #EBF0FC;

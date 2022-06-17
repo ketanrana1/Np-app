@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
 
 const Connection = () => {
 
-  let navigate = useNavigate()
   const [connection, setConnection] = useState([]);
 
   useEffect(() => {
     const getConnectionType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection`)
-      console.log("sdfa", response.data)
       setConnection(response.data)
     }
     getConnectionType();
   },[])
 
   const handleDeleteClick = async (connectionId) => {
-    //alert(connectionId)
     const payload = {
-      connectionId: connectionId
+      connectionId
     }
     try {    
-      const result = await axios.get(`${REACT_APP_BACKEND_URL}/delete-connection`, payload)
-      return toast(result.data.message);  
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-connection`, payload)
+      toast(result.data.message);  
+      setConnection(connection.filter((item) => item.connectionId !== connectionId))
+      return;
     } catch (error) {
       return toast(error?.message)      
     }
   }
+
 
 
   return (
@@ -60,7 +59,7 @@ const Connection = () => {
                       <td className="third-row"><p>{item.connectionName}</p></td>
                       <td className="fourth-row">
                         {/* <a href="" className="view-link">View</a> */}
-                        <a onClick={handleDeleteClick(item.connectionId)} className="delete-link">
+                        <a onClick={() => handleDeleteClick(item.connectionId)} className="delete-link">
                           <img src={require('../assets/images/delete.png')} alt="delete" />
                         </a>
                       </td>

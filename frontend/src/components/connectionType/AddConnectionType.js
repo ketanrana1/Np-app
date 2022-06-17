@@ -8,23 +8,16 @@ const AddConnectionType = () => {
 
   const [connectionType, setConnectionType] = useState([]);
 
-  // useEffect(() => {
-  //   const getConnectionType = async() => {
-  //     const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
-  //     setConnectionType(response.data)
-  //   }
-  //   getConnectionType();
-  // },[])
-
-
-  const onSubmitHandler = async (values) => {
+  const onSubmitHandler = async (values, { resetForm }) => {
     const payload = {
       name: values.name,
       attributes: Array.from(connectionType.map((item, index) => values[`attribute_${index+1}`]))
     }
     try {    
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection-type`, payload)
-      return toast(result.data.message);  
+      toast(result.data.message);  
+      setConnectionType([])
+      resetForm({})
     } catch (error) {
       return toast(error?.message)      
     }
@@ -51,7 +44,7 @@ const AddConnectionType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Connection Type Name</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name"/> 
                       <ErrorMessage name="name" component="div" />    
                     </div>
                   </div>

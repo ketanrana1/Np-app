@@ -27,7 +27,7 @@ const MainNavigation = () => {
             </li>
 
             <li className="nav-item">    
-            <NavLink to='/connection-type' className={navData => navData.isActive ? 'active' : '' }>
+            <NavLink to='/connection-type/add-connection-type' className={navData => navData.isActive ? 'active' : '' }>
             <img src={require('../../assets/images/connection.png')} alt="connection" />Connection type
             </NavLink>
           </li>
