@@ -53,7 +53,7 @@ export const AddConnection = () => {
 
   return (
     <div>
-      <h1 className="page-head">Add Connection Type</h1>
+      <h1 className="page-head">Add Connection</h1>
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik

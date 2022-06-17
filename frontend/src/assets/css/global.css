@@ -282,6 +282,10 @@ margin-bottom: 30px;
   border-radius: 5px;
 }
 
+.task-type-checkbox input[type="checkbox"], .task-type-checkbox input[type="radio"] {
+    margin-right:15px;
+}
+
 @media only screen and (max-width:992px) {
     .cont-form-all .label-input-cont p {
         width: 100%

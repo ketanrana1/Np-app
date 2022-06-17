@@ -25,12 +25,16 @@ const MainNavigation = () => {
             <img src={require('../../assets/images/calendar.png')} alt="connection" />  Schedule
             </NavLink>
             </li>
-
             <li className="nav-item">    
             <NavLink to='/connection-type/add-connection-type' className={navData => navData.isActive ? 'active' : '' }>
             <img src={require('../../assets/images/connection.png')} alt="connection" />Connection type
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink to='/task-type/add-task-type' className={navData => navData.isActive ? 'active' : '' }>
+            <img src={require('../../assets/images/task-list.png')} alt="connection" /> Task Type
+            </NavLink>
+            </li>
         </ul>
       </nav>
 </>

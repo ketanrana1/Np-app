@@ -19,6 +19,7 @@ import Task from './pages/Task';
 import AddTask from './components/task/AddTask';
 import EditTask from './components/task/EditTask';
 import Login from './pages/Login';
+import AddTaskType from './components/taskType/AddTaskType';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/task' element={<Layout><Task /></Layout>} />
         <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
         <Route path='/task/:edit-task' element={<Layout><EditTask /></Layout>} />
+        <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
         <Route path='/flow/:edit-flow' element={<Layout><EditFlow /></Layout>} />
