@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import firebaseConfig from "../firebase-config"
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword , sendPasswordResetEmail} from 'firebase/auth'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const DEFAULT_STATE = {
   email: '',
@@ -27,6 +28,16 @@ const Login = () => {
     }
   }
 
+  const forgotPasswordHandler = async () => {
+    const { email } = formState
+    try {
+      await sendPasswordResetEmail(getAuth(firebaseConfig),email)
+      return toast("Reset Password email has been sent successfully")
+    } catch (error) {
+      return toast(error?.message);  
+    }
+  }
+
   const onInputChangeHandler = (e) => setFormState({...formState , [e.target.name]: e.target.value})
 
   return (
@@ -39,7 +50,7 @@ const Login = () => {
         <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler}/>
       </div>
       <div className="form-group frgt-pssw-cont">
-        <a href="">Forgot Password</a>
+        <Link to="/login"><div onClick={forgotPasswordHandler}>Forgot Password</div></Link>
       </div>
       <div className="form-group form-check">
         <input type="checkbox" className="form-check-input" />
