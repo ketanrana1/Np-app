@@ -8,25 +8,26 @@ import { useNavigate } from 'react-router-dom';
 const AddTask = () => {
 
   let navigate = useNavigate()
-  const [connectionType, setConnectionType] = useState([]);
-  const [connectionTypeAttributes, setConnectionTypeAttributes] = useState([]);
+  const [taskType, setTaskType] = useState([]);
+  const [taskTypeAttributes, setTaskTypeAttributes] = useState([]);
   const [selectValue, setSelectValue] = useState('');
 
 
   useEffect(() => {
-    const getConnectionType = async() => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
-      setConnectionType(response.data)
+    const getTaskType = async() => {
+      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task-type`)
+      setTaskType(response.data)
     }
-    getConnectionType();
+    getTaskType();
   },[])
 
-
-  const handleConnectionTypeChnage = async (e) => {
+ 
+  const handleTaskTypeChnage = async (e) => {
     setSelectValue(e.target.value)
     try {    
-      const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type/${e.target.value}`)
-      setConnectionTypeAttributes(result.data[0].attributes)
+      const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task-type/${e.target.value}`)
+      setTaskTypeAttributes(result.data[0].attributes)
+      console.log("RESULT", result.data[0].attributes)
       return toast(result.data.message);  
     } catch (error) {
       return toast(error?.message)      
@@ -40,18 +41,18 @@ const AddTask = () => {
     const payload = {
       name: values.name,
       description: values.description,
-      connectionTypeAttributes: newValues,
-      connectionTypeId: selectValue
+      taskTypeAttributes: newValues,
+      taskTypeId: selectValue
     }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection`, payload)
-      navigate('/connection');
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-task`, payload)
+      navigate('/task');
       return toast(result.data.message);  
     } catch (error) {
       return toast(error?.message)      
     }
   }
-
+ 
   return (
     <div>
       <h1 className="page-head">Add Task</h1>
@@ -75,7 +76,7 @@ const AddTask = () => {
                 <div className="form-group col-12">
                     <div className="label-input-cont">
                     <p>Task Name</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
+                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name" /> 
                     <ErrorMessage name="name" component="div" />    
                   </div>
                   <div className="label-input-cont">
@@ -86,10 +87,10 @@ const AddTask = () => {
 
                   <div className="label-input-cont">
                     <p>Select Type</p>
-                    <Field onChange={handleConnectionTypeChnage} className="form-control all-form-fl-w-ip" as="select" value={selectValue} >
+                    <Field onChange={handleTaskTypeChnage} className="form-control all-form-fl-w-ip" as="select" value={selectValue} >
                       <option value="" selected disabled >Select Task Type</option>
                       {
-                        connectionType.map((item) =>  <option value={item.connectionTypeId}>{item.name}</option>)
+                        taskType.map((item) =>  <option value={item.taskTypeId}>{item.name}</option>)
                       }
                     </Field>
                     <ErrorMessage name="connectionType" component="div" />    
@@ -97,11 +98,12 @@ const AddTask = () => {
 
                 </div>
                   {
-                    connectionTypeAttributes.map((item, index) => {
+                    taskTypeAttributes.map((item, index) => {
                     return <div className="form-group col-12">
                               <div className="label-input-cont">
-                              <p>{ item }</p>
-                              <Field className="form-control all-form-fl-w-ip" type="name" name={item} required placeholder={`Enter Attribute value`} />    
+                              <p>{ item.name }</p>
+                              <Field className="form-control all-form-fl-w-ip" type={item.inputField} name={item.name} required={ item.fieldRequired } placeholder={`Enter Attribute value`} /> 
+                              {/* <Field className="form-control all-form-fl-w-ip" type="name" name={item} required placeholder={`Enter Attribute value`} />     */}
                             </div>
                           </div>
                     })

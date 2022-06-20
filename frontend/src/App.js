@@ -40,8 +40,8 @@ function App() {
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/connection/:edit-connection' element={<Layout><EditConnection /></Layout>} />
         <Route path='/task' element={<Layout><Task /></Layout>} />
+        <Route path='/task/edit-task/:id' element={<Layout><EditTask /></Layout>} />
         <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
-        <Route path='/task/:edit-task' element={<Layout><EditTask /></Layout>} />
         <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />

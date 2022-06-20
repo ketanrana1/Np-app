@@ -14,7 +14,7 @@ const taskSchema = new Schema({
     type: String,
     ref: 'TaskType' 
   },
-  connectionTypeAttributes: Object
+  taskTypeAttributes: Object
 },
 {timestamps: true}
 );

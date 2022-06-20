@@ -54,7 +54,7 @@ const Connection = () => {
         {
             connection.map((item, index) => {
             return <tr> 
-                      <th className="first-row" scope="row">{item.connectionName}</th>
+                      <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.connectionName}</p></td>
                       <td className="fourth-row">
