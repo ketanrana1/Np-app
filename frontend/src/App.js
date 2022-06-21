@@ -20,7 +20,7 @@ import AddTask from './components/task/AddTask';
 import EditTask from './components/task/EditTask';
 import Login from './pages/Login';
 import { useEffect } from 'react';
-import Register from './pages/register';
+import Register from './pages/Register';
 import AddTaskType from './components/taskType/AddTaskType';
 
 function App() {
