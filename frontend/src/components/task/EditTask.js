@@ -21,7 +21,7 @@ const EditTask = () => {
       setTaskDetails(response.data[0])
     }
     getTaskType();
-  },[])
+  },[]) 
 
   const onSubmitHandler = async () => {
 
@@ -61,7 +61,6 @@ const EditTask = () => {
     } catch (error) {
       return toast(error?.message)      
     }
-
   }
 
  

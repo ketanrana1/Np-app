@@ -65,9 +65,9 @@ export const AddFlow = () => {
                     <p>Task</p>
                     <Field className="form-control all-form-fl-w-ip" required component="select" name="tasks" multiple={true} >
                       {
-                        tasks.map((item) =>  <option value={item.connectionTypeId}>{item.name}</option>)
+                        tasks.map((item) =>  <option>{item.name}</option>)
                       }
-                    </Field>
+                    </Field> 
                     <ErrorMessage name="connectionType" component="div" />    
                   </div>
                 </div>

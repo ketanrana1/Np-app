@@ -11,7 +11,7 @@ const flowSchema = new Schema({
   name: String,
   description: String,
   tasks: [Object],
-  variableSel: [String]
+  variableSel: String
 },
   { timestamps: true }
 );

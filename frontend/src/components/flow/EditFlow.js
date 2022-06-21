@@ -9,11 +9,12 @@ import { useNavigate } from 'react-router-dom';
 const EditFlow = () => {
 
   const [flowDetails, setFlowDetails] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [taskTypeAttributes, setTaskTypeAttributes] = useState([]);
   const [selectValue, setSelectValue] = useState('');
 
   const params = useParams();
-  const { id } = params;
+  const { id } = params; 
 
   useEffect(() => {
     const getFlow = async() => {
@@ -22,11 +23,19 @@ const EditFlow = () => {
       console.log("Flow Details", response.data[0])
     }
     getFlow();
+    const getTask = async() => {
+      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+      setTasks(response.data)
+      console.log("TASKSSSSS", response.data)
+    }
+    getTask();
   },[])
 
-  const onSubmitHandler = async () => {
+  const onSubmitHandler = async (values) => {
 
-    console.log("taskDetails")
+    console.log("taskDetails", flowDetails)
+
+    console.log("values", values)
 
     // const allAttributeDetails = []
     // taskTypeAttributes.map((item) => {
@@ -52,20 +61,23 @@ const EditFlow = () => {
     // navigate('/task');
     
 
-    // const payload = {
-    //   ...taskDetails
-    // }
-    // delete payload._id
-    // try {    
-    //   const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-task`, {taskDetails: payload, id})   
-    //   return toast(result.data.message);  
-    // } catch (error) {
-    //   return toast(error?.message)      
-    // }
+    const payload = {
+      ...flowDetails
+    }
+    delete payload._id
+    try {    
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-flow`, {flowDetails: payload, id})   
+      return toast(result.data.message);  
+    } catch (error) {
+      return toast(error?.message)      
+    }
 
   }
-
- 
+  const test = (item) => {
+    const checking = flowDetails?.tasks.findIndex((_item) => _item === item.name)
+    if(checking === -1) return false;
+    return true
+  }
 
   return (
     <div>
@@ -86,12 +98,37 @@ const EditFlow = () => {
                 </div>
                 <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setFlowDetails({...flowDetails, description: e.target.value})} value={ flowDetails.description } /> 
+                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setFlowDetails({...flowDetails, description: e.target.value})} value={ flowDetails.description } />       
                     <ErrorMessage name="name" component="div" />    
                 </div>
               </div>
+              <div className="form-group col-12">
+                <div className="label-input-cont">
+                      <p>Task</p>
+                      <Field className="form-control all-form-fl-w-ip" required component="select" name="tasks" multiple={true} onChange={(e) => { 
+
+                        const newTasks = [];
+                        var options = e.target.options;
+                        for (var i = 0, l = options.length; i < l; i++) {
+                          if (options[i].selected) {
+                            newTasks.push(options[i].value);
+                          }
+                        }
+                        setFlowDetails({
+                          ...flowDetails, 
+                          tasks: newTasks
+                        })
+                       }} >
+                      {
+                          tasks.map((item) =>  <option selected={test(item)}>{item.name}</option>)
+                      }
+                      </Field>
+                      <ErrorMessage name="connectionType" component="div" /> 
+                </div>
+              </div>
+              
               {/* { 
-                taskDetails?.taskTypeAttributes?.map((item, index) => {
+                flowDetails?.taskTypeAttributes?.map((item, index) => {
                 return <div className="form-group col-12">
                           <div className="label-input-cont">
                             <p>{item.key}</p>
@@ -116,6 +153,13 @@ const EditFlow = () => {
                 }
                 )
               } */}
+              <div className="form-group col-12">
+                <div className="label-input-cont">
+                  <p>VariableSel</p>
+                  <Field className="form-control all-form-fl-w-ip" type="name" required name="variableSel" placeholder="Enter Comma Seprated Values" onChange={(e) => setFlowDetails({...flowDetails, variableSel: e.target.value})} value={ flowDetails.variableSel } /> 
+                  <ErrorMessage name="name" component="div" />    
+                </div>
+              </div>
                 <div className="submit-cont">
                   <input type="submit" value="Save" />
                 </div>

@@ -89,6 +89,7 @@ export class FlowController {
 
   @Post('/edit-flow')
   async editTask( @Body() body: any ) {
+    console.log("Body", body)
 
     const payload = {
       ...body
@@ -98,7 +99,8 @@ export class FlowController {
     const result = await flow.findOneAndUpdate({ "flowId": body.flowDetails.flowId }, {
       name: body.flowDetails.name,
       description: body.flowDetails.description,
-      flowTypeAttributes: body.flowDetails.flowTypeAttributes,
+      tasks: body.flowDetails.tasks,
+      variableSel: body.flowDetails.variableSel,
 
     });
 
