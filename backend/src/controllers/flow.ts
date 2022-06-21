@@ -1,0 +1,100 @@
+import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import flow from 'models/flow';
+
+// UPDATE 
+// DELETE
+// LOOKUP DATA
+@Controller('/api')
+export class FlowController {
+
+  @Get('/get-flow')
+  async getflow() {
+    return await flow.aggregate([
+      {
+        '$lookup': {
+          'from': ' ',
+          'localField': 'flowTypeId',
+          'foreignField': 'flowTypeId',
+          'as': 'flowType'
+        }
+      }, {
+        '$project': {
+          '_id': 0,
+          'flowName': 1,
+          'description': 1,
+          'tasks': {
+            '$first': '$name'
+          },
+          'variableSel': {
+            
+          }
+        }
+      }
+    ]);
+  }
+
+  @Get('/get-flow/:id')
+  async getFlowById(@Param('id') id: string) {
+    return await flow.aggregate([
+      {
+        '$match': {
+          'flowTypeId': id
+        }
+      },
+    ]);
+  }
+
+  @Post('/update-flow')
+  async updateflowById(@Body() body: any) {
+    const { flowTypeId } = body;
+    const updateItems = { ...body }
+    delete updateItems.flowTypeId;
+    try {
+      await flow.findOneAndUpdate({ flowTypeId }, { ...updateItems })
+      return {
+        success: true,
+        message: "Flow updated successfully"
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: "Flow could not be updated. Please try after some time."
+      }
+    }
+  }
+
+  @Post('/delete-flow')
+  async deleteFlowById(@Body() body: any) {
+    const { flowId } = body;
+    try {
+      await flow.findOneAndDelete({ flowId })
+      return {
+        success: true,
+        message: "Flow deleted successfully"
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: "Flow could not be deleted. Please try after some time."
+      }
+    }
+  }
+
+  @Post('/add-flow')
+  async addflow(@Body() body: any) {
+
+    const newFlow = new flow(body);
+    const result = await newFlow.save();
+
+    if (!result)
+      return {
+        success: false,
+        message: "Flow could not be added. Please try after some time."
+      }
+
+    return {
+      success: true,
+      message: "Flow is added."
+    };
+  }
+}

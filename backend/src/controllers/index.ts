@@ -1,4 +1,5 @@
 import { ConnectionController } from "./connection"
 import { TaskController } from "./task"
-
-export { ConnectionController, TaskController }
+import { FlowController } from "./flow"
+import { ScheduleController } from "./schedule"
+export { ConnectionController, TaskController, FlowController, ScheduleController}
