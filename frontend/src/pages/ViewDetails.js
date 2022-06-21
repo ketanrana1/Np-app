@@ -39,10 +39,12 @@ const ViewDetails = () => {
                                     name,
                                     description,
                                     taskId,
+                                    tasks,
                                     taskName,
                                     createdAt,
                                     updatedAt,
-                                    taskTypeAttributes
+                                    taskTypeAttributes,
+                                    variableSel
                                 } = detail
 
                                 return (<div className="label-input-cont">
@@ -50,7 +52,7 @@ const ViewDetails = () => {
                                     {description && <p>Description: {description}</p>}
                                     {taskId && <p>Task Id: {taskId}</p>}
                                     {taskName && <p>Task Name: {taskName}</p>}
-                                   
+                                    {variableSel && <p>Variable Sel: {variableSel}</p>}
                                     {taskTypeAttributes && <div><p>Attributes: </p>
                                         {taskTypeAttributes?.map((attr) => {
                                             const { key, value } = attr
@@ -58,12 +60,21 @@ const ViewDetails = () => {
                                                 <>
                                                     <div className='col-12 d-flex'>
                                                         <p className='col-6'>Key: {key}</p>
-                                                        <p>Value: {value}</p>
+                                                        {value && <p>Value: {value}</p>}
                                                     </div>
                                                 </>
                                             )
                                         })}
                                     </div>}
+                                    {tasks && <div className='d-flex'>
+                                        <label>Task: </label>
+                                        {tasks.map((task) => {
+                                            return (
+                                                <p className='col-2'>{task}</p>
+                                            )
+                                        })}
+                                    </div>
+                                    }
                                 </div>)
                             })}
                         </div>
