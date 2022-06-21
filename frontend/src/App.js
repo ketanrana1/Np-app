@@ -22,6 +22,7 @@ import Login from './pages/Login';
 import { useEffect } from 'react';
 import Register from './pages/Register';
 import AddTaskType from './components/taskType/AddTaskType';
+import ViewDetails from './pages/ViewDetails';
 
 function App() {
 
@@ -39,16 +40,23 @@ function App() {
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/connection/:edit-connection' element={<Layout><EditConnection /></Layout>} />
+
         <Route path='/task' element={<Layout><Task /></Layout>} />
         <Route path='/task/edit-task/:id' element={<Layout><EditTask /></Layout>} />
+        <Route path='/task/view-task/:id' element={<Layout><ViewDetails /></Layout>} />
         <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
         <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
+
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
         <Route path='/flow/:edit-flow' element={<Layout><EditFlow /></Layout>} />
+        <Route path='/flow/view-flow/:id' element={<Layout><ViewDetails /></Layout>} />
+
         <Route path='/schedule' element={<Layout><Schedule /></Layout>} />
         <Route path='/schedule/:add-schedule' element={<Layout><AddSchedule /></Layout>} />
         <Route path='/schedule/:edit-schedule' element={<Layout><EditSchedule /></Layout>} />
+        <Route path='/schedule/view-schedule/:id' element={<Layout><ViewDetails /></Layout>} />
+
         <Route path='*' element={<Layout><NotFound /></Layout>} />
         <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
         <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />

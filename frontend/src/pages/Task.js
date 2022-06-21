@@ -33,7 +33,6 @@ const Task = () => {
     }
   }
 
-
   return (
     <div>
       <h1 className="page-head">Connection </h1>
@@ -55,11 +54,13 @@ const Task = () => {
         <tbody>
         {
             task.map((item, index) => {
+              console.log("item",item)
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.taskName}</p></td>
                       <td className="fourth-row">
+                      <Link to={`/task/view-task/${item.taskId}`} state={"task"}className="view-link" >View</Link>
                       <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >Edit</Link>
                       <a onClick={() => handleDeleteClick(item.taskId)} className="delete-link">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
