@@ -50,11 +50,10 @@ const ViewDetails = () => {
                                     {description && <p>Description: {description}</p>}
                                     {taskId && <p>Task Id: {taskId}</p>}
                                     {taskName && <p>Task Name: {taskName}</p>}
-                                    {createdAt && <p>Created At: {createdAt}</p>}
-                                    {updatedAt && <p>Updated At: {updatedAt}</p>}
-                                    <div><p>Attributes: </p>
-                                        {taskTypeAttributes && taskTypeAttributes?.map((attr) => {
-                                            const {key,value} = attr
+                                   
+                                    {taskTypeAttributes && <div><p>Attributes: </p>
+                                        {taskTypeAttributes?.map((attr) => {
+                                            const { key, value } = attr
                                             return (
                                                 <>
                                                     <div className='col-12 d-flex'>
@@ -64,7 +63,7 @@ const ViewDetails = () => {
                                                 </>
                                             )
                                         })}
-                                    </div>
+                                    </div>}
                                 </div>)
                             })}
                         </div>
