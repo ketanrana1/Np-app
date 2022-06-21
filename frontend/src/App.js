@@ -40,6 +40,7 @@ function App() {
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/connection/:edit-connection' element={<Layout><EditConnection /></Layout>} />
+        <Route path='/register-user' element={<Layout><Register /></Layout>} />
 
         <Route path='/task' element={<Layout><Task /></Layout>} />
         <Route path='/task/edit-task/:id' element={<Layout><EditTask /></Layout>} />
