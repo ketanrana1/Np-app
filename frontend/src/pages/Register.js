@@ -20,7 +20,7 @@ const Register = () => {
     try {
       await createUserWithEmailAndPassword(getAuth(firebaseConfig),email, password); 
       toast("User Registered Successfully")
-      return navigate('/login')
+    
     } catch (error) {
       return toast(error?.message);  
     }
@@ -29,16 +29,18 @@ const Register = () => {
   const onInputChangeHandler = (e) => setFormState({...formState , [e.target.name]: e.target.value})
 
   return (
-    <div className="login-form-cont">
-        <h3 className="logo-text">Logo</h3>
+    <div className="col-12">
+      <h1 className="page-head">Register</h1>
       <div className="form-group">
+        <label>Email</label>
         <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler}/>
       </div>
       <div className="form-group">
+      <label>Email</label>
         <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler}/>
       </div>
-      <div className="submit-cont">
-         <input type="submit" value="Register" onClick={registerButtonHandler}/>
+      <div className='mt-5'>
+         <input type="submit" value="Register" className='btn btn-secondary' onClick={registerButtonHandler}/>
       </div>
     </div>
     )  

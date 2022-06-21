@@ -11,6 +11,7 @@ const Flow = () => {
   useEffect(() => {
     const getFlow = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+      console.log("response",response.data);
       setFlow(response.data) 
       console.log("KTR", response.data)
     }
@@ -60,6 +61,7 @@ const Flow = () => {
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.tasks}</p></td>
                       <td className="fourth-row">
+                      <Link to={`/flow/view-flow/${item.flowId}`} state={"flow"} className="view-link" >View</Link>
                       <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >Edit</Link>
                       <a onClick={() => handleDeleteClick(item.flowId)} className="delete-link">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
