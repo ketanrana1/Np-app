@@ -51,7 +51,7 @@ export class TaskController {
      return await Task.aggregate([
        {
           '$match': {
-            'taskTypeId': id
+            'taskId': id
           }
        },
      ]);
@@ -147,6 +147,7 @@ export class TaskController {
 
     const newTask = new Task(body);
     const result = await newTask.save();
+    console.log("BODY", body)
 
     if(!result) 
       return {
@@ -159,4 +160,33 @@ export class TaskController {
       message: "Task is added."
     };
    }
+
+   @Post('/edit-task')
+  async editTask( @Body() body: any ) {
+
+    const payload = {
+      ...body
+    }
+    delete body.id
+
+    const result = await Task.findOneAndUpdate({ "taskId": body.taskDetails.taskId }, {
+      name: body.taskDetails.name,
+      description: body.taskDetails.description,
+      taskTypeAttributes: body.taskDetails.taskTypeAttributes,
+
+    });
+
+    if(!result) 
+      return {
+        success: false,
+        message: "Task could not be updated. Please try after some time."
+      }
+ 
+    return {
+      success: true,
+      message: "Task is updated."
+    };
+   }
+
+
 }

@@ -35,15 +35,26 @@ const AddTask = () => {
   }
 
   const onSubmitHandler = async (values) => {
-    const newValues = {...values};
-    delete newValues.name
-    delete newValues.description
+    const allAttributeDetails = []
+    taskTypeAttributes.map((item) => {
+      Object.entries(values).map(([key,value]) => {
+        if(key === item.name) {
+          allAttributeDetails.push({
+            key,
+            fieldRequired: item.fieldRequired,
+            inputField: item.inputField,
+            value,
+          })
+        }
+      })
+    })
     const payload = {
       name: values.name,
       description: values.description,
-      taskTypeAttributes: newValues,
+      taskTypeAttributes: allAttributeDetails,
       taskTypeId: selectValue
     }
+
     try {    
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-task`, payload)
       navigate('/task');

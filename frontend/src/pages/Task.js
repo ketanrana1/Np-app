@@ -12,8 +12,11 @@ const Task = () => {
     const getTaskType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
       setTask(response.data)
+      console.log("KTR", response.data)
     }
+    
     getTaskType();
+    
   },[])
 
   const handleDeleteClick = async (taskId) => {
@@ -21,7 +24,7 @@ const Task = () => {
       taskId
     }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-connection`, payload)
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-task`, payload)
       toast(result.data.message);  
       setTask(task.filter((item) => item.taskId !== taskId))
       return;
@@ -36,7 +39,7 @@ const Task = () => {
       <h1 className="page-head">Connection </h1>
      <div className="inner-body-cont">
       <div className="btn-bloat-right">
-         <Link className="commn-btn" to="/connection/add-connection">Create New</Link>
+         <Link className="commn-btn" to="/task/add-task">Create New</Link>
       </div> 
        
        <div className="commn-table-cont table-responsive-md">
