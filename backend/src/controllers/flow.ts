@@ -1,7 +1,7 @@
 import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
 import flow from 'models/flow';
 
-// UPDATE 
+// UPDATE  
 // DELETE
 // LOOKUP DATA
 @Controller('/api')
@@ -11,23 +11,11 @@ export class FlowController {
   async getflow() {
     return await flow.aggregate([
       {
-        '$lookup': {
-          'from': ' ',
-          'localField': 'flowTypeId',
-          'foreignField': 'flowTypeId',
-          'as': 'flowType'
-        }
-      }, {
         '$project': {
-          '_id': 0,
-          'flowName': 1,
-          'description': 1,
-          'tasks': {
-            '$first': '$name'
-          },
-          'variableSel': {
-            
-          }
+          '_id': 0, 
+          'createdAt': 0, 
+          'updatedAt': 0, 
+          '__v': 0
         }
       }
     ]);
@@ -38,7 +26,7 @@ export class FlowController {
     return await flow.aggregate([
       {
         '$match': {
-          'flowTypeId': id
+          'flowId': id
         }
       },
     ]);
@@ -56,7 +44,7 @@ export class FlowController {
         message: "Flow updated successfully"
       }
     } catch (error) {
-      return {
+      return { 
         success: false,
         message: "Flow could not be updated. Please try after some time."
       }
@@ -66,6 +54,7 @@ export class FlowController {
   @Post('/delete-flow')
   async deleteFlowById(@Body() body: any) {
     const { flowId } = body;
+    console.log("FLOWID", flowId)
     try {
       await flow.findOneAndDelete({ flowId })
       return {
@@ -97,4 +86,33 @@ export class FlowController {
       message: "Flow is added."
     };
   }
+
+  @Post('/edit-flow')
+  async editTask( @Body() body: any ) {
+
+    const payload = {
+      ...body
+    }
+    delete body.id
+
+    const result = await flow.findOneAndUpdate({ "flowId": body.flowDetails.flowId }, {
+      name: body.flowDetails.name,
+      description: body.flowDetails.description,
+      flowTypeAttributes: body.flowDetails.flowTypeAttributes,
+
+    });
+
+    if(!result) 
+      return {
+        success: false,
+        message: "Flow could not be updated. Please try after some time."
+      }
+ 
+    return {
+      success: true,
+      message: "Flow is updated."
+    };
+   }
+
+
 }

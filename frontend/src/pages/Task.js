@@ -12,7 +12,6 @@ const Task = () => {
     const getTaskType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
       setTask(response.data)
-      console.log("KTR", response.data)
     }
     
     getTaskType();

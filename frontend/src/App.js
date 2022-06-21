@@ -49,7 +49,7 @@ function App() {
 
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
-        <Route path='/flow/:edit-flow' element={<Layout><EditFlow /></Layout>} />
+        <Route path='/flow/:edit-flow/:id' element={<Layout><EditFlow /></Layout>} />
         <Route path='/flow/view-flow/:id' element={<Layout><ViewDetails /></Layout>} />
 
         <Route path='/schedule' element={<Layout><Schedule /></Layout>} />

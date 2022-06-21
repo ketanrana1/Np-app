@@ -8,10 +8,10 @@ const flowSchema = new Schema({
     type: String,
     default: uuidv4
   },
-  flowName: String,
+  name: String,
   description: String,
   tasks: [Object],
-  variableSel: [Object]
+  variableSel: [String]
 },
   { timestamps: true }
 );
