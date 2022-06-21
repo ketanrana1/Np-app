@@ -89,7 +89,7 @@ const EditTask = () => {
                     <ErrorMessage name="name" component="div" />    
                 </div>
               </div>
-              {
+              { 
                 taskDetails?.taskTypeAttributes?.map((item, index) => {
                 return <div className="form-group col-12">
                           <div className="label-input-cont">

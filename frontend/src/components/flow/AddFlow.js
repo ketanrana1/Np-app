@@ -7,53 +7,31 @@ import { useNavigate } from 'react-router-dom';
 
 export const AddFlow = () => {
   let navigate = useNavigate()
-  const [connectionType, setConnectionType] = useState([]);
-  const [connectionTypeAttributes, setConnectionTypeAttributes] = useState([]);
-  const [selectValue, setSelectValue] = useState('');
-
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const getConnectionType = async() => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
-      setConnectionType(response.data)
+    const getTask = async() => {
+      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+      setTasks(response.data)
+      console.log("TASKSSSSS", response.data)
     }
-    getConnectionType();
+    getTask();
+    
   },[])
 
-
-  const handleTaskChange = async (e) => {
-    setSelectValue(e.target.value)
-    try {    
-      const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type/${e.target.value}`)
-      setConnectionTypeAttributes(result.data[0].attributes)
-      return toast(result.data.message);  
-    } catch (error) {
-      return toast(error?.message)      
-    }
-  }
-
   const onSubmitHandler = async (values) => {
-    const newValues = {...values};
-    delete newValues.name
-    delete newValues.description
-    const payload = {
-      name: values.name,
-      description: values.description,
-      connectionTypeAttributes: newValues,
-      connectionTypeId: selectValue
-    }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection`, payload)
-      navigate('/connection');
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
+      navigate('/flow');
       return toast(result.data.message);  
     } catch (error) {
       return toast(error?.message)      
     }
-  }
+  } 
 
   return (
     <div>
-      <h1 className="page-head">Add Connection</h1>
+      <h1 className="page-head">Add Task</h1>
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik
@@ -74,7 +52,7 @@ export const AddFlow = () => {
                 <div className="form-group col-12">
                     <div className="label-input-cont">
                     <p>Flow Name</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
+                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name" /> 
                     <ErrorMessage name="name" component="div" />    
                   </div>
                   <div className="label-input-cont">
@@ -85,30 +63,18 @@ export const AddFlow = () => {
 
                   <div className="label-input-cont">
                     <p>Task</p>
-                    <Field onChange={handleTaskChange} className="form-control all-form-fl-w-ip" as="select" value={selectValue} >
-                      <option value="" selected disabled >Select Task Names</option>
+                    <Field className="form-control all-form-fl-w-ip" required component="select" name="tasks" multiple={true} >
                       {
-                        connectionType.map((item) =>  <option value={item.connectionTypeId}>{item.name}</option>)
+                        tasks.map((item) =>  <option value={item.connectionTypeId}>{item.name}</option>)
                       }
                     </Field>
                     <ErrorMessage name="connectionType" component="div" />    
                   </div>
-
                 </div>
-                  {
-                    connectionTypeAttributes.map((item, index) => {
-                    return <div className="form-group col-12">
-                              <div className="label-input-cont">
-                              <p>{ item }</p>
-                              <Field className="form-control all-form-fl-w-ip" type="name" name={item} required placeholder={`Enter Attribute value`} />    
-                            </div>
-                          </div>
-                    })
-                  }
                   <div className="form-group col-12">
                     <div className="label-input-cont">
                       <p>VariableSel</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Array of Strings" /> 
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="variableSel" placeholder="Enter Comma Seprated Values" /> 
                       <ErrorMessage name="name" component="div" />    
                     </div>
                   </div>

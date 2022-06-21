@@ -5,7 +5,7 @@ import { REACT_APP_BACKEND_URL } from '../common/environment';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-export const AddConnection = () => {
+export const AddConnection = () => { 
   let navigate = useNavigate()
   const [connectionType, setConnectionType] = useState([]);
   const [connectionTypeAttributes, setConnectionTypeAttributes] = useState([]);
