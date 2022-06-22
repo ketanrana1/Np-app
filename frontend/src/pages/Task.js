@@ -59,7 +59,7 @@ const Task = () => {
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.taskName}</p></td>
                       <td className="fourth-row">
-                      <Link to={`/task/view-task/${item.taskId}`} state={"task"}className="view-link" >View</Link>
+                      <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >Edit</Link>
                       <a onClick={() => handleDeleteClick(item.taskId)} className="delete-link">
                         <img src={require('../assets/images/delete.png')} alt="delete" />

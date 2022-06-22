@@ -1,15 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import {
+    Link,
     useLocation,
     useParams,
 } from "react-router-dom";
 
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
+import ViewFlow from '../components/flow/ViewFlow';
+import ViewSchedule from '../components/schedule/ViewSchedule';
+import ViewTask from '../components/task/ViewTask';
 const ViewDetails = () => {
     const { id } = useParams()
 
-    const { state: tab } = useLocation();
+    const { state: { tab, name }, pathname } = useLocation();
+    const checking = useLocation()
 
     const [details, setDetails] = useState([]);
 
@@ -29,54 +34,27 @@ const ViewDetails = () => {
 
     return (
         <div>
-            <h1 className="page-head">View </h1>
+            <h1 className="page-head text-capitalize">{name} Details</h1>
             <div className="inner-body-cont">
                 <div className="commn-table-cont table-responsive-md">
                     <div className="row">
                         <div className="form-group col-12">
-                            {details && details?.map((detail) => {
-                                const {
-                                    name,
-                                    description,
-                                    taskId,
-                                    tasks,
-                                    taskName,
-                                    createdAt,
-                                    updatedAt,
-                                    taskTypeAttributes,
-                                    variableSel
-                                } = detail
+                            <table class="table">
+                                <tbody>
+                                    {details && details?.map((detail) => {
+                                        return (
+                                            <>
+                                                {tab === "task" && <ViewTask detail={detail} />}
+                                                {tab === "flow" && <ViewFlow detail={detail} />}
+                                                {tab === "schedule" && <ViewSchedule detail={detail} />}
+                                               
+                                            </>
+                                        )
+                                    })}
 
-                                return (<div className="label-input-cont">
-                                    {name && <p>Name: {name}</p>}
-                                    {description && <p>Description: {description}</p>}
-                                    {taskId && <p>Task Id: {taskId}</p>}
-                                    {taskName && <p>Task Name: {taskName}</p>}
-                                    {variableSel && <p>Variable Sel: {variableSel}</p>}
-                                    {taskTypeAttributes && <div><p>Attributes: </p>
-                                        {taskTypeAttributes?.map((attr) => {
-                                            const { key, value } = attr
-                                            return (
-                                                <>
-                                                    <div className='col-12 d-flex'>
-                                                        <p className='col-6'>Key: {key}</p>
-                                                        {value && <p>Value: {value}</p>}
-                                                    </div>
-                                                </>
-                                            )
-                                        })}
-                                    </div>}
-                                    {tasks && <div className='d-flex'>
-                                        <label>Task: </label>
-                                        {tasks.map((task) => {
-                                            return (
-                                                <p className='col-2'>{task}</p>
-                                            )
-                                        })}
-                                    </div>
-                                    }
-                                </div>)
-                            })}
+                                </tbody>
+                            </table>
+                            <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary" >Edit</Link>
                         </div>
                     </div>
                 </div>

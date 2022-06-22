@@ -27,7 +27,8 @@ const Schedule = () => {
             <td className="second-row" >Lorem ipsum dolor sit amet consectetur adipisicing.</td>
             <td className="third-row">Task Name</td>
             <td className="fifth-row"><p>********</p></td>
-            <td className="fourth-row"><a href="" className="view-link">View</a> <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
+            <td className="fourth-row"><Link to={`/schedule/view-schedule/1234`} state={{ tab: "schedule", name: "Guru" }} className="view-link" >View</Link>
+            <a className="delete-link" href=""><img src={require('../assets/images/delete.png')} alt="delete" /></a></td>
           </tr>
           <tr>
             <th className="first-row" scope="row">SF01</th>
