@@ -123,12 +123,12 @@ export class ScheduleController {
     if(!result) 
       return {
         success: false,
-        message: "Flow could not be updated. Please try after some time."
+        message: "Schedule could not be updated. Please try after some time."
       }
  
     return {
       success: true,
-      message: "Flow is updated."
+      message: "Schedule is updated."
     };
    }
 

@@ -15,7 +15,7 @@ const ViewDetails = () => {
 
     const { state: { tab, name }, pathname } = useLocation();
     const checking = useLocation()
-
+    console.log("checking",checking);
     const [details, setDetails] = useState([]);
 
     useEffect(() => {
@@ -55,6 +55,7 @@ const ViewDetails = () => {
                                 </tbody>
                             </table>
                             <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary" >Edit</Link>
+                            
                         </div>
                     </div>
                 </div>
