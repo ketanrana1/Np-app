@@ -25,7 +25,7 @@ const ViewTask = ({detail}) => {
                     {taskTypeAttributes.map((attr) => {
                         const { key, value } = attr
                         return (
-                            <div className='col-12'>
+                            <div className='col-6'>
                                 <td className='col-2'>Key: {key}</td>
                                 {value && <td className='col-2'>Value: {value}</td>}
                             </div>
