@@ -13,21 +13,11 @@ export class ScheduleController {
   async getSchedule() {
     return await schedule.aggregate([
       {
-        '$lookup': {
-          'from': 'scheduletypes',
-          'localField': 'scheduleTypeId',
-          'foreignField': 'scheduleTypeId',
-          'as': 'scheduleType'
-        }
-      }, {
         '$project': {
-          '_id': 0,
-          'name': 1,
-          'description': 1,
-          'scheduleName': {
-            '$first': '$scheduleType.name'
-          },
-          'scheduleId': 1
+          '_id': 0, 
+          'createdAt': 0, 
+          'updatedAt': 0, 
+          '__v': 0
         }
       }
     ]);
@@ -38,7 +28,7 @@ export class ScheduleController {
     return await schedule.aggregate([
       {
         '$match': {
-          'scheduleTypeId': id
+          'flowId': id
         }
       },
     ]);
