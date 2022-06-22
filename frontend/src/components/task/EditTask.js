@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EditTask = () => {
 
+  let navigate = useNavigate()
   const [taskDetails, setTaskDetails] = useState([]);
   const [taskTypeAttributes, setTaskTypeAttributes] = useState([]);
   const [selectValue, setSelectValue] = useState('');
@@ -56,7 +57,8 @@ const EditTask = () => {
     }
     delete payload._id
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-task`, {taskDetails: payload, id})   
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-task`, {taskDetails: payload, id})
+      navigate('/task'); 
       return toast(result.data.message);  
     } catch (error) {
       return toast(error?.message)      

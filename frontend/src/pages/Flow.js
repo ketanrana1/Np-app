@@ -15,9 +15,7 @@ const Flow = () => {
       setFlow(response.data) 
       console.log("KTR", response.data)
     }
-    
     getFlow();
-    
   },[])
 
   const handleDeleteClick = async (flowId) => {
@@ -33,7 +31,7 @@ const Flow = () => {
       return toast(error?.message)      
     }
   }
-
+ 
 
   return ( 
     <div>

@@ -56,7 +56,7 @@ function App() {
 
         <Route path='/schedule' element={<Layout><Schedule /></Layout>} />
         <Route path='/schedule/:add-schedule' element={<Layout><AddSchedule /></Layout>} />
-        <Route path='/schedule/:edit-schedule' element={<Layout><EditSchedule /></Layout>} />
+        <Route path='/schedule/:edit-schedule/:id' element={<Layout><EditSchedule /></Layout>} />
         <Route path='/schedule/view-schedule/:id' element={<Layout><ViewDetails /></Layout>} />
 
         <Route path='*' element={<Layout><NotFound /></Layout>} />
