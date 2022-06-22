@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 const EditFlow = () => {
 
+  let navigate = useNavigate()
+
   const [flowDetails, setFlowDetails] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [taskTypeAttributes, setTaskTypeAttributes] = useState([]);
@@ -66,8 +68,9 @@ const EditFlow = () => {
     }
     delete payload._id
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-flow`, {flowDetails: payload, id})   
-      return toast(result.data.message);  
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-flow`, {flowDetails: payload, id}) 
+      navigate('/flow');   
+      return toast(result.data.message);
     } catch (error) {
       return toast(error?.message)      
     }

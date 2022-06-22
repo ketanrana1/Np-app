@@ -17,7 +17,7 @@ export const AddFlow = () => {
     }
     getTask();
     
-  },[])
+  },[]) 
 
   const onSubmitHandler = async (values) => {
     try {    

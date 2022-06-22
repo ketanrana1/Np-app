@@ -7,7 +7,7 @@ import schedule from 'models/schedule';
 // LOOKUP DATA
 @Controller('/api')
 export class ScheduleController {
-
+ 
 
   @Get('/get-schedule')
   async getSchedule() {
@@ -28,7 +28,7 @@ export class ScheduleController {
     return await schedule.aggregate([
       {
         '$match': {
-          'flowId': id
+          'scheduleId': id
         }
       },
     ]);
@@ -72,7 +72,7 @@ export class ScheduleController {
     }
   }
 
-
+ 
 
   @Post('/add-schedule')
   async addSchedule(@Body() body: any) {
@@ -83,7 +83,8 @@ export class ScheduleController {
     //     success: false,
     //     message: "Contection Type Attributes length should match Schedule Attributes length"
     //   }
-    // }
+    // } 
+    console.log("BODY", body)
 
     const newSchedule = new schedule(body);
     const result = await newSchedule.save();
@@ -99,4 +100,36 @@ export class ScheduleController {
       message: "Schedule is added."
     };
   }
+
+  @Post('/edit-schedule')
+  async editTask( @Body() body: any ) {
+    console.log("Body", body)
+
+    const payload = {
+      ...body
+    }
+    delete body.id
+
+    const result = await schedule.findOneAndUpdate({ "schedule": body.scheduleDetails.scheduleId }, {
+      description: body.scheduleDetails.description,
+      flows: body.scheduleDetails.flows,
+      cronPattern: body.scheduleDetails.cronPattern,
+      activeFlag: body.scheduleDetails.activeFlag,
+      success_Email: body.scheduleDetails.success_Email,
+      error_Email: body.scheduleDetails.error_Email,
+
+    });
+
+    if(!result) 
+      return {
+        success: false,
+        message: "Flow could not be updated. Please try after some time."
+      }
+ 
+    return {
+      success: true,
+      message: "Flow is updated."
+    };
+   }
+
 }

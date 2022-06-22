@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
 const scheduleSchema = new Schema({
-  flowId: {
+  scheduleId: {
     type: String,
     default: uuidv4
   },
@@ -12,9 +12,10 @@ const scheduleSchema = new Schema({
   description: String,
   flow: String,
   cronPattern: String,
-  activeFlag: Boolean,
+  activeFlag: String,
   success_Email: String,
   error_Email: String,
+  flows: [Object,]
 },
   { timestamps: true }
 );
