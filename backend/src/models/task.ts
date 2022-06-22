@@ -14,6 +14,7 @@ const taskSchema = new Schema({
     type: String,
     ref: 'TaskType' 
   },
+  taskTypeName: String, 
   taskTypeAttributes: Object
 },
 {timestamps: true}

@@ -80,7 +80,7 @@ export const AddConnection = () => {
                   <div className="label-input-cont">
                     <p>Description</p>
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage name="name" component="div" />    
+                    <ErrorMessage name="description" component="div" />    
                   </div>
 
                   <div className="label-input-cont">

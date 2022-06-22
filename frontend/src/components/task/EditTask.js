@@ -19,39 +19,13 @@ const EditTask = () => {
   useEffect(() => {
     const getTaskType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task/${id}`)
+      console.log("task type", response)
       setTaskDetails(response.data[0])
     }
     getTaskType();
   },[]) 
 
   const onSubmitHandler = async () => {
-
-    console.log("taskDetails")
-
-    // const allAttributeDetails = []
-    // taskTypeAttributes.map((item) => {
-    //   Object.entries(values).map(([key,value]) => {
-    //     if(key === item.name) {
-    //       allAttributeDetails.push({
-    //         key,
-    //         fieldRequired: item.fieldRequired,
-    //         inputField: item.inputField,
-    //         value,
-    //       })
-    //     }
-    //   })
-    // })
-    // const payload = {
-    //   name: values.name,
-    //   description: values.description,
-    //   taskTypeAttributes: allAttributeDetails,
-    //   taskTypeId: selectValue
-    // }
-    // console.log("PAYLOAD", payload)
-    // console.log("taskDetails", values)
-    // navigate('/task');
-    
-
     const payload = {
       ...taskDetails
     }
@@ -67,7 +41,7 @@ const EditTask = () => {
 
  
 
-  return (
+  return ( 
     <div>
       <h1 className="page-head">Edit task</h1>
       <div className="inner-body-cont">
@@ -81,7 +55,7 @@ const EditTask = () => {
               <div className="form-group col-12">
                 <div className="label-input-cont">
                   <p>Task Name</p>
-                  <p>{taskDetails.name}</p>
+                  <p className="all-form-fl-w-ip title-edit">{taskDetails.name}</p>
                   {/* <Field className="form-control all-form-fl-w-ip" type="text" name="name" required placeholder={`Enter Attribute value`} onChange={(e) => setTaskDetails({...taskDetails, name: e.target.value})} value={taskDetails.name}/> 
                   <ErrorMessage name="name" component="div" />  */}
                 </div>
@@ -89,6 +63,11 @@ const EditTask = () => {
                     <p>Description</p>
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setTaskDetails({...taskDetails, description: e.target.value})} value={ taskDetails.description } /> 
                     <ErrorMessage name="name" component="div" />    
+                </div>
+
+                <div className="label-input-cont">
+                  <p>Task Type Name</p>
+                  <p className="all-form-fl-w-ip title-edit">{taskDetails.taskTypeName}</p>
                 </div>
               </div>
               { 
@@ -114,7 +93,7 @@ const EditTask = () => {
                           /> 
                         </div>
                       </div>
-                }
+                } 
                 )
               }
                 <div className="submit-cont">

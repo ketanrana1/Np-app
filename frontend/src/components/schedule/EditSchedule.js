@@ -45,7 +45,7 @@ const EditSchedule = () => {
     delete payload._id
     try {    
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-schedule`, {scheduleDetails: payload, id}) 
-      // navigate('/schedule');   
+      navigate('/schedule');   
       return toast(result.data.message);
     } catch (error) {
       return toast(error?.message)      
@@ -75,7 +75,7 @@ const EditSchedule = () => {
               <div className="form-group col-12">
                 <div className="label-input-cont">
                   <p>Schedule Name</p>
-                  <p>{scheduleDetails.name}</p> 
+                  <p className="all-form-fl-w-ip title-edit">{scheduleDetails.name}</p> 
                 </div>
                 <div className="label-input-cont">
                     <p>Description</p>
@@ -143,13 +143,13 @@ const EditSchedule = () => {
                   <div className="form-group col-12 col-md-6">
                     <div className="label-input-cont">
                       <p>Error Email</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="error_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, error_Email: e.target.value})} value={ scheduleDetails.error_Email } />    
+                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="error_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, error_Email: e.target.value})} value={ scheduleDetails.error_Email } />    
                     </div>
                   </div>
                   <div className="form-group col-12 col-md-6">
                     <div className="label-input-cont">
                       <p>Success Email</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="success_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, success_Email: e.target.value})} value={ scheduleDetails.success_Email } />    
+                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="success_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, success_Email: e.target.value})} value={ scheduleDetails.success_Email } />    
                     </div>
                   </div>
                   <div className="form-group col-12">

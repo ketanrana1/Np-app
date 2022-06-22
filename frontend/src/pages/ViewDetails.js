@@ -54,7 +54,7 @@ const ViewDetails = () => {
 
                                 </tbody>
                             </table>
-                            <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary" >Edit</Link>
+                            <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary mt-5" >Edit</Link>
                             
                         </div>
                     </div>

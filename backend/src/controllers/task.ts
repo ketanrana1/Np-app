@@ -15,6 +15,7 @@ export class TaskController {
         '$project': {
           'name': 1, 
           'taskTypeId': 1, 
+          'taskTypeName': 1,
           'attributes': 1, 
           '_id': 0
         }
@@ -121,10 +122,11 @@ export class TaskController {
       success: true,
       message: "Task type is added."
     };
-   }
+   } 
 
   @Post('/add-task')
   async addTask( @Body() body: any ) {
+    console.log("BODY", body)
     const { taskTypeId, taskTypeAttributes } = body;
     const findTaskType = await TaskType.aggregate([
       {
@@ -137,13 +139,6 @@ export class TaskController {
       success: false,
       message: "Task could not be added as Task Type does not exist"
     }
-
-    // if(findConnectionType[0].attributes.length !== connectionTypeAttributes.length) {
-    //   return {
-    //     success: false,
-    //     message: "Contection Type Attributes length should match Task Attributes length"
-    //   }
-    // }
 
     const newTask = new Task(body);
     const result = await newTask.save();

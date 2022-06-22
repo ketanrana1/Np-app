@@ -57,7 +57,7 @@ export const AddSchedule = () => {
                   <div className="label-input-cont">
                     <p>Description</p>
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage name="name" component="div" />    
+                    <ErrorMessage name="description" component="div" />    
                   </div>
 
                   <div className="label-input-cont">
@@ -80,22 +80,22 @@ export const AddSchedule = () => {
                   <div className="form-group col-12 col-md-6">
                     <div className="label-input-cont">
                       <p>Error Email</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="error_Email" placeholder="Email id" /> 
+                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="error_Email" placeholder="Email id" /> 
                       <ErrorMessage name="name" component="div" />    
                     </div>
                   </div>
                   <div className="form-group col-12 col-md-6">
                     <div className="label-input-cont">
                       <p>Success Email</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="success_Email" placeholder="Email id" /> 
+                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="success_Email" placeholder="Email id" /> 
                       <ErrorMessage name="name" component="div" />    
                     </div>
                   </div>
-                  <div className="form-group col-12 col-md-6">
+                  <div className="form-group col-12">
                     <div className="label-input-cont">
                       <p>Active Flag</p>
-                      <Field className="form-control all-form-fl-w-ip" type="checkbox" name="activeFlag" placeholder="Email id" /> 
-                      <ErrorMessage name="name" component="div" /> Active    
+                      <Field className="form-control all-form-fl-w-ip checbox-schedule-active" type="checkbox" name="activeFlag" placeholder="Email id" /> 
+                      <ErrorMessage name="name" component="div" /><span className="checkbox-schedule-span">Active</span>     
                     </div>
                   </div>
                 <div className="submit-cont">

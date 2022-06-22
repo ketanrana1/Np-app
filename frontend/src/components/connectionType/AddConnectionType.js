@@ -43,7 +43,7 @@ const AddConnectionType = () => {
                 <div className="row">
                   <div className="form-group col-12">
                       <div className="label-input-cont">
-                      <p>Connection Attribute Name</p>
+                      <p>Connection Type Name</p>
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name"/> 
                       <ErrorMessage name="name" component="div" />    
                     </div>
@@ -52,7 +52,7 @@ const AddConnectionType = () => {
                       connectionType.map((item, index) => {
                       return <div className="form-group col-12">
                                 <div className="label-input-cont">
-                                <p>Connection Name</p>
+                                <p>Attribute Name</p>
                                 <Field className="form-control all-form-fl-w-ip" type="name" name={`attribute_${index + 1}`} required placeholder={`Enter Attribute ${index + 1} Name`} />
                                 <ErrorMessage name={`attribute_${index+1}`} component="div" />     
                               </div>
