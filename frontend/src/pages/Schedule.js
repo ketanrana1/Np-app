@@ -58,7 +58,7 @@ const Schedule = () => {
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.flows}</p></td>
                       <td className="fourth-row">
-                      <Link to={`/schedule/view-schedule/${item.scheduleId}`} state={"schedule"} className="view-link" >View</Link>
+                      <Link to={`/schedule/view-schedule/${item.scheduleId}`} state={{ tab: "schedule", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/schedule/edit-schedule/${item.scheduleId}`} className="view-link" >Edit</Link>
                       <a onClick={() => handleDeleteClick(item.scheduleId)} className="delete-link">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
