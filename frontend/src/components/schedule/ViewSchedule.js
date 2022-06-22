@@ -13,10 +13,10 @@ const ViewSchedule = ({detail}) => {
                 <th scope="col">Description</th>
                 <td>{description}</td>
             </tr>
-            <tr>
+            { flow && <tr>
                 <th scope="col">Flow Type: </th>
                 <td>{flow}</td>
-            </tr>
+            </tr> }
             <tr>
                 <th scope="col">Cron Pattern: </th>
                 <td>{cronPattern}</td>

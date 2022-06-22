@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ViewFlow = ({detail}) => {
+    console.log("deatils",detail)
     const { name, description, tasks, variableSel } = detail
     return (
         <>
@@ -13,16 +14,10 @@ const ViewFlow = ({detail}) => {
                 <th scope="col">Description</th>
                 <td>{description}</td>
             </tr>
-            {
-                variableSel && variableSel?.map((data) => {
-                    return (
-                        <tr>
-                            <th scope="col">Variable Sel: </th>
-                            <td>{data}</td>
-                        </tr>
-                    )
-                })
-            }
+            <tr>
+                <th scope="col">Variable Sel: </th>
+                <td>{variableSel}</td>
+            </tr> 
             {
                 tasks && tasks?.map((task) => {
                     return (
