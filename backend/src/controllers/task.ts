@@ -170,7 +170,6 @@ export class TaskController {
     delete body.id
 
     const result = await Task.findOneAndUpdate({ "taskId": body.taskDetails.taskId }, {
-      name: body.taskDetails.name,
       description: body.taskDetails.description,
       taskTypeAttributes: body.taskDetails.taskTypeAttributes,
 

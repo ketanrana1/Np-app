@@ -97,7 +97,6 @@ export class FlowController {
     delete body.id
 
     const result = await flow.findOneAndUpdate({ "flowId": body.flowDetails.flowId }, {
-      name: body.flowDetails.name,
       description: body.flowDetails.description,
       tasks: body.flowDetails.tasks,
       variableSel: body.flowDetails.variableSel,

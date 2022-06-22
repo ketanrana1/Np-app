@@ -59,7 +59,7 @@ const EditSchedule = () => {
     return true
   }
 
-  console.log("sdafasdf", flows)
+  console.log("scheduleDetails", scheduleDetails)
 
   return (
     <div>
@@ -155,9 +155,12 @@ const EditSchedule = () => {
                   <div className="form-group col-12">
                     <div className="label-input-cont">
                       <p>Active Flag</p>
-                      <Field className="form-control all-form-fl-w-ip" type="checkbox" checked={ scheduleDetails.activeFlag === "true" ? "checked" : ""} name="activeFlag" placeholder="Email id" onChange={(e) => 
-                        setScheduleDetails({...scheduleDetails, activeFlag: !scheduleDetails.activeFlag})
-                        } value={ scheduleDetails.activeFlag } />    
+                      <Field className="form-control all-form-fl-w-ip" type="checkbox" checked={ scheduleDetails.activeFlag === "true" ? "checked" : ""} name="activeFlag" placeholder="Email id" onChange={(e) =>  {
+
+                        setScheduleDetails({...scheduleDetails, activeFlag: scheduleDetails.activeFlag === "true" ? "false" : "true" })
+
+                      }
+                        } />    
                     </div>
                   </div>
                 <div className="submit-cont">
