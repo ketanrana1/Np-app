@@ -15,7 +15,7 @@ const scheduleSchema = new Schema({
   activeFlag: String,
   success_Email: String,
   error_Email: String,
-  flows: [Object,]
+  flows: [String]
 },
   { timestamps: true }
 );
