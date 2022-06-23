@@ -5,41 +5,50 @@ import { REACT_APP_BACKEND_URL } from '../common/environment';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import SelectMultipleInput from '../Feilds/multipleSelectField'
-import { names } from '../../utils/constants'
+import CustomSelect from '../field/customSelect';
+import "../../assets/css/multiSelect.css"
 const EditSchedule = () => {
   const { id } = useParams();
   let navigate = useNavigate()
-
-  const [flows, setFlows] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  var Value = []
   const [scheduleDetails, setScheduleDetails] = useState([]);
+  const [flows, setFlows] = useState([]);
+  const [options, setOptions] = useState('');
 
   useEffect(() => {
     const getSchedule = async () => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule/${id}`)
       setScheduleDetails(response.data[0])
-      console.log("Schedule Details", response.data[0])
+      Value.push(...response.data[0]?.flows)
+
     }
     getSchedule();
     const getFlow = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      console.log("Flows", response.data)
-      setFlows(response.data)
+      const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+      const selectValue = data.map((flow) => {
+        return (
+          {
+            label: flow.name,
+            value: flow.name
+          }
+        )
+      })
+      setOptions(selectValue)
+      setFlows(data)
 
     }
     getFlow();
   }, [])
 
   const onSubmitHandler = async (values) => {
-
+    const { flows } = values
     const payload = {
-      ...scheduleDetails, flows: tasks
+      ...scheduleDetails, flows
     }
     delete payload._id
-    try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-schedule`, {scheduleDetails: payload, id}) 
-      navigate('/schedule');   
+    try {
+      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-schedule`, { scheduleDetails: payload, id })
+      navigate('/schedule');
       return toast(result.data.message);
     } catch (error) {
       return toast(error?.message)
@@ -59,20 +68,32 @@ const EditSchedule = () => {
         <div className="flow-form-cont cont-form-all">
           <Formik
             onSubmit={onSubmitHandler}
-            initialValues={{ name: '', description: '' }}
+            initialValues={{ name: '', description: '', flows: Value }}
           >
             <Form>
               <div className="row">
-              <div className="form-group col-12">
-                <div className="label-input-cont">
-                  <p>Schedule Name</p>
-                  <p className="all-form-fl-w-ip title-edit">{scheduleDetails.name}</p> 
-                </div>
-                <div className="label-input-cont">
+                <div className="form-group col-12">
+                  <div className="label-input-cont">
+                    <p>Schedule Name</p>
+                    <p className="all-form-fl-w-ip title-edit">{scheduleDetails.name}</p>
+                  </div>
+                  <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
+                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
                     <ErrorMessage name="name" component="div" />
                   </div>
+                </div>
+                <div className="label-input-cont col-6">
+                  <p>Task</p>
+                  <Field
+                    className="custom-select"
+                    name="flows"
+                    options={options}
+                    component={CustomSelect}
+                    placeholder="Please Select"
+                    isMulti={true}
+                  />
+                  <ErrorMessage name="flows" component="div" />
                 </div>
                 <div className="form-group col-12">
                   <div className="label-input-cont">
@@ -80,37 +101,23 @@ const EditSchedule = () => {
                     <Field className="form-control all-form-fl-w-ip" type="name" required name="cronPattern" placeholder="Cron Pattern" onChange={(e) => setScheduleDetails({ ...scheduleDetails, cronPattern: e.target.value })} value={scheduleDetails.cronPattern} />
                   </div>
                 </div>
-                <div className="form-group col-12">
-                  <div className="d-flex align-items-center mb-3">
-                    <SelectMultipleInput
-                      inputLabel={'Flow'}
-                      limitTags={1}
-                      options={names.map((item) => item)}
-                      value={tasks}
-                      onChange={(e, newVal) => setTasks(newVal)}
-                    />
-                    <ErrorMessage name="connectionType" component="div" />
+                <div className="form-group col-12 col-md-6">
+                  <div className="label-input-cont">
+                    <p>Error Email</p>
+                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="error_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({ ...scheduleDetails, error_Email: e.target.value })} value={scheduleDetails.error_Email} />
                   </div>
-                  <div className="form-group col-12 col-md-6">
-                    <div className="label-input-cont">
-                      <p>Error Email</p>
-                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="error_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, error_Email: e.target.value})} value={ scheduleDetails.error_Email } />    
-                    </div>
-                  </div>
-                  <div className="form-group col-12 col-md-6">
-                    <div className="label-input-cont">
-                      <p>Success Email</p>
-                      <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="success_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({...scheduleDetails, success_Email: e.target.value})} value={ scheduleDetails.success_Email } />    
-                    </div>
+                </div>
+                <div className="form-group col-12 col-md-6">
+                  <div className="label-input-cont">
+                    <p>Success Email</p>
+                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="success_Email" placeholder="Email id" onChange={(e) => setScheduleDetails({ ...scheduleDetails, success_Email: e.target.value })} value={scheduleDetails.success_Email} />
                   </div>
                 </div>
                 <div className="form-group col-12">
-                  <div className="label-input-cont">
+                  <div className="label-input-cont no-outline">
                     <p>Active Flag</p>
-                    <Field className="form-control all-form-fl-w-ip" type="checkbox" checked={scheduleDetails.activeFlag === "true" ? "checked" : ""} name="activeFlag" placeholder="Email id" onChange={(e) => {
-
+                    <Field type="checkbox" checked={scheduleDetails.activeFlag === "true" ? "checked" : ""} name="activeFlag" placeholder="Email id" onChange={(e) => {
                       setScheduleDetails({ ...scheduleDetails, activeFlag: scheduleDetails.activeFlag === "true" ? "false" : "true" })
-
                     }
                     } />
                   </div>
