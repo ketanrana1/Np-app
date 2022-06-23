@@ -20,6 +20,7 @@ export const AddFlow = () => {
   },[]) 
 
   const onSubmitHandler = async (values) => {
+    console.log("VALUES", values)
     try {    
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
       navigate('/flow');
@@ -31,7 +32,7 @@ export const AddFlow = () => {
 
   return (
     <div>
-      <h1 className="page-head">Add Task</h1>
+      <h1 className="page-head">Add Flow</h1>
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik
@@ -52,7 +53,7 @@ export const AddFlow = () => {
                 <div className="form-group col-12">
                     <div className="label-input-cont">
                     <p>Flow Name</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name" /> 
+                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Flow Name" /> 
                     <ErrorMessage name="name" component="div" />    
                   </div>
                   <div className="label-input-cont">

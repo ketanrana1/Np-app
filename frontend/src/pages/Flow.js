@@ -32,7 +32,7 @@ const Flow = () => {
       return toast(error?.message)
     }
   }
-
+console.log("sdaf", flow)
   return (
     <div>
       <h1 className="page-head">Flow </h1>
@@ -57,7 +57,7 @@ const Flow = () => {
                   return <tr>
                     <th className="first-row" scope="row">{item.name}</th>
                     <td className="second-row" >{item.description}</td>
-                    <td className="third-row"><p>{item.tasks}</p></td>
+                    <td className="third-row"><p>{item.tasks.map((_item,index) => index !== item.tasks.length - 1 ? `${_item}, ` : _item)}</p></td>
                     <td className="fourth-row">
                       <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >Edit</Link>
