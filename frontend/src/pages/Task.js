@@ -53,7 +53,7 @@ const Task = () => {
         </thead>
         <tbody>
         {
-            task.map((item, index) => {
+            task.reverse().map((item, index) => {
               console.log("item",item)
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>

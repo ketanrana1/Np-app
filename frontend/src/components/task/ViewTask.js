@@ -14,20 +14,15 @@ const ViewTask = ({detail}) => {
                 <td>{description}</td>
             </tr>
 
-            <tr>
-                <th className="col-2">Task Id: </th>
-                <td>{taskId}</td>
-            </tr>
-
             {
                 taskTypeAttributes && <tr className='col-12 border-top'>
                     <th>Attributes: </th>
                     {taskTypeAttributes.map((attr) => {
-                        const { key, value } = attr
+                        const { key, value,fieldRequired } = attr
                         return (
-                            <div className='col-6'>
-                                <td className='col-2'>Key: {key}</td>
-                                {value && <td className='col-2'>Value: {value}</td>}
+                            <div>
+                                <td className='col-2'>{key}</td>
+                                {value && <td className='col-2'>{`${value}`} </td>}
                             </div>
                         )
                     })}

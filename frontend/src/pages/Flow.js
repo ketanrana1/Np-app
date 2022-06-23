@@ -53,7 +53,7 @@ console.log("sdaf", flow)
             </thead>
             <tbody>
               {
-                flow.map((item, index) => {
+                flow.reverse().map((item, index) => {
                   return <tr>
                     <th className="first-row" scope="row">{item.name}</th>
                     <td className="second-row" >{item.description}</td>

@@ -313,6 +313,9 @@ margin-bottom: 30px;
     position: absolute;
     left: 18%;
 }
+
+
+
 @media only screen and (max-width:992px) {
     .cont-form-all .label-input-cont p {
         width: 100%

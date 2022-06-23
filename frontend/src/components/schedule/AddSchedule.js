@@ -71,10 +71,10 @@ export const AddSchedule = () => {
                     <ErrorMessage name="description" component="div" />
                   </div>
                 
-                  <div className="label-input-cont col-6">
+                  <div className="label-input-cont col-12">
                     <p>Task</p>
                     <Field
-                      className="custom-select"
+                      className="custom-select-schedule"
                       name="flows"
                       label="Task"
                       options={flows}
