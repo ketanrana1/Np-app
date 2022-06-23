@@ -18,6 +18,7 @@ const Schedule = () => {
   },[])
 
   const handleDeleteClick = async (scheduleId) => {
+    if (!window.confirm("Are you sure?")) return;
     const payload = {
       scheduleId
     }

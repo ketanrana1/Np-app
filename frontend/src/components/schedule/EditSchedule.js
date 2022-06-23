@@ -70,7 +70,7 @@ const EditSchedule = () => {
                 </div>
                 <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
+                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
                     <ErrorMessage name="name" component="div" />
                   </div>
                 </div>

@@ -61,7 +61,7 @@ const EditTask = () => {
                 </div>
                 <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setTaskDetails({...taskDetails, description: e.target.value})} value={ taskDetails.description } /> 
+                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setTaskDetails({...taskDetails, description: e.target.value})} value={ taskDetails.description } /> 
                     <ErrorMessage name="name" component="div" />    
                 </div>
 

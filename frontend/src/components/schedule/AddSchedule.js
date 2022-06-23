@@ -56,7 +56,7 @@ export const AddSchedule = () => {
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." /> 
+                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." /> 
                     <ErrorMessage name="description" component="div" />    
                   </div>
 
