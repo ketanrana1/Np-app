@@ -5,7 +5,6 @@ import LoginLayout from './components/layout/LoginLayout';
 import NotFound from './pages/NotFound';
 import Connection from './pages/Connection';
 import AddConnection from './components/connection/AddConnection';
-import EditConnection from './components/connection/EditConnection';
 import ConnectionType from './pages/ConnectionType';
 import AddConnectionType from './components/connectionType/AddConnectionType';
 import EditConnectionType from './components/connectionType/EditConnectionType';
@@ -39,7 +38,6 @@ function App() {
         <Route path='/connection-type/:edit-connection-type' element={<Layout><EditConnectionType /></Layout>} />
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
-        <Route path='/connection/:edit-connection' element={<Layout><EditConnection /></Layout>} />
         <Route path='/register-user' element={<Layout><Register /></Layout>} />
 
         <Route path='/task' element={<Layout><Task /></Layout>} />

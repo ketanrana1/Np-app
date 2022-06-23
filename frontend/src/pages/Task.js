@@ -19,6 +19,7 @@ const Task = () => {
   },[])
 
   const handleDeleteClick = async (taskId) => {
+    if (!window.confirm("Are you sure?")) return;
     const payload = {
       taskId
     }

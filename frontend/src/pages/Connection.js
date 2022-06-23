@@ -17,6 +17,7 @@ const Connection = () => {
   },[])
 
   const handleDeleteClick = async (connectionId) => {
+    if (!window.confirm("Are you sure?")) return;
     const payload = {
       connectionId
     }

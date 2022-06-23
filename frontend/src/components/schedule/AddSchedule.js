@@ -84,16 +84,6 @@ export const AddSchedule = () => {
                     />
                     <ErrorMessage name="flows" component="div" />
                   </div>
-
-                  {/* <div className="label-input-cont">
-                    <p>Task</p>
-                    <Field className="form-control all-form-fl-w-ip" required component="select" name="flows" multiple={true} >
-                      {
-                        flows.map((item) =>  <option value={item.name}>{item.name}</option>)
-                      }
-                    </Field> 
-                    <ErrorMessage name="connectionType" component="div" />    
-                  </div> */}
                 </div>
                 <div className="form-group col-12">
                   <div className="label-input-cont">

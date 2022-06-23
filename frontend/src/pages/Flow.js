@@ -19,6 +19,7 @@ const Flow = () => {
   }, [])
 
   const handleDeleteClick = async (flowId) => {
+    if (!window.confirm("Are you sure?")) return;
     const payload = {
       flowId
     }

@@ -86,7 +86,7 @@ const EditFlow = () => {
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." onChange={(e) => setFlowDetails({ ...flowDetails, description: e.target.value })} value={flowDetails.description} />
+                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." onChange={(e) => setFlowDetails({ ...flowDetails, description: e.target.value })} value={flowDetails.description} />
                     <ErrorMessage name="name" component="div" />
                   </div>
                 </div>

@@ -8,16 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../field/customSelect';
 import "../../assets/css/multiSelect.css"
 const EditSchedule = () => {
-
+  const { id } = useParams();
   let navigate = useNavigate()
   var Value = []
   const [scheduleDetails, setScheduleDetails] = useState([]);
   const [flows, setFlows] = useState([]);
   const [options, setOptions] = useState('');
- 
-
-  const params = useParams();
-  const { id } = params;
 
   useEffect(() => {
     const getSchedule = async () => {
