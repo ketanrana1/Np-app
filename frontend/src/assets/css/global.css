@@ -292,6 +292,27 @@ margin-bottom: 30px;
     left: 15%;
 }
 
+.all-form-fl-w-ip.title-edit {
+    background:white;
+    font-weight:bold;
+}
+
+.checkbox-attribute {
+
+}
+
+.cont-form-all .label-input-cont input[type="checkbox"].checkbox-attribute {
+    width: 30px;
+    position: static;
+    display: inline-block;
+  }
+  .form-control.all-form-fl-w-ip.schedule-email-field {
+    width: 71%;
+  }
+  span.checkbox-schedule-span {
+    position: absolute;
+    left: 18%;
+}
 @media only screen and (max-width:992px) {
     .cont-form-all .label-input-cont p {
         width: 100%

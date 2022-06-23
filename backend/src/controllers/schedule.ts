@@ -110,7 +110,7 @@ export class ScheduleController {
     }
     delete body.id
 
-    const result = await schedule.findOneAndUpdate({ "schedule": body.scheduleDetails.scheduleId }, {
+    const result = await schedule.findOneAndUpdate({ "scheduleId": body.scheduleDetails.scheduleId }, {
       description: body.scheduleDetails.description,
       flows: body.scheduleDetails.flows,
       cronPattern: body.scheduleDetails.cronPattern,

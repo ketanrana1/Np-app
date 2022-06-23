@@ -95,8 +95,8 @@ const EditFlow = () => {
               <div className="row">
               <div className="form-group col-12">
                 <div className="label-input-cont">
-                  <p>Task Name</p>
-                  <p>{flowDetails.name}</p>
+                  <p>Flow Name</p>
+                  <p className="all-form-fl-w-ip title-edit">{flowDetails.name}</p>
                   {/* <Field className="form-control all-form-fl-w-ip" type="text" name="name" required placeholder={`Enter Attribute value`} onChange={(e) => setFlowDetails({...flowDetails, name: e.target.value})} value={flowDetails.name}/> 
                   <ErrorMessage name="name" component="div" />  */}
                 </div>

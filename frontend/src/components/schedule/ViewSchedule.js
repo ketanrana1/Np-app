@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ViewSchedule = ({detail}) => {
-    const { name, description, flow, activeFlag, success_Email, error_Email, cronPattern } = detail
+    const { name, description, flows, activeFlag, success_Email, error_Email, cronPattern } = detail
     return (
         <>
             <tr>
@@ -13,9 +13,12 @@ const ViewSchedule = ({detail}) => {
                 <th scope="col">Description</th>
                 <td>{description}</td>
             </tr>
-            { flow && <tr>
+            { flows && <tr>
                 <th scope="col">Flow Type: </th>
-                <td>{flow}</td>
+                {flows.map((item)=>{
+                    return( <td>{item}</td>)
+                })}
+               
             </tr> }
             <tr>
                 <th scope="col">Cron Pattern: </th>

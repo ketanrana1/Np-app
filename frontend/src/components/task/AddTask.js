@@ -11,6 +11,7 @@ const AddTask = () => {
   const [taskType, setTaskType] = useState([]);
   const [taskTypeAttributes, setTaskTypeAttributes] = useState([]);
   const [selectValue, setSelectValue] = useState('');
+  const [taskTypeName, setTaskTypeName] = useState('')
 
 
   useEffect(() => {
@@ -27,7 +28,8 @@ const AddTask = () => {
     try {    
       const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task-type/${e.target.value}`)
       setTaskTypeAttributes(result.data[0].attributes)
-      console.log("RESULT", result.data[0].attributes)
+      setTaskTypeName(result.data[0].name)
+      console.log("RESULT", result.data[0].name)
       return toast(result.data.message);  
     } catch (error) {
       return toast(error?.message)      
@@ -52,7 +54,8 @@ const AddTask = () => {
       name: values.name,
       description: values.description,
       taskTypeAttributes: allAttributeDetails,
-      taskTypeId: selectValue
+      taskTypeId: selectValue,
+      taskTypeName: taskTypeName,
     }
 
     try {    
@@ -93,7 +96,7 @@ const AddTask = () => {
                   <div className="label-input-cont">
                     <p>Description</p>
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage name="name" component="div" />    
+                    <ErrorMessage name="description" component="div" />    
                   </div>
 
                   <div className="label-input-cont">

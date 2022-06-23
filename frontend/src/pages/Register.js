@@ -40,7 +40,7 @@ const Register = () => {
         <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler}/>
       </div>
       <div className='mt-5'>
-         <input type="submit" value="Register" className='btn btn-secondary' onClick={registerButtonHandler}/>
+         <input type="submit" value="Register" className='btn btn-primary' onClick={registerButtonHandler}/>
       </div>
     </div>
     )  

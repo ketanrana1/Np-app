@@ -92,7 +92,7 @@ const AddTaskType = () => {
                               <div className="label-input-cont">
                                 <div role="group" aria-labelledby="checkbox-group">
                                 <label>
-                                  <Field type="checkbox" name={`fieldRequired_${index + 1}`} value={`required_${index + 1}`} />
+                                  <Field className="checkbox-attribute" type="checkbox" name={`fieldRequired_${index + 1}`} value={`required_${index + 1}`} />
                                   Make Input field optional instead of required
                                 </label><br/>
                               </div>
