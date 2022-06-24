@@ -74,13 +74,17 @@ export const AddConnection = () => {
                 <div className="form-group col-12">
                     <div className="label-input-cont">
                     <p>Connection Name</p>
+                    <div class="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
-                    <ErrorMessage name="name" component="div" />    
+                    <ErrorMessage className="error-message" name="name" component="div" /> 
+                    </div>   
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
+                    <div class="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage name="description" component="div" />    
+                    <ErrorMessage className="error-message" name="description" component="div" /> 
+                    </div>   
                   </div>
 
                   <div className="label-input-cont">

@@ -56,8 +56,10 @@ const AddTaskType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Task Type Name</p>
+                      <div class="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name"/> 
-                      <ErrorMessage name="name" component="div" />    
+                      <ErrorMessage className="error-message" name="name" component="div" /> 
+                      </div>  
                     </div>
                   </div>
                     {

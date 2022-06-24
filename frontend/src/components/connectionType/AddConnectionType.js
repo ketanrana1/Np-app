@@ -44,8 +44,10 @@ const AddConnectionType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Connection Type Name</p>
-                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name"/> 
-                      <ErrorMessage name="name" component="div" />    
+                      <div class="outer-input-div">
+                        <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name"/> 
+                        <ErrorMessage className="error-message" name="name" component="div" /> 
+                      </div>            
                     </div>
                   </div>
                     {

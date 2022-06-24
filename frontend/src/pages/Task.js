@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
+import Modal from '../components/layout/Modal';
+import $ from "jquery";
 
 const Task = () => {
 
   const [task, setTask] = useState([]);
+  const [taskId, setTaskId] = useState("");
 
   useEffect(() => {
     const getTaskType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
-      setTask(response.data)
+      setTask(response.data.reverse())
     }
     
     getTaskType();
@@ -19,7 +22,6 @@ const Task = () => {
   },[])
 
   const handleDeleteClick = async (taskId) => {
-    if (!window.confirm("Are you sure?")) return;
     const payload = {
       taskId
     }
@@ -27,6 +29,7 @@ const Task = () => {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-task`, payload)
       toast(result.data.message);  
       setTask(task.filter((item) => item.taskId !== taskId))
+      $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
       return toast(error?.message)      
@@ -34,6 +37,7 @@ const Task = () => {
   }
 
   return (
+    <>
     <div>
       <h1 className="page-head">Task </h1>
      <div className="inner-body-cont">
@@ -53,7 +57,7 @@ const Task = () => {
         </thead>
         <tbody>
         {
-            task.reverse().map((item, index) => {
+            task.map((item, index) => {
               console.log("item",item)
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
@@ -62,7 +66,7 @@ const Task = () => {
                       <td className="fourth-row">
                       <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >Edit</Link>
-                      <a onClick={() => handleDeleteClick(item.taskId)} className="delete-link">
+                      <a onClick={() => setTaskId(item.taskId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>
                       </td>
@@ -74,6 +78,8 @@ const Task = () => {
        </div>
      </div>
     </div>
+    <Modal deleteHandler={() => handleDeleteClick(taskId)}/>
+    </>
   )
 }
 

@@ -3,22 +3,24 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
+import Modal from '../components/layout/Modal';
+import $ from "jquery";
 
 const Schedule = () => {
 
   const [schedule, setSchedule] = useState([]);
+  const [scheduleId, setScheduleId] = useState("");
 
   useEffect(() => {
     const getSchedule = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule`)
-      console.log("response",response.data);
+      console.log("response",response.data.reverse());
       setSchedule(response.data) 
     }
     getSchedule();
   },[])
 
   const handleDeleteClick = async (scheduleId) => {
-    if (!window.confirm("Are you sure?")) return;
     const payload = {
       scheduleId
     }
@@ -26,6 +28,7 @@ const Schedule = () => {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-schedule`, payload)
       toast(result.data.message);  
       setSchedule(schedule.filter((item) => item.scheduleId !== scheduleId))
+      $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
       return toast(error?.message)      
@@ -34,6 +37,7 @@ const Schedule = () => {
  
 
   return ( 
+    <>
     <div>
       <h1 className="page-head">Schedule </h1>
      <div className="inner-body-cont">
@@ -53,7 +57,7 @@ const Schedule = () => {
         </thead>
         <tbody> 
         {
-            schedule.reverse().map((item, index) => {
+            schedule.map((item, index) => {
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" >{item.description}</td>
@@ -61,7 +65,7 @@ const Schedule = () => {
                       <td className="fourth-row">
                       <Link to={`/schedule/view-schedule/${item.scheduleId}`} state={{ tab: "schedule", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/schedule/edit-schedule/${item.scheduleId}`} className="view-link" >Edit</Link>
-                      <a onClick={() => handleDeleteClick(item.scheduleId)} className="delete-link">
+                      <a onClick={() => setScheduleId(item.scheduleId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>
                       </td>
@@ -73,6 +77,8 @@ const Schedule = () => {
        </div>
      </div>
     </div>
+    <Modal deleteHandler={() => handleDeleteClick(scheduleId)}/>
+    </>
   )
 }
 

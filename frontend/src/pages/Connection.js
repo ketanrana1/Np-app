@@ -3,21 +3,23 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
+import Modal from '../components/layout/Modal';
+import $ from "jquery";
 
 const Connection = () => {
 
   const [connection, setConnection] = useState([]);
-
+  const [connectionId,setConnectionId] = useState("");
   useEffect(() => {
     const getConnectionType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection`)
-      setConnection(response.data)
+      setConnection(response.data.reverse())
     }
     getConnectionType();
   },[])
 
-  const handleDeleteClick = async (connectionId) => {
-    if (!window.confirm("Are you sure?")) return;
+  const handleDeleteClick = async () => {
+
     const payload = {
       connectionId
     }
@@ -25,6 +27,7 @@ const Connection = () => {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-connection`, payload)
       toast(result.data.message);  
       setConnection(connection.filter((item) => item.connectionId !== connectionId))
+      $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
       return toast(error?.message)      
@@ -34,6 +37,7 @@ const Connection = () => {
 
 
   return (
+    <>
     <div>
       <h1 className="page-head">Connection </h1>
      <div className="inner-body-cont">
@@ -53,14 +57,13 @@ const Connection = () => {
         </thead>
         <tbody>
         {
-            connection.reverse().map((item, index) => {
+            connection.map((item, index) => {
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" >{item.description}</td>
                       <td className="third-row"><p>{item.connectionName}</p></td>
                       <td className="fourth-row">
-                        {/* <a href="" className="view-link">View</a> */}
-                        <a onClick={() => handleDeleteClick(item.connectionId)} className="delete-link">
+                        <a onClick={() => setConnectionId(item.connectionId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                           <img src={require('../assets/images/delete.png')} alt="delete" />
                         </a>
                       </td>
@@ -72,6 +75,10 @@ const Connection = () => {
        </div>
      </div>
     </div>
+     <Modal deleteHandler={() => handleDeleteClick(connectionId)}/>
+     
+     
+</>
   )
 }
 

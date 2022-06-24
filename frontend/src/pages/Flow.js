@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
+import Modal from '../components/layout/Modal';
+import $ from "jquery";
 
 const Flow = () => {
 
   const [flow, setFlow] = useState([]);
+  const [flowId,setFlowId] = useState("");
 
   useEffect(() => {
     const getFlow = async () => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      setFlow(response.data)
+      setFlow(response.data.reverse())
     }
 
     getFlow();
@@ -19,7 +22,6 @@ const Flow = () => {
   }, [])
 
   const handleDeleteClick = async (flowId) => {
-    if (!window.confirm("Are you sure?")) return;
     const payload = {
       flowId
     }
@@ -27,6 +29,8 @@ const Flow = () => {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-flow`, payload)
       toast(result.data.message);
       setFlow(flow.filter((item) => item.flowId !== flowId))
+      $("#delete-confirmation-modal").modal("hide");
+      
       return;
     } catch (error) {
       return toast(error?.message)
@@ -34,6 +38,7 @@ const Flow = () => {
   }
 console.log("sdaf", flow)
   return (
+    <>
     <div>
       <h1 className="page-head">Flow </h1>
       <div className="inner-body-cont">
@@ -53,7 +58,7 @@ console.log("sdaf", flow)
             </thead>
             <tbody>
               {
-                flow.reverse().map((item, index) => {
+                flow.map((item, index) => {
                   return <tr>
                     <th className="first-row" scope="row">{item.name}</th>
                     <td className="second-row" >{item.description}</td>
@@ -61,7 +66,7 @@ console.log("sdaf", flow)
                     <td className="fourth-row">
                       <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >Edit</Link>
-                      <a onClick={() => handleDeleteClick(item.flowId)} className="delete-link">
+                      <a onClick={() => setFlowId(item.flowId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>
                     </td>
@@ -73,6 +78,8 @@ console.log("sdaf", flow)
         </div>
       </div>
     </div>
+    <Modal deleteHandler={() => handleDeleteClick(flowId)}/>
+    </>
   )
 }
 

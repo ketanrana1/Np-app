@@ -247,6 +247,16 @@ border-bottom: 0 solid #dee2e6;
     width: 86%;
 }
 
+.cont-form-all .label-input-cont .outer-input-div {
+    width: 86%;
+}
+
+.cont-form-all .label-input-cont .outer-input-div .error-message {
+    padding-left:15px;
+    color:red;
+    padding-top:5px;
+}
+
 .cont-form-all .label-input-cont {
 margin-bottom: 30px;
 }
@@ -306,6 +316,8 @@ margin-bottom: 30px;
     position: static;
     display: inline-block;
   }
+
+
   .form-control.all-form-fl-w-ip.schedule-email-field {
     width: 71%;
   }
