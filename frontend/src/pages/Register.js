@@ -37,8 +37,8 @@ const Register = () => {
         <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email}/>
       </div>
       <div className="form-group">
-      <label>Password</label>
-        <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} value={formState.password}/>
+        <label>Password</label>
+          <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} value={formState.password}/>
       </div>
       <div className='mt-5'>
          <input type="submit" value="Register" className='btn btn-primary' onClick={registerButtonHandler}/>
