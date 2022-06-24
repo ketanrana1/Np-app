@@ -14,8 +14,12 @@ const Schedule = () => {
   useEffect(() => {
     const getSchedule = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule`)
-      console.log("response",response.data.reverse());
-      setSchedule(response.data) 
+      setSchedule(response.data.reverse().map((item) => {
+        return {
+          ...item,
+          readMore: "none",
+        }
+      }))
     }
     getSchedule();
   },[])
@@ -33,6 +37,13 @@ const Schedule = () => {
     } catch (error) {
       return toast(error?.message)      
     }
+  }
+
+
+  const handleReadMoreClick = (index) => {
+    const readMoreHandle = [...schedule];
+    readMoreHandle[index].readMore = "block";
+    setSchedule(readMoreHandle)
   }
  
 
@@ -60,7 +71,12 @@ const Schedule = () => {
             schedule.map((item, index) => {
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
-                      <td className="second-row" >{item.description}</td>
+                      <td className="second-row" ><p>
+                      <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
+                        { item.description.length > 150 ? item.description.slice(0, 150) :  item.description}
+                          <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> { item.description.length > 150 ? 'Read More...' : '' }</span> 
+                          </span>
+                      <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                       <td className="third-row"><p>{item.flows}</p></td>
                       <td className="fourth-row">
                       <Link to={`/schedule/view-schedule/${item.scheduleId}`} state={{ tab: "schedule", name: item.name }} className="view-link" >View</Link>

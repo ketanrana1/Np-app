@@ -14,7 +14,12 @@ const Flow = () => {
   useEffect(() => {
     const getFlow = async () => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      setFlow(response.data.reverse())
+      setFlow(response.data.reverse().map((item) => {
+        return {
+          ...item,
+          readMore: "none",
+        }
+      }))
     }
 
     getFlow();
@@ -36,7 +41,13 @@ const Flow = () => {
       return toast(error?.message)
     }
   }
-console.log("sdaf", flow)
+
+  const handleReadMoreClick = (index) => {
+    const readMoreHandle = [...flow];
+    readMoreHandle[index].readMore = "block";
+    setFlow(readMoreHandle)
+  }
+
   return (
     <>
     <div>
@@ -61,7 +72,12 @@ console.log("sdaf", flow)
                 flow.map((item, index) => {
                   return <tr>
                     <th className="first-row" scope="row">{item.name}</th>
-                    <td className="second-row" >{item.description}</td>
+                    <td className="second-row" ><p>
+                      <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
+                        { item.description.length > 150 ? item.description.slice(0, 150) :  item.description}
+                          <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> { item.description.length > 150 ? 'Read More...' : '' }</span> 
+                          </span>
+                      <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                     <td className="third-row"><p>{item.tasks.map((_item,index) => index !== item.tasks.length - 1 ? `${_item}, ` : _item)}</p></td>
                     <td className="fourth-row">
                       <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >View</Link>

@@ -14,7 +14,12 @@ const Task = () => {
   useEffect(() => {
     const getTaskType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
-      setTask(response.data.reverse())
+      setTask(response.data.reverse().map((item) => {
+        return {
+          ...item,
+          readMore: "none",
+        }
+      }))
     }
     
     getTaskType();
@@ -34,6 +39,12 @@ const Task = () => {
     } catch (error) {
       return toast(error?.message)      
     }
+  }
+
+  const handleReadMoreClick = (index) => {
+    const readMoreHandle = [...task];
+    readMoreHandle[index].readMore = "block";
+    setTask(readMoreHandle)
   }
 
   return (
@@ -61,7 +72,12 @@ const Task = () => {
               console.log("item",item)
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
-                      <td className="second-row" >{item.description}</td>
+                      <td className="second-row" ><p>
+                      <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
+                        { item.description.length > 150 ? item.description.slice(0, 150) :  item.description}
+                          <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> { item.description.length > 150 ? 'Read More...' : '' }</span> 
+                          </span>
+                      <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                       <td className="third-row"><p>{item.taskName}</p></td>
                       <td className="fourth-row">
                       <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name }} className="view-link" >View</Link>

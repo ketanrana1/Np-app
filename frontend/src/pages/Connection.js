@@ -10,10 +10,16 @@ const Connection = () => {
 
   const [connection, setConnection] = useState([]);
   const [connectionId,setConnectionId] = useState("");
+
   useEffect(() => {
     const getConnectionType = async() => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection`)
-      setConnection(response.data.reverse())
+      setConnection(response.data.reverse().map((item) => {
+        return {
+          ...item,
+          readMore: "none",
+        }
+      }))
     }
     getConnectionType();
   },[])
@@ -35,6 +41,12 @@ const Connection = () => {
   }
 
 
+  
+  const handleReadMoreClick = (index) => {
+    const readMoreHandle = [...connection];
+    readMoreHandle[index].readMore = "block";
+    setConnection(readMoreHandle)
+  }
 
   return (
     <>
@@ -60,7 +72,12 @@ const Connection = () => {
             connection.map((item, index) => {
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
-                      <td className="second-row" >{item.description}</td>
+                      <td className="second-row" ><p>
+                      <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
+                        { item.description.length > 150 ? item.description.slice(0, 150) :  item.description}
+                          <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> { item.description.length > 150 ? 'Read More...' : '' }</span> 
+                          </span>
+                      <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                       <td className="third-row"><p>{item.connectionName}</p></td>
                       <td className="fourth-row">
                         <a onClick={() => setConnectionId(item.connectionId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
