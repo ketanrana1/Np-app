@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import firebaseConfig from "../firebase-config"
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
-
+import Loader from "../components/field/loader"
 const DEFAULT_STATE = {
   email: '',
   password: ''
@@ -12,15 +12,16 @@ const DEFAULT_STATE = {
 const Register = () => {
 
   const navigate = useNavigate();
-
+  const [loader, setLoader] = useState(false)
   const [formState, setFormState] = useState(DEFAULT_STATE);
-
   const registerButtonHandler = async () => {
+    setLoader(true)
     const { email, password } = formState
     try {
-      await createUserWithEmailAndPassword(getAuth(firebaseConfig),email, password); 
+      const userCredential = await createUserWithEmailAndPassword(getAuth(firebaseConfig),email, password)
+      await sendEmailVerification(userCredential.user);
+      setLoader(false)
       toast("User Registered Successfully")
-    
     } catch (error) {
       return toast(error?.message);  
     }
@@ -29,6 +30,7 @@ const Register = () => {
   const onInputChangeHandler = (e) => setFormState({...formState , [e.target.name]: e.target.value})
 
   return (
+    <>
     <div className="col-12">
       <h1 className="page-head">Register</h1>
       <div className="form-group">
@@ -42,7 +44,10 @@ const Register = () => {
       <div className='mt-5'>
          <input type="submit" value="Register" className='btn btn-primary' onClick={registerButtonHandler}/>
       </div>
+      
     </div>
+    {loader && <Loader />}
+    </>
     )  
 }
 
