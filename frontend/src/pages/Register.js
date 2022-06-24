@@ -12,17 +12,20 @@ const DEFAULT_STATE = {
 const Register = () => {
 
   const navigate = useNavigate();
-  const [loader, useLoader] = useState(false)
+  const [loader, setLoader] = useState(false)
   const [formState, setFormState] = useState(DEFAULT_STATE);
 
   const registerButtonHandler = async () => {
+    setLoader(true)
     const { email, password } = formState
     try {
       await createUserWithEmailAndPassword(getAuth(firebaseConfig), email, password);
+      setLoader(false)
       toast("User Registered Successfully")
       setFormState(DEFAULT_STATE)
       return;
     } catch (error) {
+      setLoader(false)
       return toast(error?.message);
     }
   }

@@ -12,8 +12,8 @@ For Backend -:
 For Frontend -:
 1. Navigate to frontend
 2. Install all the packages with command "npm i"
-3. Run the server with command "npm start"
+3. Run the command "npm start"
 
 ## Usage
 
-Visit http://localhost:3000/
+Visit http://localhost:3000/ 
