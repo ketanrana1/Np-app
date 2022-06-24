@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
+import Modal from '../components/layout/Modal';
+import $ from "jquery";
 
 const Flow = () => {
 
   const [flow, setFlow] = useState([]);
+  const [flowId,setFlowId] = useState("");
 
   useEffect(() => {
     const getFlow = async () => {
       const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      setFlow(response.data)
+      setFlow(response.data.reverse().map((item) => {
+        return {
+          ...item,
+          readMore: "none",
+        }
+      }))
     }
 
     getFlow();
@@ -19,7 +27,6 @@ const Flow = () => {
   }, [])
 
   const handleDeleteClick = async (flowId) => {
-    if (!window.confirm("Are you sure?")) return;
     const payload = {
       flowId
     }
@@ -27,13 +34,22 @@ const Flow = () => {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-flow`, payload)
       toast(result.data.message);
       setFlow(flow.filter((item) => item.flowId !== flowId))
+      $("#delete-confirmation-modal").modal("hide");
+      
       return;
     } catch (error) {
       return toast(error?.message)
     }
   }
 
+  const handleReadMoreClick = (index) => {
+    const readMoreHandle = [...flow];
+    readMoreHandle[index].readMore = "block";
+    setFlow(readMoreHandle)
+  }
+
   return (
+    <>
     <div>
       <h1 className="page-head">Flow </h1>
       <div className="inner-body-cont">
@@ -56,12 +72,17 @@ const Flow = () => {
                 flow.map((item, index) => {
                   return <tr>
                     <th className="first-row" scope="row">{item.name}</th>
-                    <td className="second-row" >{item.description}</td>
-                    <td className="third-row"><p>{item.tasks}</p></td>
+                    <td className="second-row" ><p>
+                      <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
+                        { item.description.length > 150 ? item.description.slice(0, 150) :  item.description}
+                          <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> { item.description.length > 150 ? 'Read More...' : '' }</span> 
+                          </span>
+                      <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
+                    <td className="third-row"><p>{item.tasks.map((_item,index) => index !== item.tasks.length - 1 ? `${_item}, ` : _item)}</p></td>
                     <td className="fourth-row">
                       <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >View</Link>
                       <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >Edit</Link>
-                      <a onClick={() => handleDeleteClick(item.flowId)} className="delete-link">
+                      <a onClick={() => setFlowId(item.flowId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>
                     </td>
@@ -73,6 +94,8 @@ const Flow = () => {
         </div>
       </div>
     </div>
+    <Modal deleteHandler={() => handleDeleteClick(flowId)}/>
+    </>
   )
 }
 

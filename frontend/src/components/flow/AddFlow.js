@@ -31,7 +31,8 @@ export const AddFlow = () => {
   }, [])
 
   const onSubmitHandler = async (values) => {
-    try {
+    console.log("VALUES", values)
+    try {    
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
       navigate('/flow');
       return toast(result.data.message);
@@ -42,11 +43,11 @@ export const AddFlow = () => {
 
   return (
     <div>
-      <h1 className="page-head">Add Task</h1>
+      <h1 className="page-head">Add Flow</h1>
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik
-            initialValues={{ name: '', description: ''}}
+            initialValues={{ name: '', description: '', tasks: []}}
             validate={values => {
               const errors = {};
               if (!values.name) {
@@ -63,25 +64,29 @@ export const AddFlow = () => {
                 <div className="form-group col-12">
                   <div className="label-input-cont">
                     <p>Flow Name</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name" />
-                    <ErrorMessage name="name" component="div" />
+                    <div class="outer-input-div">
+                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Flow Name" /> 
+                    <ErrorMessage className="error-message" name="name" component="div" /> 
+                    </div>   
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
+                    <div class="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage name="description" component="div" />    
+                    <ErrorMessage className="error-message" name="description" component="div" /> 
+                    </div>   
                   </div>
-                  <div className="label-input-cont col-6">
+                  <div className="label-input-cont col-12">
                     <p>Task</p>
                     <Field
-                      className="custom-select"
-                      name="flows"
+                      className="custom-select-schedule"
+                      name="tasks"
                       options={flows}
                       component={CustomSelect}
                       placeholder="Please Select"
                       isMulti={true}
                     />
-                    <ErrorMessage name="flows" component="div" />
+                    <ErrorMessage name="tasks" component="div" />
                   </div>
                   {/* <div className="label-input-cont">
                     <p>Task</p>
@@ -97,7 +102,6 @@ export const AddFlow = () => {
                   <div className="label-input-cont">
                     <p>VariableSel</p>
                     <Field className="form-control all-form-fl-w-ip" type="name" required name="variableSel" placeholder="Enter Comma Seprated Values" />
-                    <ErrorMessage name="name" component="div" />
                   </div>
                 </div>
                 <div className="submit-cont">

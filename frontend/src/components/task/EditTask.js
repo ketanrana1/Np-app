@@ -56,13 +56,13 @@ const EditTask = () => {
                 <div className="label-input-cont">
                   <p>Task Name</p>
                   <p className="all-form-fl-w-ip title-edit">{taskDetails.name}</p>
-                  {/* <Field className="form-control all-form-fl-w-ip" type="text" name="name" required placeholder={`Enter Attribute value`} onChange={(e) => setTaskDetails({...taskDetails, name: e.target.value})} value={taskDetails.name}/> 
-                  <ErrorMessage name="name" component="div" />  */}
                 </div>
                 <div className="label-input-cont">
                     <p>Description</p>
+                    <div class="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.."  onChange={(e) => setTaskDetails({...taskDetails, description: e.target.value})} value={ taskDetails.description } /> 
-                    <ErrorMessage name="name" component="div" />    
+                    <ErrorMessage className="error-message" name="name" component="div" /> 
+                    </div>   
                 </div>
 
                 <div className="label-input-cont">

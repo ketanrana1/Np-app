@@ -7,7 +7,6 @@ import Connection from './pages/Connection';
 import AddConnection from './components/connection/AddConnection';
 import ConnectionType from './pages/ConnectionType';
 import AddConnectionType from './components/connectionType/AddConnectionType';
-import EditConnectionType from './components/connectionType/EditConnectionType';
 import Flow from './pages/Flow';
 import AddFlow from './components/flow/AddFlow';
 import EditFlow from './components/flow/EditFlow';
@@ -35,7 +34,6 @@ function App() {
         <Route path='/' element={<Layout><Navigate replace to='/connection' /></Layout>} />
         <Route path='/connection-type' element={<Layout><ConnectionType /></Layout>} />
         <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
-        <Route path='/connection-type/:edit-connection-type' element={<Layout><EditConnectionType /></Layout>} />
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/register-user' element={<Layout><Register /></Layout>} />

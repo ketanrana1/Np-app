@@ -79,14 +79,16 @@ const EditSchedule = () => {
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
+                    <div class="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
-                    <ErrorMessage name="name" component="div" />
+                    <ErrorMessage className="error-message" name="name" component="div" />
+                    </div>
                   </div>
                 </div>
-                <div className="label-input-cont col-6">
+                <div className="label-input-cont col-12">
                   <p>Task</p>
                   <Field
-                    className="custom-select"
+                    className="custom-select-schedule"
                     name="flows"
                     options={options}
                     component={CustomSelect}

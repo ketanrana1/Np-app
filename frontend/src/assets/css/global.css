@@ -255,6 +255,16 @@ a.commn-btn {
     width: 86%;
 }
 
+.cont-form-all .label-input-cont .outer-input-div {
+    width: 86%;
+}
+
+.cont-form-all .label-input-cont .outer-input-div .error-message {
+    padding-left:15px;
+    color:red;
+    padding-top:5px;
+}
+
 .cont-form-all .label-input-cont {
     margin-bottom: 30px;
 }
@@ -313,15 +323,33 @@ a.commn-btn {
     width: 30px;
     position: static;
     display: inline-block;
-}
+  }
 
-.form-control.all-form-fl-w-ip.schedule-email-field {
+
+  .form-control.all-form-fl-w-ip.schedule-email-field {
     width: 71%;
 }
 
 span.checkbox-schedule-span {
     position: absolute;
     left: 18%;
+}
+
+.read-more-text {
+    cursor:pointer;
+    color: #0055FF
+}
+
+
+.all-form-fl-w-ip.remove-attribute-button {
+    display: inline-block;
+    padding: 5px 28px;
+    background-color: #0055FF;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 5px;
+    width: unset !important;
+    cursor: pointer;
 }
 
 @media only screen and (max-width:992px) {

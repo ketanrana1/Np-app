@@ -35,6 +35,13 @@ const AddTaskType = () => {
     }
   }
 
+  const removeAttribute = () => {
+    const removeAttribute = [...taskType]
+    removeAttribute.pop()
+    setConnectionType(removeAttribute)
+  }
+
+
   return (
     <div>
         <h1 className="page-head">Add Type</h1>
@@ -56,8 +63,10 @@ const AddTaskType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Task Type Name</p>
+                      <div class="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name"/> 
-                      <ErrorMessage name="name" component="div" />    
+                      <ErrorMessage className="error-message" name="name" component="div" /> 
+                      </div>  
                     </div>
                   </div>
                     {
@@ -101,6 +110,12 @@ const AddTaskType = () => {
                             </>
                       })
                     }
+                    <div className="form-group col-12 pr-0">
+                        <div className="label-input-cont">
+                        <p></p>
+                        {taskType.length !== 0 && <div className="all-form-fl-w-ip remove-attribute-button" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
+                      </div>                  
+                    </div>
                   <div className="add-conne-type-btn">
                     <button onClick={() => setConnectionType([...taskType, 1])}>Add Attribute</button>
                   </div>
