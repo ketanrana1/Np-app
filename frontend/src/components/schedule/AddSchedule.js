@@ -6,35 +6,47 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../field/customSelect';
 import "../../assets/css/multiSelect.css";
+import Loader from '../field/loader';
 export const AddSchedule = () => {
   let navigate = useNavigate()
   const [flows, setFlows] = useState([]);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     const getFlow = async () => {
-      const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      const selectValue = data.map((flow) => {
-        return (
-          {
-            label: flow.name,
-            value: flow.name
-          }
-        )
+      try {
+        const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+        setLoader(false)
+        const selectValue = data.map((flow) => {
+          return (
+            {
+              label: flow.name,
+              value: flow.name
+            }
+          )
 
-      })
-      setFlows(selectValue)
+        })
+        setFlows(selectValue)
+      } catch (error) {
+        setLoader(false)
+        console.log(error);
+      }
     }
     getFlow();
 
   }, [])
 
   const onSubmitHandler = async (values) => {
+    setLoader(true)
     console.log("values", values)
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-schedule`, values)
+      setLoader(false)
       navigate('/schedule');
       return toast(result.data.message);
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)
     }
   }
@@ -63,18 +75,18 @@ export const AddSchedule = () => {
                   <div className="label-input-cont">
                     <p>Schedule Name</p>
                     <div class="outer-input-div">
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Schedule Name" />
-                    <ErrorMessage className="error-message" name="name" component="div" />
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Schedule Name" />
+                      <ErrorMessage className="error-message" name="name" component="div" />
                     </div>
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
                     <div class="outer-input-div">
-                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." />
-                    <ErrorMessage className="error-message" name="description" component="div" />
+                      <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." />
+                      <ErrorMessage className="error-message" name="description" component="div" />
                     </div>
                   </div>
-                
+
                   <div className="label-input-cont col-12">
                     <p>Task</p>
                     <Field
@@ -111,7 +123,7 @@ export const AddSchedule = () => {
                   <div className="label-input-cont">
                     <p>Active Flag</p>
                     <Field type="checkbox" name="activeFlag" placeholder="Email id" />
-                 <span className="checkbox-schedule-span">Active</span>
+                    <span className="checkbox-schedule-span">Active</span>
                   </div>
                 </div>
                 <div className="submit-cont">
@@ -122,6 +134,7 @@ export const AddSchedule = () => {
           </Formik>
         </div>
       </div>
+      {loader && <Loader />}
     </div>
   )
 

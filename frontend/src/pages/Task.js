@@ -5,21 +5,31 @@ import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
 import Modal from '../components/layout/Modal';
 import $ from "jquery";
+import Loader from '../components/field/loader';
 
 const Task = () => {
 
   const [task, setTask] = useState([]);
   const [taskId, setTaskId] = useState("");
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     const getTaskType = async() => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
-      setTask(response.data.reverse().map((item) => {
-        return {
-          ...item,
-          readMore: "none",
-        }
-      }))
+      try {
+        setLoader(true)
+        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+        setLoader(false)
+        setTask(response.data.reverse().map((item) => {
+          return {
+            ...item,
+            readMore: "none",
+          }
+        }))
+      } catch (error) {
+        setLoader(false)
+        console.log(error);
+      }
+     
     }
     
     getTaskType();
@@ -95,6 +105,7 @@ const Task = () => {
      </div>
     </div>
     <Modal deleteHandler={() => handleDeleteClick(taskId)}/>
+    {loader && <Loader/>}
     </>
   )
 }

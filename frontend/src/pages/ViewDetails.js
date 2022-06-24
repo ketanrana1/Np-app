@@ -7,22 +7,28 @@ import {
 } from "react-router-dom";
 
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
+import Loader from '../components/field/loader';
 import ViewFlow from '../components/flow/ViewFlow';
 import ViewSchedule from '../components/schedule/ViewSchedule';
 import ViewTask from '../components/task/ViewTask';
 const ViewDetails = () => {
     const { id } = useParams()
+    const { state: { tab, name } } = useLocation();
 
-    const { state: { tab, name }, pathname } = useLocation();
-    const checking = useLocation()
-    console.log("checking",checking);
+    const [loader, setLoader] = useState(false)
     const [details, setDetails] = useState([]);
 
     useEffect(() => {
         const getdetailsType = async () => {
-            const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-${tab}/${id}`)
-            setDetails(data)
-            console.log("KTR", data)
+            try {
+                setLoader(true)
+                const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-${tab}/${id}`)
+                setDetails(data)
+                setLoader(false)
+            } catch (error) {
+                setLoader(false)
+                console.log(error);
+            }
         }
 
         getdetailsType();
@@ -47,7 +53,7 @@ const ViewDetails = () => {
                                                 {tab === "task" && <ViewTask detail={detail} />}
                                                 {tab === "flow" && <ViewFlow detail={detail} />}
                                                 {tab === "schedule" && <ViewSchedule detail={detail} />}
-                                               
+
                                             </>
                                         )
                                     })}
@@ -55,11 +61,12 @@ const ViewDetails = () => {
                                 </tbody>
                             </table>
                             <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary mt-5" >Edit</Link>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
+            {loader && <Loader />}
         </div>
     )
 }

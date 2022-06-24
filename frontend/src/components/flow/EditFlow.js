@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../field/customSelect';
 import "../../assets/css/multiSelect.css"
+import Loader from '../field/loader';
 
 const EditFlow = () => {
 
@@ -14,17 +15,26 @@ const EditFlow = () => {
   var Value = []
   const [flowDetails, setFlowDetails] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [loader, setLoader] = useState(false)
   const [options, setOptions] = useState('');
 
   const params = useParams();
   const { id } = params;
 
   useEffect(() => {
+    setLoader(true)
     const getFlow = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow/${id}`)
-      setFlowDetails(response.data[0])
-      Value.push(...response.data[0]?.tasks)
-      console.log("Flow Details", response.data[0])
+      try {
+        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow/${id}`)
+        setLoader(false)
+        setFlowDetails(response.data[0])
+        Value.push(...response.data[0]?.tasks)
+        console.log("Flow Details", response.data[0])
+      } catch (error) {
+        setLoader(false)
+        console.log(error);
+      }
+    
     }
     getFlow();
     const getTask = async () => {
@@ -45,6 +55,7 @@ const EditFlow = () => {
   }, [])
 
   const onSubmitHandler = async (values) => {
+    setLoader(true)
     console.log("values",values)
     const { tasks } = values
     const payload = {
@@ -53,9 +64,11 @@ const EditFlow = () => {
     delete payload._id
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-flow`, { flowDetails: payload, id })
+      setLoader(false)
       navigate('/flow');
       return toast(result.data.message);
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)
     }
 
@@ -144,6 +157,7 @@ const EditFlow = () => {
         </div>
 
       </div>
+      {loader && <Loader/>}
     </div>
   )
 }

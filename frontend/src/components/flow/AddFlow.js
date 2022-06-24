@@ -6,37 +6,50 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../field/customSelect';
 import "../../assets/css/multiSelect.css"
+import Loader from '../field/loader';
 export const AddFlow = () => {
   let navigate = useNavigate()
   const [tasks, setTasks] = useState([]);
   const [flows, setFlows] = useState([]);
+  const [loader, setLoader] = useState(false)
   useEffect(() => {
+    setLoader(true)
     const getTask = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
-      setTasks(response.data)
-      const selectValue = response?.data?.map((flow) => {
-        return (
-          {
-            label: flow.name,
-            value: flow.name
-          }
-        )
+      try {
+        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+        setLoader(false)
+        setTasks(response.data)
+        const selectValue = response?.data?.map((flow) => {
+          return (
+            {
+              label: flow.name,
+              value: flow.name
+            }
+          )
 
-      })
-      setFlows(selectValue)
-      console.log("TASKSSSSS", response.data)
+        })
+        setFlows(selectValue)
+        console.log("TASKSSSSS", response.data)
+      } catch (error) {
+        setLoader(false)
+        console.log(error);
+      }
+
     }
     getTask();
 
   }, [])
 
   const onSubmitHandler = async (values) => {
+    setLoader(true)
     console.log("VALUES", values)
-    try {    
+    try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
+      setLoader(false)
       navigate('/flow');
       return toast(result.data.message);
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)
     }
   }
@@ -47,7 +60,7 @@ export const AddFlow = () => {
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik
-            initialValues={{ name: '', description: '', tasks: []}}
+            initialValues={{ name: '', description: '', tasks: [] }}
             validate={values => {
               const errors = {};
               if (!values.name) {
@@ -65,16 +78,16 @@ export const AddFlow = () => {
                   <div className="label-input-cont">
                     <p>Flow Name</p>
                     <div class="outer-input-div">
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Flow Name" /> 
-                    <ErrorMessage className="error-message" name="name" component="div" /> 
-                    </div>   
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Flow Name" />
+                      <ErrorMessage className="error-message" name="name" component="div" />
+                    </div>
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
                     <div class="outer-input-div">
-                    <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." /> 
-                    <ErrorMessage className="error-message" name="description" component="div" /> 
-                    </div>   
+                      <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." />
+                      <ErrorMessage className="error-message" name="description" component="div" />
+                    </div>
                   </div>
                   <div className="label-input-cont col-12">
                     <p>Task</p>
@@ -112,6 +125,7 @@ export const AddFlow = () => {
           </Formik>
         </div>
       </div>
+      {loader && <Loader/>}
     </div>
   )
 

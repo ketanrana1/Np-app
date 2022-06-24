@@ -28,6 +28,7 @@ const Login = () => {
       return toast("Logged in Successfully")
 
     } catch (error) {
+      setLoader(false)
       return toast(error?.message);
     }
   }

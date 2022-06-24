@@ -5,21 +5,30 @@ import { REACT_APP_BACKEND_URL } from '../components/common/environment';
 import { toast } from 'react-toastify';
 import Modal from '../components/layout/Modal';
 import $ from "jquery";
+import Loader from '../components/field/loader';
 
 const Flow = () => {
 
   const [flow, setFlow] = useState([]);
   const [flowId,setFlowId] = useState("");
-
+  const [loader, setLoader] = useState(false)
   useEffect(() => {
+    setLoader(true)
     const getFlow = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
-      setFlow(response.data.reverse().map((item) => {
-        return {
-          ...item,
-          readMore: "none",
-        }
-      }))
+      try {
+        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+        setLoader(false)
+        setFlow(response.data.reverse().map((item) => {
+          return {
+            ...item,
+            readMore: "none",
+          }
+        }))
+      } catch (error) {
+        setLoader(false)
+        console.log(error);
+      }
+     
     }
 
     getFlow();
@@ -27,17 +36,20 @@ const Flow = () => {
   }, [])
 
   const handleDeleteClick = async (flowId) => {
+    setLoader(true)
     const payload = {
       flowId
     }
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-flow`, payload)
+      setLoader(false)
       toast(result.data.message);
       setFlow(flow.filter((item) => item.flowId !== flowId))
       $("#delete-confirmation-modal").modal("hide");
       
       return;
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)
     }
   }
@@ -95,6 +107,7 @@ const Flow = () => {
       </div>
     </div>
     <Modal deleteHandler={() => handleDeleteClick(flowId)}/>
+    {loader && <Loader/>}
     </>
   )
 }

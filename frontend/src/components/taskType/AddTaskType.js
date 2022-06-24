@@ -3,12 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../common/environment';
 import { toast } from 'react-toastify';
+import Loader from '../field/loader';
 
 const AddTaskType = () => {
 
   const [taskType, setConnectionType] = useState([]);
-
+  const [loader, setLoader] = useState(false)
   const onSubmitHandler = async (values, { resetForm }) => {
+    setLoader(true)
     console.log("VALUES", values)
     const check = []
     taskType.map((item, index) => {
@@ -27,10 +29,12 @@ const AddTaskType = () => {
         name: values.name,
         attributes: check
       })
+      setLoader(false)
       toast(result.data.message);  
       setConnectionType([])
       resetForm({})
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)      
     }
   }
@@ -127,6 +131,7 @@ const AddTaskType = () => {
             </Formik>
           </div>
         </div>
+        {loader && <Loader/>}
       </div>
       
   )

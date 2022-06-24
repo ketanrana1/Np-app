@@ -7,24 +7,32 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../field/customSelect';
 import "../../assets/css/multiSelect.css"
+import Loader from '../field/loader';
 const EditSchedule = () => {
   const { id } = useParams();
   let navigate = useNavigate()
   var Value = []
   const [scheduleDetails, setScheduleDetails] = useState([]);
   const [flows, setFlows] = useState([]);
+  const [loader, setLoader] = useState(false)
   const [options, setOptions] = useState('');
 
   useEffect(() => {
+    setLoader(true)
     const getSchedule = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule/${id}`)
-      setScheduleDetails(response.data[0])
-      Value.push(...response.data[0]?.flows)
-
+      try {
+        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule/${id}`)
+        setLoader(false)
+        setScheduleDetails(response.data[0])
+        Value.push(...response.data[0]?.flows)
+      } catch (error) {
+        setLoader(false)
+      }
     }
     getSchedule();
     const getFlow = async () => {
       const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+      setLoader(false)
       const selectValue = data.map((flow) => {
         return (
           {
@@ -41,6 +49,7 @@ const EditSchedule = () => {
   }, [])
 
   const onSubmitHandler = async (values) => {
+    setLoader(true)
     const { flows } = values
     const payload = {
       ...scheduleDetails, flows
@@ -48,9 +57,11 @@ const EditSchedule = () => {
     delete payload._id
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-schedule`, { scheduleDetails: payload, id })
+      setLoader(false)
       navigate('/schedule');
       return toast(result.data.message);
     } catch (error) {
+      setLoader(false)
       return toast(error?.message)
     }
 
@@ -132,6 +143,7 @@ const EditSchedule = () => {
           </Formik>
         </div>
       </div>
+      {loader && <Loader/>}
     </div>
   )
 }
