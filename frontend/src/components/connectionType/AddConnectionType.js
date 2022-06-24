@@ -64,9 +64,7 @@ const AddConnectionType = () => {
                                 <p>Attribute Name</p>
                                 <Field className="form-control all-form-fl-w-ip" type="name" name={`attribute_${index + 1}`} required placeholder={`Enter Attribute ${index + 1} Name`} /> 
                                 <ErrorMessage name={`attribute_${index+1}`} component="div" /> 
-                               
-                              </div>
-                              
+                              </div>                             
                             </div>
                            
                       })
