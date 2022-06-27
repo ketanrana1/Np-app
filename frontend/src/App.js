@@ -5,7 +5,6 @@ import LoginLayout from './components/layout/LoginLayout';
 import NotFound from './pages/NotFound';
 import Connection from './pages/Connection';
 import AddConnection from './components/connection/AddConnection';
-import ConnectionType from './pages/ConnectionType';
 import AddConnectionType from './components/connectionType/AddConnectionType';
 import Flow from './pages/Flow';
 import AddFlow from './components/flow/AddFlow';
@@ -32,7 +31,6 @@ function App() {
     
       <Routes>
         <Route path='/' element={<Layout><Navigate replace to='/connection' /></Layout>} />
-        <Route path='/connection-type' element={<Layout><ConnectionType /></Layout>} />
         <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />

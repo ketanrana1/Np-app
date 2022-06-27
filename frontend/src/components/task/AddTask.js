@@ -135,7 +135,6 @@ const AddTask = () => {
                       <div className="label-input-cont">
                         <p>{item.name}</p>
                         <Field className="form-control all-form-fl-w-ip" type={item.inputField} name={item.name} required={item.fieldRequired} placeholder={`Enter Attribute value`} />
-                        {/* <Field className="form-control all-form-fl-w-ip" type="name" name={item} required placeholder={`Enter Attribute value`} />     */}
                       </div>
                     </div>
                   })

@@ -406,3 +406,27 @@ span.checkbox-schedule-span {
     align-items: center;
 }
 /*flow form ends*/
+
+.add-attribute-btn {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: #0055FF;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-attribute-btn:hover {
+    color:white;
+    text-decoration:none;
+}
+
+
+.cont-form-all .label-input-cont .outer-input-div {
+
+}
+
+.cont-form-all .label-input-cont .outer-input-div .all-form-fl-w-ip {
+    width: 100%;
+}

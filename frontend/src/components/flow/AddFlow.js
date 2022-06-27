@@ -99,15 +99,6 @@ export const AddFlow = () => {
                     />
                     <ErrorMessage name="tasks" component="div" />
                   </div>
-                  {/* <div className="label-input-cont">
-                    <p>Task</p>
-                    <Field className="form-control all-form-fl-w-ip" required component="select" name="tasks" multiple={true} >
-                      {
-                        tasks.map((item) =>  <option>{item.name}</option>)
-                      }
-                    </Field> 
-                    <ErrorMessage name="connectionType" component="div" />    
-                  </div> */}
                 </div>
                 <div className="form-group col-12">
                   <div className="label-input-cont">

@@ -77,7 +77,7 @@ const AddConnectionType = () => {
                     </div>
               
                   <div className="add-conne-type-btn">
-                    <button onClick={() => setConnectionType([...connectionType, 1])}>Add Attribute</button>
+                    <a className="add-attribute-btn" onClick={() => setConnectionType([...connectionType, 1])}>Add Attribute</a>
                   </div>
                   <div className="submit-cont">
                     <input type="submit" value="Save" />
