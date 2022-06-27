@@ -71,8 +71,8 @@ const AddConnectionType = () => {
                     }
                     <div className="form-group col-12 pr-0">
                         <div className="label-input-cont">
-                        <p></p>
-                        {connectionType.length !== 0 && <div className="all-form-fl-w-ip remove-attribute-button" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
+                          <p></p>
+                          {connectionType.length !== 0 && <div className="all-form-fl-w-ip remove-attribute-button" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
                       </div>                  
                     </div>
               
