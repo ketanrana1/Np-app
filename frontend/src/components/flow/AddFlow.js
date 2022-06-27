@@ -29,7 +29,6 @@ export const AddFlow = () => {
 
         })
         setFlows(selectValue)
-        console.log("TASKSSSSS", response.data)
       } catch (error) {
         setLoader(false)
         console.log(error);
@@ -42,7 +41,6 @@ export const AddFlow = () => {
 
   const onSubmitHandler = async (values) => {
     setLoader(true)
-    console.log("VALUES", values)
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
       setLoader(false)

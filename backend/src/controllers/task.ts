@@ -107,8 +107,6 @@ export class TaskController {
 
   @Post('/add-task-type')
   async addTaskType( @Body() body: any ) {
-
-    console.log("BODY", body)
     const newTaskType = new TaskType(body);
     const result = await newTaskType.save();
 
@@ -126,7 +124,6 @@ export class TaskController {
 
   @Post('/add-task')
   async addTask( @Body() body: any ) {
-    console.log("BODY", body)
     const { taskTypeId, taskTypeAttributes } = body;
     const findTaskType = await TaskType.aggregate([
       {
@@ -142,7 +139,6 @@ export class TaskController {
 
     const newTask = new Task(body);
     const result = await newTask.save();
-    console.log("BODY", body)
 
     if(!result) 
       return {

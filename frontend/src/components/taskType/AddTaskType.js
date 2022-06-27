@@ -19,8 +19,6 @@ const AddTaskType = () => {
           fieldRequired: typeof values[`fieldRequired_${index + 1}`] === "undefined" ? false : true,
           inputField: values[`inputField_${index + 1}`]?.split('_')[0] 
       }
-
-      console.log("PAYLOAD", payload)
       check.push(payload)
     }) 
 

@@ -79,7 +79,6 @@ const Task = () => {
         <tbody>
         {
             task.map((item, index) => {
-              console.log("item",item)
             return <tr> 
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" ><p>

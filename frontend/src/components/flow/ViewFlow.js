@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ViewFlow = ({detail}) => {
-    console.log("deatils",detail)
     const { name, description, tasks, variableSel } = detail
     return ( 
         <>

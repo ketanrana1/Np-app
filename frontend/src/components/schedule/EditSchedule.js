@@ -66,12 +66,6 @@ const EditSchedule = () => {
     }
 
   }
-  const test = (item) => {
-    const checking = scheduleDetails?.flows.findIndex((_item) => _item === item.name)
-    if (checking === -1) return false;
-    return true
-  }
-
   return (
     <div>
       <h1 className="page-head">Edit Schdule</h1>

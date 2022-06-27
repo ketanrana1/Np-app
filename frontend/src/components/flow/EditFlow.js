@@ -29,7 +29,6 @@ const EditFlow = () => {
         setLoader(false)
         setFlowDetails(response.data[0])
         Value.push(...response.data[0]?.tasks)
-        console.log("Flow Details", response.data[0])
       } catch (error) {
         setLoader(false)
         console.log(error);
@@ -49,14 +48,12 @@ const EditFlow = () => {
         )
       })
       setOptions(selectValue)
-      console.log("TASKSSSSS", response.data)
     }
     getTask();
   }, [])
 
   const onSubmitHandler = async (values) => {
     setLoader(true)
-    console.log("values",values)
     const { tasks } = values
     const payload = {
       ...flowDetails, tasks
@@ -72,11 +69,6 @@ const EditFlow = () => {
       return toast(error?.message)
     }
 
-  }
-  const test = (item) => {
-    const checking = flowDetails?.tasks.findIndex((_item) => _item === item.name)
-    if (checking === -1) return false;
-    return true
   }
 
   return (
@@ -115,32 +107,6 @@ const EditFlow = () => {
                   />
                   <ErrorMessage name="tasks" component="div" />
                 </div>
-                {/* { 
-                flowDetails?.taskTypeAttributes?.map((item, index) => {
-                return <div className="form-group col-12">
-                          <div className="label-input-cont">
-                            <p>{item.key}</p>
-                            <Field className="form-control all-form-fl-w-ip" checked={ item.value === true ? "checked" : ""} type={item.inputField} name={item.name} required={ item.fieldRequired } placeholder={`Enter Attribute value`} 
-                            value={ item.value } 
-                            onChange={(e) => {
-                                const test = [...taskDetails.taskTypeAttributes];
-                                if(test[index].inputField === "checkbox"){
-                                  test[index].value = !test[index].value;
-                                } else {
-                                  test[index].value = e.target.value
-                                }
-                                setTaskDetails({
-                                ...taskDetails, 
-                                taskTypeAttributes: test
-                              })
-                            }
-                          }
-                          /> 
-                        </div>
-                      </div>
-                }
-                )
-              } */}
                 <div className="form-group col-12">
                   <div className="label-input-cont">
                     <p>VariableSel</p>

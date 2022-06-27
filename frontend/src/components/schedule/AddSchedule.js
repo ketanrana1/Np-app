@@ -39,7 +39,6 @@ export const AddSchedule = () => {
 
   const onSubmitHandler = async (values) => {
     setLoader(true)
-    console.log("values", values)
     try {
       const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-schedule`, values)
       setLoader(false)

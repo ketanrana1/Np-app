@@ -90,15 +90,15 @@ const EditTask = () => {
                         <Field className="form-control all-form-fl-w-ip" checked={item.value === true ? "checked" : ""} type={item.inputField} name={item.name} required={item.fieldRequired} placeholder={`Enter Attribute value`}
                           value={item.value}
                           onChange={(e) => {
-                            const test = [...taskDetails.taskTypeAttributes];
-                            if (test[index].inputField === "checkbox") {
-                              test[index].value = !test[index].value;
+                            const newAttributes = [...taskDetails.taskTypeAttributes];
+                            if (newAttributes[index].inputField === "checkbox") {
+                              newAttributes[index].value = !newAttributes[index].value;
                             } else {
-                              test[index].value = e.target.value
+                              newAttributes[index].value = e.target.value
                             }
                             setTaskDetails({
                               ...taskDetails,
-                              taskTypeAttributes: test
+                              taskTypeAttributes: newAttributes
                             })
                           }
                           }

@@ -54,7 +54,6 @@ export class FlowController {
   @Post('/delete-flow')
   async deleteFlowById(@Body() body: any) {
     const { flowId } = body;
-    console.log("FLOWID", flowId)
     try {
       await flow.findOneAndDelete({ flowId })
       return {
@@ -89,8 +88,6 @@ export class FlowController {
 
   @Post('/edit-flow')
   async editTask( @Body() body: any ) {
-    console.log("Body", body)
-
     const payload = {
       ...body
     }

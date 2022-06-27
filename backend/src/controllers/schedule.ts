@@ -76,16 +76,6 @@ export class ScheduleController {
 
   @Post('/add-schedule')
   async addSchedule(@Body() body: any) {
-
-
-    // if(findScheduleType[0].attributes.length !== ScheduleTypeAttributes.length) {
-    //   return {
-    //     success: false,
-    //     message: "Contection Type Attributes length should match Schedule Attributes length"
-    //   }
-    // } 
-    console.log("BODY", body)
-
     const newSchedule = new schedule(body);
     const result = await newSchedule.save();
 
@@ -103,8 +93,6 @@ export class ScheduleController {
 
   @Post('/edit-schedule')
   async editTask( @Body() body: any ) {
-    console.log("Body", body)
-
     const payload = {
       ...body
     }
