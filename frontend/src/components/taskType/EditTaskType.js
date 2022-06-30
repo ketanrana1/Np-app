@@ -96,6 +96,16 @@ const EditTaskType = () => {
                                                                         type="radio"
                                                                         name={`inputField_${index + 1}`}
                                                                         checked={'text' === inputField}
+                                                                        
+                                                                        onChange={(e) => {
+                                                                            const attributesList = [...taskDetails?.attributes]
+                                                                            const text = (e.target.value).split('_')[0]
+                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            setTaskDetails({
+                                                                                ...taskDetails,
+                                                                                attributes: attributesList
+                                                                            })
+                                                                        }}
                                                                         value={`text_${index + 1}`}
                                                                         required />
                                                                     Text
@@ -106,6 +116,16 @@ const EditTaskType = () => {
                                                                         type="radio"
                                                                         name={`inputField_${index + 1}`}
                                                                         checked={'textarea' === inputField}
+                                                                        
+                                                                        onChange={(e) => {
+                                                                            const attributesList = [...taskDetails?.attributes]
+                                                                            const text = (e.target.value).split('_')[0]
+                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            setTaskDetails({
+                                                                                ...taskDetails,
+                                                                                attributes: attributesList
+                                                                            })
+                                                                        }}
                                                                         value={`textarea_${index + 1}`}
                                                                     />
                                                                     Textarea
@@ -113,7 +133,18 @@ const EditTaskType = () => {
                                                                 <label>
                                                                     <Field type="radio"
                                                                         name={`inputField_${index + 1}`}
-                                                                        checked={'checkbox' === inputField ? true : false}
+                                                                        checked={'checkbox' === inputField}
+                                                                        
+                                                                        onChange={(e) => {
+                                                                            const attributesList = [...taskDetails?.attributes]
+                                                                            const text = (e.target.value).split('_')[0]
+                                                                            
+                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            setTaskDetails({
+                                                                                ...taskDetails,
+                                                                                attributes: attributesList
+                                                                            })
+                                                                        }}
                                                                         value={`checkbox_${index + 1}`} />
                                                                     Checkbox
                                                                 </label>
