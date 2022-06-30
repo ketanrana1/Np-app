@@ -96,15 +96,6 @@ const EditTaskType = () => {
                                                                         type="radio"
                                                                         name={`inputField_${index + 1}`}
                                                                         checked={'text' === inputField}
-                                                                        // onChange={(e) => {
-                                                                        //     const attributesList = [...taskDetails?.attributes]
-                                                                        //     attributesList[index] = { name, fieldRequired, inputField : fa}
-                                                                        //     setTaskDetails({
-                                                                        //         ...taskDetails,
-                                                                        //         attributes: attributesList
-                                                                        //     })
-                                                                        //     console.log("fasfdasf",e.target.checked)
-                                                                        // }}
                                                                         value={`text_${index + 1}`}
                                                                         required />
                                                                     Text
