@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 import { useExpressServer } from 'routing-controllers';
-import { ConnectionController, TaskController, FlowController, ScheduleController } from "./controllers"
+import { ConnectionController, TaskController, FlowController, ScheduleController, TaskTypeController} from "./controllers"
 import './database/mongoose';
 import bodyParser from 'body-parser'; 
 import { PORT } from "constants/environment"
@@ -16,7 +16,7 @@ app.use(cors())
 useExpressServer(app, 
   {
     cors: true,
-    controllers: [ConnectionController, TaskController, FlowController, ScheduleController],
+    controllers: [ConnectionController, TaskController, FlowController, ScheduleController, TaskTypeController],
   }
 )
 

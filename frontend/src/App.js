@@ -20,6 +20,11 @@ import { useEffect } from 'react';
 import Register from './pages/Register';
 import AddTaskType from './components/taskType/AddTaskType';
 import ViewDetails from './pages/ViewDetails';
+import TaskType from './pages/TaskType';
+import EditTaskType from './components/taskType/EditTaskType';
+import ConnectionType from './pages/ConnectionType';
+import EditConnectionType from './components/connectionType/EditConnectionType';
+
 
 function App() {
 
@@ -31,7 +36,13 @@ function App() {
     
       <Routes>
         <Route path='/' element={<Layout><Navigate replace to='/connection' /></Layout>} />
+
+        <Route path='/connection-type' element={<Layout><ConnectionType/></Layout>} />
         <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
+        <Route path='/connection-type/view-connection-type/:id' element={<Layout><ViewDetails/></Layout>} />
+        <Route path='/connection-type/edit-connection-type/:id' element={<Layout><EditConnectionType/></Layout>} />
+        
+
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/register-user' element={<Layout><Register /></Layout>} />
@@ -40,7 +51,11 @@ function App() {
         <Route path='/task/edit-task/:id' element={<Layout><EditTask /></Layout>} />
         <Route path='/task/view-task/:id' element={<Layout><ViewDetails /></Layout>} />
         <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
+
+        <Route path='/task-type' element={<Layout><TaskType /></Layout>} />
         <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
+        <Route path='/task-type/view-task-type/:id' element={<Layout><ViewDetails /></Layout>} />
+        <Route path='/task-type/edit-task-type/:id' element={<Layout><EditTaskType /></Layout>} />
 
         <Route path='/flow' element={<Layout><Flow /></Layout>} />
         <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />

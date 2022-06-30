@@ -1,6 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const MainNavigation = () => {
+  const navigate = useNavigate()
+  const logoutUser = () =>{
+    sessionStorage.setItem('Auth key', '');
+    navigate("/login")
+    return toast("Logout Successfully")
+  }
   return (
     <>
       <nav className="main-nav navbar bg-light px-0">
@@ -26,12 +33,12 @@ const MainNavigation = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to='/connection-type/add-connection-type' className={navData => navData.isActive ? 'active' : ''}>
+            <NavLink to='/connection-type' className={navData => navData.isActive ? 'active' : ''}>
               <img src={require('../../assets/images/connection.png')} alt="connection" />Connection type
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to='/task-type/add-task-type' className={navData => navData.isActive ? 'active' : ''}>
+            <NavLink to='/task-type' className={navData => navData.isActive ? 'active' : ''}>
               <img src={require('../../assets/images/task-list.png')} alt="connection" />Task Type
             </NavLink>
           </li>
@@ -39,6 +46,11 @@ const MainNavigation = () => {
             <NavLink to='/register-user' className={navData => navData.isActive ? 'active' : ''}>
               <img src={require('../../assets/images/user.png')} alt="connection" />Add User
             </NavLink>
+          </li>
+          <li className="nav-item">
+            <div className='logout' onClick={logoutUser}>
+              <img src={require('../../assets/images/logout.png')} alt="connection" />Logout
+            </div>
           </li>
         </ul>
       </nav>

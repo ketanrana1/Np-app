@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import "../assets/css/global.css"
+import { async } from '@firebase/util'
 const DEFAULT_STATE = {
   email: '',
   password: ''
@@ -15,12 +16,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState(DEFAULT_STATE);
+  const [changePassword, setChangePassword] = useState(false)
   const [loader, setLoader] = useState(false)
   const loginButtonHandler = async () => {
     const { email, password } = formState
     setLoader(true)
     try {
       const response = await signInWithEmailAndPassword(getAuth(firebaseConfig), email, password);
+      console.log("respose", response)
       sessionStorage.setItem('Auth key', response._tokenResponse.refreshToken);
 
       setLoader(false)
@@ -34,15 +37,26 @@ const Login = () => {
   }
 
   const forgotPasswordHandler = async () => {
+    setChangePassword(true)
+    setFormState(DEFAULT_STATE)
+  }
+  const sendEmail = async () => {
+    setLoader(true)
     const { email } = formState
     try {
       await sendPasswordResetEmail(getAuth(firebaseConfig), email)
-      return toast("Reset Password email has been sent successfully")
+      setLoader(false)
+      toast("Reset Password email has been sent successfully")
+      setTimeout(() => {
+        setChangePassword(false)
+      }, 1000)
+      return
     } catch (error) {
-      return toast(error?.message);
+      console.log(error?.message);
+      setLoader(false)
+      return toast("Please Fill the Email Field");
     }
   }
-
   const onInputChangeHandler = (e) => setFormState({ ...formState, [e.target.name]: e.target.value })
 
   return (
@@ -50,24 +64,33 @@ const Login = () => {
 
       <div className="login-form-cont">
 
-        <h3 className="logo-text">Logo</h3>
+        <h3 className="logo-text">{changePassword ? 'Forget Password' : 'Logo'}</h3>
         <div className="form-group">
-          <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} />
+          <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />
         </div>
-        <div className="form-group">
-          <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} />
+        {!changePassword && <><div className="form-group">
+          <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} value={formState.password} />
         </div>
-        <div className="form-group frgt-pssw-cont">
-          <Link to="/login"><div onClick={forgotPasswordHandler}>Forgot Password</div></Link>
-        </div>
-        <div className="form-group form-check">
-          <input type="checkbox" className="form-check-input" />
-          <label className="form-check-label" for="exampleCheck1">Remember</label>
-        </div>
-        <div className="submit-cont">
-          <div className='backgorund btn btn-primary' onClick={!loader && loginButtonHandler} >
-            {loader ? <div className='loader'></div> : <div className='py-2 px-4'>Login</div>}
+          <div className="form-group frgt-pssw-cont">
+            <Link to="/login"><div onClick={forgotPasswordHandler}>Forgot Password</div></Link>
           </div>
+          <div className="form-group form-check">
+            <input type="checkbox" className="form-check-input" />
+            <label className="form-check-label" for="exampleCheck1">Remember</label>
+          </div></>}
+
+        <div className="submit-cont">
+          {changePassword ?
+            (<div className='d-flex justify-content-between w-100'>
+              <div className='py-2 px-4 btn btn-primary' onClick={() => setChangePassword(false)}>Go Back</div>
+              <div className='py-2 px-4 btn btn-primary' onClick={sendEmail}>{loader ?
+                <div className='loader'></div> : "Send Email"}</div>
+            </div>) : (
+              <div className='backgorund btn btn-primary' onClick={!loader && loginButtonHandler} >
+                {loader ?
+                  <div className='loader'></div> : <div className='btn btn-primary py-2 px-4' >Login</div>}
+              </div>)
+          }
         </div>
       </div>
     </>

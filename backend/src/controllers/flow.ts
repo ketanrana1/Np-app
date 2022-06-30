@@ -97,7 +97,6 @@ export class FlowController {
       description: body.flowDetails.description,
       tasks: body.flowDetails.tasks,
       variableSel: body.flowDetails.variableSel,
-
     });
 
     if(!result) 

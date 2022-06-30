@@ -11,12 +11,11 @@ const AddTaskType = () => {
   const [loader, setLoader] = useState(false)
   const onSubmitHandler = async (values, { resetForm }) => {
     setLoader(true)
-    console.log("VALUES", values)
     const check = []
     taskType.map((item, index) => {
        const payload = {
           name: values[`attribute_${index + 1}`],
-          fieldRequired: typeof values[`fieldRequired_${index + 1}`] === "undefined" ? false : true,
+          fieldRequired: typeof values[`fieldRequired_${index + 1}`] === "undefined",
           inputField: values[`inputField_${index + 1}`]?.split('_')[0] 
       }
       check.push(payload)

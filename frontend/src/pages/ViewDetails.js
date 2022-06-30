@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
+import ViewConnectionType from '../components/connectionType/ViewConnectiontype';
 import Loader from '../components/field/loader';
 import ViewFlow from '../components/flow/ViewFlow';
 import ViewSchedule from '../components/schedule/ViewSchedule';
 import ViewTask from '../components/task/ViewTask';
+import ViewTaskType from '../components/taskType/ViewTaskType';
 const ViewDetails = () => {
     const { id } = useParams()
     const { state: { tab, name } } = useLocation();
@@ -53,7 +55,8 @@ const ViewDetails = () => {
                                                 {tab === "task" && <ViewTask detail={detail} />}
                                                 {tab === "flow" && <ViewFlow detail={detail} />}
                                                 {tab === "schedule" && <ViewSchedule detail={detail} />}
-
+                                                {tab === "task-type" && <ViewTaskType detail={detail} />}
+                                                {tab === "connection-type" && <ViewConnectionType detail={detail} />}
                                             </>
                                         )
                                     })}

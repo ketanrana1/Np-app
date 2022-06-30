@@ -430,3 +430,14 @@ span.checkbox-schedule-span {
 .cont-form-all .label-input-cont .outer-input-div .all-form-fl-w-ip {
     width: 100%;
 }
+.logout{
+    font: normal normal normal 18px/22px DM Sans;
+    letter-spacing: 0px;
+    color: #707070;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 30px;
+    margin-bottom: 0;
+    padding: 10px 25px;
+    max-width: 280px;
+    cursor: pointer;
+}
