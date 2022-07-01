@@ -20,7 +20,13 @@ const AddTask = () => {
     setLoader(true)
     const getTaskType = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task-type`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-task-type`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }       
+        });
         setLoader(false)
         setTaskType(response.data)
       } catch (error) {
@@ -36,7 +42,13 @@ const AddTask = () => {
     setLoader(true)
     setSelectValue(e.target.value)
     try {
-      const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task-type/${e.target.value}`)
+      const result = await axios({
+        method: 'get',    
+        url: `${REACT_APP_BACKEND_URL}/api/get-task-type/${e.target.value}`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        }       
+      });
       setLoader(false)
       setTaskTypeAttributes(result.data[0].attributes)
       setTaskTypeName(result.data[0].name)
@@ -71,7 +83,14 @@ const AddTask = () => {
     }
 
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-task`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-task`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       setLoader(false)
       navigate('/task');
       return toast(result.data.message);

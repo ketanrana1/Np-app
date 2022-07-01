@@ -21,11 +21,19 @@ const AddTaskType = () => {
       check.push(payload)
     }) 
 
-    try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-task-type`, { 
-        name: values.name,
-        attributes: check
-      })
+    try {
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-task-type`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: { 
+          name: values.name,
+          attributes: check
+        }         
+      });
+
       setLoader(false)
       toast(result.data.message);  
       setConnectionType([])
@@ -95,7 +103,7 @@ const AddTaskType = () => {
                                   <Field type="radio" name={`inputField_${index + 1}`} value={`checkbox_${index + 1}`} />
                                   Checkbox
                                 </label>                               
-                              </div>
+                              </div> 
                               </div>
                             </div>
                             <div className="form-group col-6 task-type-checkbox">
@@ -118,7 +126,7 @@ const AddTaskType = () => {
                       </div>                  
                     </div>
                   <div className="add-conne-type-btn">
-                    <button onClick={() => setConnectionType([...taskType, 1])}>Add Attribute</button>
+                    <a className="add-attribute-btn" onClick={() => setConnectionType([...taskType, 1])}>Add Attribute</a>
                   </div>
                   <div className="submit-cont">
                     <input type="submit" value="Save" />

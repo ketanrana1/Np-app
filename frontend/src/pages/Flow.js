@@ -16,7 +16,13 @@ const Flow = () => {
     setLoader(true)
     const getFlow = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-flow`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         setFlow(response.data.reverse().map((item) => {
           return {
@@ -41,7 +47,14 @@ const Flow = () => {
       flowId
     }
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-flow`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-flow`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       setLoader(false)
       toast(result.data.message);
       setFlow(flow.filter((item) => item.flowId !== flowId))

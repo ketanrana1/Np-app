@@ -25,7 +25,13 @@ const EditFlow = () => {
     setLoader(true)
     const getFlow = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow/${id}`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         setFlowDetails(response.data[0])
         Value.push(...response.data[0]?.tasks)
@@ -37,7 +43,13 @@ const EditFlow = () => {
     }
     getFlow();
     const getTask = async () => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+      const response = await axios({
+        method: 'get',    
+        url: `${REACT_APP_BACKEND_URL}/api/get-task`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        }        
+      });
       setTasks(response.data)
       const selectValue = response?.data?.map((task) => {
         return (
@@ -60,7 +72,14 @@ const EditFlow = () => {
     }
     delete payload._id
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-flow`, { flowDetails: payload, id })
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/edit-flow`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: { flowDetails: payload, id }         
+      });
       setLoader(false)
       navigate('/flow');
       return toast(result.data.message);

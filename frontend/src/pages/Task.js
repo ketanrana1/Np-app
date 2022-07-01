@@ -17,7 +17,13 @@ const Task = () => {
     const getTaskType = async() => {
       try {
         setLoader(true)
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-task`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         setTask(response.data.reverse().map((item) => {
           return {
@@ -41,7 +47,14 @@ const Task = () => {
       taskId
     }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-task`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-task`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       toast(result.data.message);  
       setTask(task.filter((item) => item.taskId !== taskId))
       $("#delete-confirmation-modal").modal("hide");

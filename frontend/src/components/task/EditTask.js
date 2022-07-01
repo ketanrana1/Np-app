@@ -22,7 +22,13 @@ const EditTask = () => {
     setLoader(true)
     const getTaskType = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task/${id}`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-task/${id}`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         setTaskDetails(response.data[0])
       }
@@ -41,7 +47,14 @@ const EditTask = () => {
     }
     delete payload._id
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-task`, { taskDetails: payload, id })
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/edit-task`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: { taskDetails: payload, id }         
+      });
       setLoader(false)
       navigate('/task');
       return toast(result.data.message);

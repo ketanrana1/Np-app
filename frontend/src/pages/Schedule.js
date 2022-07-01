@@ -16,7 +16,13 @@ const Schedule = () => {
     setLoader(true)
     const getSchedule = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-schedule`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         setSchedule(response.data.reverse().map((item) => {
           return {
@@ -39,7 +45,14 @@ const Schedule = () => {
       scheduleId
     }
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-schedule`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-schedule`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       toast(result.data.message);
       setSchedule(schedule.filter((item) => item.scheduleId !== scheduleId))
       $("#delete-confirmation-modal").modal("hide");

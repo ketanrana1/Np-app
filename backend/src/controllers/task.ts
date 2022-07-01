@@ -1,6 +1,7 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import TaskType from 'models/taskType';
 import Task from 'models/task';
+import AuthMiddleware from 'middlewares/AuthMiddleware';
  
 // UPDATE 
 // DELETE
@@ -9,6 +10,7 @@ import Task from 'models/task';
 export class TaskController {
  
   @Get('/get-task-type')
+  @UseBefore(AuthMiddleware)
   async getTaskType() {
     return await TaskType.aggregate([
       {
@@ -24,6 +26,7 @@ export class TaskController {
    }
 
    @Get('/get-task')
+   @UseBefore(AuthMiddleware)
    async getTask() {
      return await Task.aggregate([
       {
@@ -48,6 +51,7 @@ export class TaskController {
     }
 
    @Get('/get-task/:id')
+   @UseBefore(AuthMiddleware)
    async getTaskById(@Param('id') id: string) {
      return await Task.aggregate([
        {
@@ -59,6 +63,7 @@ export class TaskController {
     }
 
     @Get('/get-task-type/:id')
+    @UseBefore(AuthMiddleware)
     async getTaskTypeById(@Param('id') id: string) {
       return await TaskType.aggregate([
         {
@@ -70,6 +75,7 @@ export class TaskController {
      }
 
     @Post('/update-task')
+    @UseBefore(AuthMiddleware)
     async updateTaskById( @Body() body: any ) {
       const { taskTypeId } = body;
       const updateItems = { ...body }
@@ -89,6 +95,7 @@ export class TaskController {
     }
 
     @Post('/delete-task')
+    @UseBefore(AuthMiddleware)
     async deleteTaskById( @Body() body: any ) {
       const { taskId } = body;
       try {
@@ -106,6 +113,7 @@ export class TaskController {
     } 
 
   @Post('/add-task-type')
+  @UseBefore(AuthMiddleware)
   async addTaskType( @Body() body: any ) {
     const newTaskType = new TaskType(body);
     const result = await newTaskType.save();
@@ -123,6 +131,7 @@ export class TaskController {
    } 
 
   @Post('/add-task')
+  @UseBefore(AuthMiddleware)
   async addTask( @Body() body: any ) {
     const { taskTypeId, taskTypeAttributes } = body;
     const findTaskType = await TaskType.aggregate([
@@ -153,6 +162,7 @@ export class TaskController {
    }
 
    @Post('/edit-task')
+   @UseBefore(AuthMiddleware)
   async editTask( @Body() body: any ) {
 
     const payload = {

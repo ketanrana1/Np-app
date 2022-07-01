@@ -24,7 +24,13 @@ const ViewDetails = () => {
         const getdetailsType = async () => {
             try {
                 setLoader(true)
-                const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-${tab}/${id}`)
+                const { data } = await axios({
+                    method: 'get',    
+                    url: `${REACT_APP_BACKEND_URL}/api/get-${tab}/${id}`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    }        
+                  });
                 setDetails(data)
                 setLoader(false)
             } catch (error) {

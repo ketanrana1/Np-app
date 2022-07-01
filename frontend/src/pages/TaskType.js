@@ -16,7 +16,13 @@ const TaskType = () => {
     setLoader(true)
     const getTaskType = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-taskType`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-taskType`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }       
+        });
         console.log(response);
         setLoader(false)
         setTaskType(response.data.reverse().map((item) => {
@@ -42,7 +48,14 @@ const TaskType = () => {
       taskTypeId
     }
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-taskType`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-taskType`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       setLoader(false)
       toast(result.data.message);
       setTaskType(taskType.filter((item) => item.taskTypeId !== taskTypeId))

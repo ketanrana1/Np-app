@@ -16,7 +16,13 @@ export const AddFlow = () => {
     setLoader(true)
     const getTask = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-task`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-task`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }         
+        });
         setLoader(false)
         setTasks(response.data)
         const selectValue = response?.data?.map((flow) => {
@@ -42,7 +48,14 @@ export const AddFlow = () => {
   const onSubmitHandler = async (values) => {
     setLoader(true)
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-flow`, values)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-flow`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: values         
+      });
       setLoader(false)
       navigate('/flow');
       return toast(result.data.message);

@@ -14,7 +14,13 @@ export const AddConnection = () => {
 
   useEffect(() => {
     const getConnectionType = async() => {
-      const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
+      const response = await axios({
+        method: 'get',    
+        url: `${REACT_APP_BACKEND_URL}/api/get-connection-type`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        }         
+      });
       setConnectionType(response.data)
     }
     getConnectionType();
@@ -24,7 +30,13 @@ export const AddConnection = () => {
   const handleConnectionTypeChnage = async (e) => {
     setSelectValue(e.target.value)
     try {    
-      const result = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type/${e.target.value}`)
+      const result = await axios({
+        method: 'get',    
+        url: `${REACT_APP_BACKEND_URL}/api/get-connection-type/${e.target.value}`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        }         
+      });
       setConnectionTypeAttributes(result.data[0].attributes)
       return toast(result.data.message);  
     } catch (error) {
@@ -43,7 +55,14 @@ export const AddConnection = () => {
       connectionTypeId: selectValue
     }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-connection`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       navigate('/connection');
       return toast(result.data.message);  
     } catch (error) {

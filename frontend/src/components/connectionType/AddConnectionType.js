@@ -14,7 +14,14 @@ const AddConnectionType = () => {
       attributes: Array.from(connectionType.map((item, index) => values[`attribute_${index+1}`]))
     }
     try {    
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-connection-type`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-connection-type`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       toast(result.data.message);  
       setConnectionType([])
       resetForm({})

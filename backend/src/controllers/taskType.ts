@@ -1,5 +1,6 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import taskType from 'models/taskType';
+import AuthMiddleware from 'middlewares/AuthMiddleware';
 
 // UPDATE  
 // DELETE
@@ -8,6 +9,7 @@ import taskType from 'models/taskType';
 export class TaskTypeController {
 
   @Get('/get-taskType')
+  @UseBefore(AuthMiddleware)
   async getTaskType() {
     return await taskType.aggregate([
       {
@@ -22,6 +24,7 @@ export class TaskTypeController {
   }
 
   @Get('/get-taskType/:id')
+  @UseBefore(AuthMiddleware)
   async getTaskTypeById(@Param('id') id: string) {
     return await taskType.aggregate([
       {
@@ -33,6 +36,7 @@ export class TaskTypeController {
   }
 
   @Post('/update-taskType')
+  @UseBefore(AuthMiddleware)
   async updateTaskTypeById(@Body() body: any) {
     const { taskTypeId } = body;
     const updateItems = { ...body }
@@ -52,6 +56,7 @@ export class TaskTypeController {
   }
 
   @Post('/delete-taskType')
+  @UseBefore(AuthMiddleware)
   async deleteTaskTypeById(@Body() body: any) {
     const { taskTypeId } = body;
     try {
@@ -69,6 +74,7 @@ export class TaskTypeController {
   }
 
   @Post('/add-taskType')
+  @UseBefore(AuthMiddleware)
   async addTaskType(@Body() body: any) {
 
     const newtaskType = new taskType(body);
@@ -87,6 +93,7 @@ export class TaskTypeController {
   }
 
   @Post('/edit-taskType')
+  @UseBefore(AuthMiddleware)
   async editTask( @Body() body: any ) {
     const payload = {
       ...body

@@ -16,8 +16,13 @@ const ConnectionType = () => {
     setLoader(true)
     const getconnectionType = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type`)
-        console.log(response);
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-connection-type`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }         
+        });
         setLoader(false)
         setConnectionType(response.data.reverse().map((item) => {
           return {
@@ -42,7 +47,14 @@ const ConnectionType = () => {
       connectionTypeId
     }
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-connectionType`, payload)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-connectionType`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
       setLoader(false)
       toast(result.data.message);
       setConnectionType(connectionType.filter((item) => item.connectionTypeId !== connectionTypeId))

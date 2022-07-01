@@ -1,6 +1,7 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import ConnectionType from 'models/connectionType';
 import Connection from 'models/connection';
+import AuthMiddleware from 'middlewares/AuthMiddleware';
 
 // UPDATE 
 // DELETE
@@ -9,6 +10,7 @@ import Connection from 'models/connection';
 export class ConnectionController {
 
   @Get('/get-connection-type')
+  @UseBefore(AuthMiddleware)
   async getConnectionType() {
     return await ConnectionType.aggregate([
       {
@@ -23,6 +25,7 @@ export class ConnectionController {
   }
 
   @Get('/get-connection')
+  @UseBefore(AuthMiddleware)
   async getConnection() {
     return await Connection.aggregate([
       {
@@ -47,6 +50,7 @@ export class ConnectionController {
   }
 
   @Get('/get-connection/:id')
+  @UseBefore(AuthMiddleware)
   async getConnectionById(@Param('id') id: string) {
     return await Connection.aggregate([
       {
@@ -58,6 +62,7 @@ export class ConnectionController {
   }
 
   @Get('/get-connection-type/:id')
+  @UseBefore(AuthMiddleware)
   async getConnectionTypeById(@Param('id') id: string) {
     return await ConnectionType.aggregate([
       {
@@ -69,6 +74,7 @@ export class ConnectionController {
   }
 
   @Post('/update-connection')
+  @UseBefore(AuthMiddleware)
   async updateConnectionById(@Body() body: any) {
     const { connectionTypeId } = body;
     const updateItems = { ...body }
@@ -88,6 +94,7 @@ export class ConnectionController {
   }
 
   @Post('/delete-connectionType')
+  @UseBefore(AuthMiddleware)
   async deleteConnectionTypeById(@Body() body: any) {
     const { connectionTypeId } = body;
     try {
@@ -105,6 +112,7 @@ export class ConnectionController {
   }
 
   @Post('/delete-connection')
+  @UseBefore(AuthMiddleware)
   async deleteConnectionById(@Body() body: any) {
     const { connectionId } = body;
     try {
@@ -122,6 +130,7 @@ export class ConnectionController {
   }
 
   @Post('/add-connection-type')
+  @UseBefore(AuthMiddleware)
   async addConnectionType(@Body() body: any) {
     const newConnectionType = new ConnectionType(body);
     const result = await newConnectionType.save();
@@ -139,6 +148,7 @@ export class ConnectionController {
   }
 
   @Post('/add-connection')
+  @UseBefore(AuthMiddleware)
   async addConnection(@Body() body: any) {
     const { connectionTypeId, connectionTypeAttributes } = body;
     const findConnectionType = await ConnectionType.aggregate([
@@ -152,13 +162,6 @@ export class ConnectionController {
       success: false,
       message: "Connection could not be added as Connection Type does not exist"
     }
-
-    // if(findConnectionType[0].attributes.length !== connectionTypeAttributes.length) {
-    //   return {
-    //     success: false,
-    //     message: "Contection Type Attributes length should match Connection Attributes length"
-    //   }
-    // }
 
     const newConnection = new Connection(body);
     const result = await newConnection.save();
@@ -175,6 +178,7 @@ export class ConnectionController {
     };
   }
   @Post('/edit-connection-type')
+  @UseBefore(AuthMiddleware)
   async editConnectionType(@Body() body: any) {
     const payload = {
       ...body

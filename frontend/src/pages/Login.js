@@ -5,7 +5,13 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import "../assets/css/global.css"
-import { async } from '@firebase/util'
+import jwt from 'jsonwebtoken'
+import { REACT_APP_JWT_SECRET_KEY } from '../components/common/environment';
+
+
+const jwtKey = REACT_APP_JWT_SECRET_KEY
+const jwtExpirySeconds = 86400
+
 const DEFAULT_STATE = {
   email: '',
   password: ''
@@ -23,8 +29,15 @@ const Login = () => {
     setLoader(true)
     try {
       const response = await signInWithEmailAndPassword(getAuth(firebaseConfig), email, password);
-      console.log("respose", response)
-      sessionStorage.setItem('Auth key', response._tokenResponse.refreshToken);
+
+      const responseToken = response._tokenResponse.refreshToken;    
+      const token = jwt.sign({ responseToken, email }, jwtKey, {
+        algorithm: "HS256",
+        expiresIn: jwtExpirySeconds,
+      })
+      sessionStorage.setItem('AccessToken', token);
+      
+      sessionStorage.setItem('Auth key', responseToken);
 
       setLoader(false)
       navigate('/connection')

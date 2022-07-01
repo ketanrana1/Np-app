@@ -21,7 +21,13 @@ const EditSchedule = () => {
     setLoader(true)
     const getSchedule = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-schedule/${id}`)
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-schedule/${id}`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }         
+        });
         setLoader(false)
         setScheduleDetails(response.data[0])
         Value.push(...response.data[0]?.flows)
@@ -31,7 +37,13 @@ const EditSchedule = () => {
     }
     getSchedule();
     const getFlow = async () => {
-      const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+      const { data } = await axios({
+        method: 'get',    
+        url: `${REACT_APP_BACKEND_URL}/api/get-flow`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        }        
+      });
       setLoader(false)
       const selectValue = data.map((flow) => {
         return (
@@ -56,7 +68,14 @@ const EditSchedule = () => {
     }
     delete payload._id
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-schedule`, { scheduleDetails: payload, id })
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/edit-schedule`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: { scheduleDetails: payload, id }         
+      });
       setLoader(false)
       navigate('/schedule');
       return toast(result.data.message);

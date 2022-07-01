@@ -20,7 +20,13 @@ const EditConnectionType = () => {
         setLoader(true)
         const getTaskType = async () => {
             try {
-                const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection-type/${id}`)
+                const response = await axios({
+                    method: 'get',    
+                    url: `${REACT_APP_BACKEND_URL}/api/get-connection-type/${id}`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    }        
+                  });
                 console.log("respose", response)
                 setLoader(false)
                 setConnectionType(response.data[0])
@@ -41,7 +47,14 @@ const EditConnectionType = () => {
       
         delete payload._id
         try {
-            const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-connection-type`, { connectionType: payload, id })
+            const result = await axios({
+                method: 'post',    
+                url: `${REACT_APP_BACKEND_URL}/api/edit-connection-type`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                },   
+                data: { connectionType: payload, id }         
+              });
             setLoader(false)
             navigate('/connection-type');
             return toast(result.data.message);

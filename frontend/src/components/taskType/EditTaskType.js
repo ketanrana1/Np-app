@@ -22,8 +22,13 @@ const EditTaskType = () => {
         setLoader(true)
         const getTaskType = async () => {
             try {
-                const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-taskType/${id}`)
-                console.log(response);
+                const response = await axios({
+                    method: 'get',    
+                    url: `${REACT_APP_BACKEND_URL}/api/get-taskType/${id}`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    }        
+                  });;
                 setLoader(false)
                 setTaskDetails(response.data[0])
             }
@@ -42,7 +47,14 @@ const EditTaskType = () => {
         }
         delete payload._id
         try {
-            const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/edit-taskType`, { taskDetails: payload, id })
+            const result = await axios({
+                method: 'post',    
+                url: `${REACT_APP_BACKEND_URL}/api/edit-taskType`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                },   
+                data: { taskDetails: payload, id }         
+              });
             setLoader(false)
             navigate('/task-type');
             return toast(result.data.message);
@@ -51,7 +63,6 @@ const EditTaskType = () => {
             return toast(error?.message)
         }
     }
-    console.log("taskDetails");
     return (
         <div>
             <h1 className="page-head">Edit task</h1>

@@ -1,5 +1,6 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import flow from 'models/flow';
+import AuthMiddleware from 'middlewares/AuthMiddleware';
 
 // UPDATE  
 // DELETE
@@ -8,6 +9,7 @@ import flow from 'models/flow';
 export class FlowController {
 
   @Get('/get-flow')
+  @UseBefore(AuthMiddleware)
   async getflow() {
     return await flow.aggregate([
       {
@@ -22,6 +24,7 @@ export class FlowController {
   }
 
   @Get('/get-flow/:id')
+  @UseBefore(AuthMiddleware)
   async getFlowById(@Param('id') id: string) {
     return await flow.aggregate([
       {
@@ -33,6 +36,7 @@ export class FlowController {
   }
 
   @Post('/update-flow')
+  @UseBefore(AuthMiddleware)
   async updateflowById(@Body() body: any) {
     const { flowTypeId } = body;
     const updateItems = { ...body }
@@ -52,6 +56,7 @@ export class FlowController {
   }
 
   @Post('/delete-flow')
+  @UseBefore(AuthMiddleware)
   async deleteFlowById(@Body() body: any) {
     const { flowId } = body;
     try {
@@ -69,6 +74,7 @@ export class FlowController {
   }
 
   @Post('/add-flow')
+  @UseBefore(AuthMiddleware)
   async addflow(@Body() body: any) {
 
     const newFlow = new flow(body);
@@ -87,6 +93,7 @@ export class FlowController {
   }
 
   @Post('/edit-flow')
+  @UseBefore(AuthMiddleware)
   async editTask( @Body() body: any ) {
     const payload = {
       ...body

@@ -16,12 +16,20 @@ const Connection = () => {
     setLoader(true)
     const getConnectionType = async () => {
       try {
-        const response = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-connection`)
+
+        const response = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-connection`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }            
+        });
+
         setLoader(false)
         setConnection(response.data.reverse().map((item) => {
           return {
             ...item,
-            readMore: "none",
+            readMore: "none", 
           }
         }))
       } catch (error) {
@@ -39,7 +47,16 @@ const Connection = () => {
       connectionId
     }
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/delete-connection`, payload)
+
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/delete-connection`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: payload         
+      });
+
       setLoader(false)
       toast(result.data.message);
       setConnection(connection.filter((item) => item.connectionId !== connectionId))

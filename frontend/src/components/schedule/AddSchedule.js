@@ -16,7 +16,13 @@ export const AddSchedule = () => {
     setLoader(true)
     const getFlow = async () => {
       try {
-        const { data } = await axios.get(`${REACT_APP_BACKEND_URL}/api/get-flow`)
+        const { data } = await axios({
+          method: 'get',    
+          url: `${REACT_APP_BACKEND_URL}/api/get-flow`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          }        
+        });
         setLoader(false)
         const selectValue = data.map((flow) => {
           return (
@@ -40,7 +46,14 @@ export const AddSchedule = () => {
   const onSubmitHandler = async (values) => {
     setLoader(true)
     try {
-      const result = await axios.post(`${REACT_APP_BACKEND_URL}/api/add-schedule`, values)
+      const result = await axios({
+        method: 'post',    
+        url: `${REACT_APP_BACKEND_URL}/api/add-schedule`,
+        headers: {
+            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+        },   
+        data: values         
+      });
       setLoader(false)
       navigate('/schedule');
       return toast(result.data.message);

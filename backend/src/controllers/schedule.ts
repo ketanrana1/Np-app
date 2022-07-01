@@ -1,6 +1,6 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
-// import scheduleType from 'models/schedule';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import schedule from 'models/schedule';
+import AuthMiddleware from 'middlewares/AuthMiddleware';
 
 // UPDATE 
 // DELETE
@@ -10,6 +10,7 @@ export class ScheduleController {
  
 
   @Get('/get-schedule')
+  @UseBefore(AuthMiddleware)
   async getSchedule() {
     return await schedule.aggregate([
       {
@@ -24,6 +25,7 @@ export class ScheduleController {
   }
 
   @Get('/get-schedule/:id')
+  @UseBefore(AuthMiddleware)
   async getScheduleById(@Param('id') id: string) {
     return await schedule.aggregate([
       {
@@ -37,6 +39,7 @@ export class ScheduleController {
 
 
   @Post('/update-schedule')
+  @UseBefore(AuthMiddleware)
   async updateScheduleById(@Body() body: any) {
     const { scheduleTypeId } = body;
     const updateItems = { ...body }
@@ -56,6 +59,7 @@ export class ScheduleController {
   }
 
   @Post('/delete-schedule')
+  @UseBefore(AuthMiddleware)
   async deleteScheduleById(@Body() body: any) {
     const { scheduleId } = body;
     try {
@@ -75,6 +79,7 @@ export class ScheduleController {
  
 
   @Post('/add-schedule')
+  @UseBefore(AuthMiddleware)
   async addSchedule(@Body() body: any) {
     const newSchedule = new schedule(body);
     const result = await newSchedule.save();
@@ -92,6 +97,7 @@ export class ScheduleController {
   }
 
   @Post('/edit-schedule')
+  @UseBefore(AuthMiddleware)
   async editTask( @Body() body: any ) {
     const payload = {
       ...body
