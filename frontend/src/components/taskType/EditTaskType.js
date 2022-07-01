@@ -89,9 +89,9 @@ const EditTaskType = () => {
                                                         <p>Task attribute Name</p>
                                                         <Field className="form-control all-form-fl-w-ip" type="name" name={`attribute_${index + 1}`} required placeholder={`Enter Attribute ${index + 1} Name`} onChange={(e) => {
                                                             const task = [...taskDetails?.attributes]
-                                                            task[index] = e.target.value
+                                                            task[index] = { ...attr, name: e.target.value}
                                                             setTaskDetails({
-                                                                ...taskDetails,
+                                                                ...taskDetails, 
                                                                 attributes: task
                                                             })
                                                         }} value={name} />
@@ -111,7 +111,7 @@ const EditTaskType = () => {
                                                                         onChange={(e) => {
                                                                             const attributesList = [...taskDetails?.attributes]
                                                                             const text = (e.target.value).split('_')[0]
-                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            attributesList[index] = { ...attr, inputField: text}
                                                                             setTaskDetails({
                                                                                 ...taskDetails,
                                                                                 attributes: attributesList
@@ -131,7 +131,7 @@ const EditTaskType = () => {
                                                                         onChange={(e) => {
                                                                             const attributesList = [...taskDetails?.attributes]
                                                                             const text = (e.target.value).split('_')[0]
-                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            attributesList[index] = { ...attr, inputField: text}
                                                                             setTaskDetails({
                                                                                 ...taskDetails,
                                                                                 attributes: attributesList
@@ -150,7 +150,7 @@ const EditTaskType = () => {
                                                                             const attributesList = [...taskDetails?.attributes]
                                                                             const text = (e.target.value).split('_')[0]
                                                                             
-                                                                            attributesList[index] = { name, fieldRequired, inputField: text}
+                                                                            attributesList[index] = { ...attr, inputField: text}
                                                                             setTaskDetails({
                                                                                 ...taskDetails,
                                                                                 attributes: attributesList

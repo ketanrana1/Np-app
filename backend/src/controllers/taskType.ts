@@ -101,10 +101,7 @@ export class TaskTypeController {
     delete body.id
 
     const result = await taskType.findOneAndUpdate({ "taskTypeId": body.taskDetails.taskTypeId }, {
-      description: body.taskDetails.description,
-      tasks: body.taskDetails.tasks,
-      variableSel: body.taskDetails.variableSel,
-
+      attributes: body.taskDetails.attributes,
     });
 
     if(!result) 
