@@ -116,7 +116,7 @@ export const AddFlow = () => {
                 <div className="form-group col-12">
                   <div className="label-input-cont">
                     <p>VariableSel</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="variableSel" placeholder="Enter Comma Seprated Values" />
+                    <Field className="form-control all-form-fl-w-ip" type="name" name="variableSel" placeholder="Enter Comma Seprated Values" />
                   </div>
                 </div>
                 <div className="submit-cont">

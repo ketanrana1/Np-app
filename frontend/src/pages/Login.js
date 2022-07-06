@@ -77,7 +77,7 @@ const Login = () => {
 
       <div className="login-form-cont">
 
-        <h3 className="logo-text">{changePassword ? 'Forget Password' : 'Logo'}</h3>
+        <h3 className="logo-text">{changePassword ? 'Forgezzt Password' : 'Logo'}</h3>
         <div className="form-group">
           <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />
         </div>
@@ -97,12 +97,12 @@ const Login = () => {
             (<div className='d-flex justify-content-between w-100'>
               <div className='py-2 px-4 btn btn-primary' onClick={() => setChangePassword(false)}>Go Back</div>
               <div className='py-2 px-4 btn btn-primary' onClick={sendEmail}>{loader ?
-                <div className='loader'></div> : "Send Email"}</div>
-            </div>) : (
-              <div className='backgorund btn btn-primary' onClick={!loader && loginButtonHandler} >
+                  <div className='loader'></div> : "Send Email"}</div>
+              </div>) : (
+              <div className='backgorund btn btn-primary' onClick={!loader && loginButtonHandler}>
                 {loader ?
                   <div className='loader'></div> : <div className='btn btn-primary py-2 px-4' >Login</div>}
-              </div>)
+            </div>)
           }
         </div>
       </div>

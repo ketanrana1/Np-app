@@ -100,7 +100,7 @@ export const AddSchedule = () => {
                   </div>
 
                   <div className="label-input-cont col-12">
-                    <p>Task</p>
+                    <p>Flow</p>
                     <Field
                       className="custom-select-schedule"
                       name="flows"
@@ -122,13 +122,13 @@ export const AddSchedule = () => {
                 <div className="form-group col-12 col-md-6">
                   <div className="label-input-cont">
                     <p>Error Email</p>
-                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="error_Email" placeholder="Email id" />
+                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" name="error_Email" placeholder="Email id" />
                   </div>
                 </div>
                 <div className="form-group col-12 col-md-6">
                   <div className="label-input-cont">
                     <p>Success Email</p>
-                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" required name="success_Email" placeholder="Email id" />
+                    <Field className="form-control all-form-fl-w-ip schedule-email-field" type="name" name="success_Email" placeholder="Email id" />
                   </div>
                 </div>
                 <div className="form-group col-12">

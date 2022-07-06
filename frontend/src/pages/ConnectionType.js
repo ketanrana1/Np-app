@@ -76,7 +76,7 @@ const ConnectionType = () => {
   return (
     <>
     <div>
-      <h1 className="page-head">connectionType </h1>
+      <h1 className="page-head">Connection Type </h1>
       <div className="inner-body-cont">
         <div className="btn-bloat-right">
           <Link className="commn-btn" to="/connection-type/:add-connection-type">Create New</Link>

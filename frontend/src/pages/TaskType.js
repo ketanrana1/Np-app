@@ -77,7 +77,7 @@ const TaskType = () => {
   return (
     <>
     <div>
-      <h1 className="page-head">taskType </h1>
+      <h1 className="page-head">Task Type </h1>
       <div className="inner-body-cont">
         <div className="btn-bloat-right">
           <Link className="commn-btn" to="/task-type/:add-task-type">Create New</Link>
