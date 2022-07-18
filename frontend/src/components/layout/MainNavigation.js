@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const MainNavigation = () => {
   const navigate = useNavigate()
-  const logoutUser = () =>{
+  const logoutUser = () => {
     sessionStorage.setItem('Auth key', '');
     navigate("/login")
     return toast("Logout Successfully", { autoClose: 2000 })

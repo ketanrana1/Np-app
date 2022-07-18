@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 import Layout from './components/layout/layout';
 import LoginLayout from './components/layout/LoginLayout';
+import MonitorLayout from './components/layout/MonitorLayout'
 import NotFound from './pages/NotFound';
 import Connection from './pages/Connection';
 import AddConnection from './components/connection/AddConnection';
@@ -24,6 +25,7 @@ import TaskType from './pages/TaskType';
 import EditTaskType from './components/taskType/EditTaskType';
 import ConnectionType from './pages/ConnectionType';
 import EditConnectionType from './components/connectionType/EditConnectionType';
+import Monitor from './components/monitor/Monitor';
 
 
 function App() {
@@ -42,7 +44,6 @@ function App() {
         <Route path='/connection-type/view-connection-type/:id' element={<Layout><ViewDetails/></Layout>} />
         <Route path='/connection-type/edit-connection-type/:id' element={<Layout><EditConnectionType/></Layout>} />
         
-
         <Route path='/connection' element={<Layout><Connection /></Layout>} />
         <Route path='/connection/:add-connection' element={<Layout><AddConnection /></Layout>} />
         <Route path='/register-user' element={<Layout><Register /></Layout>} />
@@ -72,6 +73,8 @@ function App() {
         <Route path='*' element={<Layout><NotFound /></Layout>} />
         <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
         <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />
+
+        <Route path='/monitor' element={<MonitorLayout><Monitor /></MonitorLayout>} />
       </Routes>
   );
 }
