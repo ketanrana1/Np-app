@@ -56,14 +56,14 @@ const Flow = () => {
         data: payload         
       });
       setLoader(false)
-      toast(result.data.message);
+      toast(result.data.message, { autoClose: 2000 });
       setFlow(flow.filter((item) => item.flowId !== flowId))
       $("#delete-confirmation-modal").modal("hide");
       
       return;
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -95,7 +95,7 @@ const Flow = () => {
             <tbody>
               {
                 flow.map((item, index) => {
-                  return <tr>
+                  return <tr key={index}>
                     <th className="first-row" scope="row">{item.name}</th>
                     <td className="second-row" ><p>
                       <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 

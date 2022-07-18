@@ -1,0 +1,62 @@
+[ 
+    {
+        "name":"Salesforce",
+        "attributes":["User","Pwd","URL"],
+        "connectionTypeId":"1"
+    },
+    {
+        "name":"ServiceNow",
+        "attributes":["ClientID","ClientToken","UserID", "UserToken"],
+        "connectionTypeId":"2"
+    },
+    {
+        "name":"Anaplan",
+        "attributes":["User","Password"],
+        "connectionTypeId":"3"
+    },
+    {
+        "name":"Acumatica",
+        "attributes":["User","Password","AuthURL", "Company", "Locale"],
+        "connectionTypeId":"4"
+    },
+    {
+        "name":"Netsuite",
+        "attributes":["ClientID","ClientSecret","UserToken", "UserSecret", "Account"],
+        "connectionTypeId":"5"
+    },
+    {
+        "name":"SFTP",
+        "attributes":["SFTP_Host","SFTP_Port","SFTP_User", "SFTP_Password"],
+        "connectionTypeId":"6"
+    },
+    {
+        "name":"Salesforce",
+        "attributes":["LoginURL","User","Password", "UserToken"],
+        "connectionTypeId":"7"
+    },
+    {
+        "name":"Hibob",
+        "attributes":["LoginURL","User","Password", "UserToken"],
+        "connectionTypeId":"8"
+    },
+    {
+        "name":"Greenhouse",
+        "attributes":[],
+        "connectionTypeId":"9"
+    },
+    {
+        "name":"Paylocity",
+        "attributes":[],
+        "connectionTypeId":"10"
+    },
+    {
+        "name":"Bigquery",
+        "attributes":[],
+        "connectionTypeId":"11"
+    },
+    {
+        "name":"S3",
+        "attributes":[],
+        "connectionTypeId":"12"
+    }
+]

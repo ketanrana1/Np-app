@@ -1,0 +1,28 @@
+[ 
+    {
+        "name":"SF01",
+        "description":"Enterprise Salesforce",
+        "connectionTypeAttributes":{
+            "LoginURL":"asd",
+            "User":"asd",
+            "Password":"sad",
+            "UserToken":"asdsd"
+        },
+        "connectionTypeId":"8",
+        "connectionName":"Salesforce",
+        "connectionId": "201"
+    },
+    {
+        "name":"SN01",
+        "description":"Service Now",
+        "connectionTypeAttributes":{
+            "LoginURL":"asd",
+            "User":"asd",
+            "Password":"sad",
+            "UserToken":"asdsd"
+        },
+        "connectionTypeId":"8",
+        "connectionName":"ServiceNow",
+        "connectionId": "201"
+    }
+]

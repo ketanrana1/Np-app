@@ -57,10 +57,10 @@ const EditTaskType = () => {
               });
             setLoader(false)
             navigate('/task-type');
-            return toast(result.data.message);
+            return toast(result.data.message, { autoClose: 2000 });
         } catch (error) {
             setLoader(false)
-            return toast(error?.message)
+            return toast(error?.message, { autoClose: 2000 })
         }
     }
     return (

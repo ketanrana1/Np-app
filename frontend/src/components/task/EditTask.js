@@ -57,10 +57,10 @@ const EditTask = () => {
       });
       setLoader(false)
       navigate('/task');
-      return toast(result.data.message);
+      return toast(result.data.message, { autoClose: 2000 });
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -84,7 +84,7 @@ const EditTask = () => {
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." onChange={(e) => setTaskDetails({ ...taskDetails, description: e.target.value })} value={taskDetails.description} />
                       <ErrorMessage className="error-message" name="name" component="div" />
                     </div>

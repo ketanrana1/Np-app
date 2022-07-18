@@ -22,11 +22,11 @@ const AddConnectionType = () => {
         },   
         data: payload         
       });
-      toast(result.data.message);  
+      toast(result.data.message, { autoClose: 2000 });  
       setConnectionType([])
       resetForm({})
     } catch (error) {
-      return toast(error?.message)      
+      return toast(error?.message, { autoClose: 2000 })      
     }
   }
 
@@ -34,7 +34,6 @@ const AddConnectionType = () => {
     const removeAttribute = [...connectionType]
     removeAttribute.pop()
     setConnectionType(removeAttribute)
-
   }
 
     return (
@@ -58,7 +57,7 @@ const AddConnectionType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Connection Type Name</p>
-                      <div class="outer-input-div">
+                      <div className="outer-input-div">
                         <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name"/> 
                         <ErrorMessage className="error-message" name="name" component="div" /> 
                       </div>            
@@ -78,8 +77,8 @@ const AddConnectionType = () => {
                     }
                     <div className="form-group col-12 pr-0">
                         <div className="label-input-cont">
-                          <p></p>
-                          {connectionType.length !== 0 && <div className="all-form-fl-w-ip remove-attribute-button" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
+                          {/* <p></p> */}
+                          {connectionType.length !== 0 && <div className="add-attribute-btn" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
                       </div>                  
                     </div>
               

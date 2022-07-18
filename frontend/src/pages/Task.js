@@ -7,6 +7,7 @@ import Modal from '../components/layout/Modal';
 import $ from "jquery";
 import Loader from '../components/field/loader';
 
+
 const Task = () => {
 
   const [task, setTask] = useState([]);
@@ -55,12 +56,12 @@ const Task = () => {
         },   
         data: payload         
       });
-      toast(result.data.message);  
+      toast(result.data.message, { autoClose: 2000 });  
       setTask(task.filter((item) => item.taskId !== taskId))
       $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
-      return toast(error?.message)      
+      return toast(error?.message, { autoClose: 2000 })      
     }
   }
 
@@ -92,7 +93,7 @@ const Task = () => {
         <tbody>
         {
             task.map((item, index) => {
-            return <tr> 
+            return <tr key={index}> 
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" ><p>
                       <span style={{display:  item.readMore === "none" ? "block" : "none" }} className="short-decp"> 
@@ -102,7 +103,7 @@ const Task = () => {
                       <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                       <td className="third-row"><p>{item.taskName}</p></td>
                       <td className="fourth-row">
-                      <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name }} className="view-link" >View</Link>
+                      <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name}} className="view-link" >View</Link>
                       <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >Edit</Link>
                       <a onClick={() => setTaskId(item.taskId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />

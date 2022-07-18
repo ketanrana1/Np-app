@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../components/common/environment';
@@ -7,11 +7,16 @@ import Modal from '../components/layout/Modal';
 import $ from "jquery";
 import Loader from '../components/field/loader';
 
+import AddInitialData from '../components/addInitialdata/AddInitialData';
+
 const Connection = () => {
+
 
   const [connection, setConnection] = useState([]);
   const [connectionId, setConnectionId] = useState("");
   const [loader, setLoader] = useState(false)
+  const [loadInitialData, setLoadInitialData ] = useState(false)
+
   useEffect(() => {
     setLoader(true)
     const getConnectionType = async () => {
@@ -36,7 +41,6 @@ const Connection = () => {
         setLoader(false)
         console.log(error);
       }
-
     }
     getConnectionType();
   }, [])
@@ -58,13 +62,13 @@ const Connection = () => {
       });
 
       setLoader(false)
-      toast(result.data.message);
+      toast(result.data.message, { autoClose: 2000 });
       setConnection(connection.filter((item) => item.connectionId !== connectionId))
       $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -75,10 +79,11 @@ const Connection = () => {
     readMoreHandle[index].readMore = "block";
     setConnection(readMoreHandle)
   }
-
+ console.log("TESTING", loadInitialData)
   return (
     <>
       <div>
+      <AddInitialData updateInitialLoadState={setLoadInitialData} loadInitialData={loadInitialData}/>
         <h1 className="page-head">Connection </h1>
         <div className="inner-body-cont">
           <div className="btn-bloat-right">
@@ -98,9 +103,9 @@ const Connection = () => {
               <tbody>
                 {
                   connection.map((item, index) => {
-                    return <tr>
+                    return <tr key={index}>
                       <th className="first-row" scope="row">{item.name}</th>
-                      <td className="second-row" ><p>
+                      <td className="second-row"><p>
                         <span style={{ display: item.readMore === "none" ? "block" : "none" }} className="short-decp">
                           {item.description.length > 150 ? item.description.slice(0, 150) : item.description}
                           <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> {item.description.length > 150 ? 'Read More...' : ''}</span>
@@ -120,6 +125,7 @@ const Connection = () => {
           </div>
         </div>
       </div>
+      
       <Modal deleteHandler={() => handleDeleteClick(connectionId)} />
       {loader && <Loader />}
 

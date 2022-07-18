@@ -6,7 +6,7 @@ const MainNavigation = () => {
   const logoutUser = () =>{
     sessionStorage.setItem('Auth key', '');
     navigate("/login")
-    return toast("Logout Successfully")
+    return toast("Logout Successfully", { autoClose: 2000 })
   }
   return (
     <>

@@ -36,7 +36,7 @@ header {
 .inner-body-cont {
     background: white;
     min-height: 100vh;
-    padding: 30px 40px;
+    padding: 15px 40px;
 }
 
 .page-head {
@@ -44,9 +44,8 @@ header {
     letter-spacing: 0px;
     color: #000000;
     font-family: 'DM Sans', sans-serif;
-    border-bottom: 1px solid #c1c1c1;
+    /*border-bottom: 1px solid #c1c1c1;*/
     padding-bottom: 10px;
-    margin-bottom: 15px;
 
 }
 
@@ -116,11 +115,14 @@ a.commn-btn {
     letter-spacing: 0px;
     color: #FFFFFF;
     display: inline-block;
-    padding: 15px 35px;
-    background-color: #0055FF;
+    padding: 12px 20px;
+    background-color: #496399;
     color: white;
     font-family: 'DM Sans', sans-serif;
     border-radius: 5px;
+}
+a.commn-btn:hover {
+    text-decoration:none;
 }
 
 .table-cont {
@@ -136,15 +138,15 @@ a.commn-btn {
 
 /*connection table starts here*/
 .commn-table-cont {
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .commn-table-cont table {
-    border: 1px solid #CFCFCF;
+    border: 1px solid #cfcfcf3b;
 }
 
 .commn-table-cont table thead {
-    background-color: #F8F9FA
+    background-color: #f8f9fa66;
 }
 
 .commn-table-cont table .first-row {
@@ -165,11 +167,11 @@ a.commn-btn {
 }
 
 .commn-table-cont table .fourth-row a {
-    color: #0055FF;
+    color: #2d5cbb;
 }
 
 .commn-table-cont table .fourth-row a.view-link {
-    color: #0055FF;
+    color: #2d5cbb;
     display: inline-block;
     margin-right: 25px;
     margin-top: 0;
@@ -186,7 +188,7 @@ a.commn-btn {
 
 .commn-table-cont table .third-row p {
     display: inline-block;
-    background-color: #EBF0FC;
+    background-color: #ebf0fc8f;
     padding: 9px 25px;
     border-radius: 25px;
 }
@@ -337,14 +339,14 @@ span.checkbox-schedule-span {
 
 .read-more-text {
     cursor:pointer;
-    color: #0055FF
+    color: #2d5cbb
 }
 
 
 .all-form-fl-w-ip.remove-attribute-button {
     display: inline-block;
     padding: 5px 28px;
-    background-color: #0055FF;
+    background-color: #2d5cbb;
     color: white;
     font-family: 'DM Sans', sans-serif;
     border-radius: 5px;
@@ -388,8 +390,7 @@ span.checkbox-schedule-span {
         border-bottom: 3px solid rgb(231, 255, 12) !important;
     }
     100% {
-        transform: rotate(360deg);
-        
+        transform: rotate(360deg);   
     }
 }
 .spinner {
@@ -409,8 +410,8 @@ span.checkbox-schedule-span {
 
 .add-attribute-btn {
     display: inline-block;
-    padding: 15px 35px;
-    background-color: #0055FF;
+    padding: 12px 20px;
+    background-color: #496399 ;
     color: white;
     font-family: 'DM Sans', sans-serif;
     border-radius: 5px;
@@ -440,4 +441,41 @@ span.checkbox-schedule-span {
     padding: 10px 25px;
     max-width: 280px;
     cursor: pointer;
+}
+
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #cfcfcf3b;
+}
+
+input.register-submit {
+    font: normal normal normal 18px/22px DM Sans;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #496399;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+a.edit-link-view {
+    font: normal normal normal 18px/22px DM Sans;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #496399;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 5px;
+}
+
+.single-view-table.table td, .single-view-table.table th {
+    border-top:none;
 }

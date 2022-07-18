@@ -63,11 +63,13 @@
     letter-spacing: 0px;
     color: #FFFFFF;
     display: inline-block;
-    padding: 15px 35px;
-    background-color: #0055FF;
+    padding: 12px 20px;
+    background-color: #496399;
     color: white;
     font-family: 'DM Sans', sans-serif;
     border-radius: 5px;
+    border:none;
+    font-size:16px;
 }
 
 .submit-cont {

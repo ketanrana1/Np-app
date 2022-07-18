@@ -53,13 +53,13 @@ const Schedule = () => {
         },   
         data: payload         
       });
-      toast(result.data.message);
+      toast(result.data.message, { autoClose: 2000 });
       setSchedule(schedule.filter((item) => item.scheduleId !== scheduleId))
       $("#delete-confirmation-modal").modal("hide");
       return;
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -93,7 +93,7 @@ const Schedule = () => {
               <tbody>
                 {
                   schedule.map((item, index) => {
-                    return <tr>
+                    return <tr key={index}>
                       <th className="first-row" scope="row">{item.name}</th>
                       <td className="second-row" ><p>
                         <span style={{ display: item.readMore === "none" ? "block" : "none" }} className="short-decp">

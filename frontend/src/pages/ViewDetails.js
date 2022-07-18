@@ -13,6 +13,8 @@ import ViewFlow from '../components/flow/ViewFlow';
 import ViewSchedule from '../components/schedule/ViewSchedule';
 import ViewTask from '../components/task/ViewTask';
 import ViewTaskType from '../components/taskType/ViewTaskType';
+
+
 const ViewDetails = () => {
     const { id } = useParams()
     const { state: { tab, name } } = useLocation();
@@ -32,6 +34,7 @@ const ViewDetails = () => {
                     }        
                   });
                 setDetails(data)
+               
                 setLoader(false)
             } catch (error) {
                 setLoader(false)
@@ -53,7 +56,7 @@ const ViewDetails = () => {
                 <div className="commn-table-cont table-responsive-md">
                     <div className="row">
                         <div className="form-group col-12">
-                            <table class="table">
+                            <table className="single-view-table table">
                                 <tbody>
                                     {details && details?.map((detail) => {
                                         return (
@@ -69,8 +72,7 @@ const ViewDetails = () => {
 
                                 </tbody>
                             </table>
-                            <Link to={`/${tab}/edit-${tab}/${id}`} className="view-link btn btn-primary mt-5" >Edit</Link>
-
+                            <Link to={`/${tab}/edit-${tab}/${id}`} className="edit-link-view view-link mt-5" >Edit</Link>
                         </div>
                     </div>
                 </div>

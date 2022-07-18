@@ -36,16 +36,18 @@ const Login = () => {
         expiresIn: jwtExpirySeconds,
       })
       sessionStorage.setItem('AccessToken', token);
+      localStorage.setItem('AccessToken', token);
       
       sessionStorage.setItem('Auth key', responseToken);
+      localStorage.setItem('AccessToken', token);
 
       setLoader(false)
       navigate('/connection')
-      return toast("Logged in Successfully")
+      return toast("Logged in Successfully", { autoClose: 2000 })
 
     } catch (error) {
       setLoader(false)
-      return toast(error?.message);
+      return toast(error?.message, { autoClose: 2000 });
     }
   }
 
@@ -59,7 +61,7 @@ const Login = () => {
     try {
       await sendPasswordResetEmail(getAuth(firebaseConfig), email)
       setLoader(false)
-      toast("Reset Password email has been sent successfully")
+      toast("Reset Password email has been sent successfully", { autoClose: 2000 })
       setTimeout(() => {
         setChangePassword(false)
       }, 1000)
@@ -67,7 +69,7 @@ const Login = () => {
     } catch (error) {
       console.log(error?.message);
       setLoader(false)
-      return toast("Please Fill the Email Field");
+      return toast("Please Fill the Email Field", { autoClose: 2000 });
     }
   }
   const onInputChangeHandler = (e) => setFormState({ ...formState, [e.target.name]: e.target.value })

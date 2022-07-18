@@ -56,10 +56,10 @@ export const AddSchedule = () => {
       });
       setLoader(false)
       navigate('/schedule');
-      return toast(result.data.message);
+      return toast(result.data.message, { autoClose: 2000 });
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -86,14 +86,14 @@ export const AddSchedule = () => {
                 <div className="form-group col-12">
                   <div className="label-input-cont">
                     <p>Schedule Name</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Schedule Name" />
                       <ErrorMessage className="error-message" name="name" component="div" />
                     </div>
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." />
                       <ErrorMessage className="error-message" name="description" component="div" />
                     </div>

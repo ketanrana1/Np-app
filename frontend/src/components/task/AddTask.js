@@ -52,10 +52,10 @@ const AddTask = () => {
       setLoader(false)
       setTaskTypeAttributes(result.data[0].attributes)
       setTaskTypeName(result.data[0].name)
-      return toast(result.data.message);
+      return toast(result.data.message, { autoClose: 2000 });
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -81,6 +81,7 @@ const AddTask = () => {
       taskTypeId: selectValue,
       taskTypeName: taskTypeName,
     }
+    console.log("PAYLOAD", payload)
 
     try {
       const result = await axios({
@@ -93,10 +94,10 @@ const AddTask = () => {
       });
       setLoader(false)
       navigate('/task');
-      return toast(result.data.message);
+      return toast(result.data.message, { autoClose: 2000 });
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -123,14 +124,14 @@ const AddTask = () => {
                 <div className="form-group col-12">
                   <div className="label-input-cont">
                     <p>Task Name</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name" />
                       <ErrorMessage className="error-message" name="name" component="div" />
                     </div>
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." />
                       <ErrorMessage className="error-message" name="description" component="div" />
                     </div>

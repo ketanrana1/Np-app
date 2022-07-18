@@ -35,12 +35,12 @@ const AddTaskType = () => {
       });
 
       setLoader(false)
-      toast(result.data.message);  
+      toast(result.data.message, { autoClose: 2000 });  
       setConnectionType([])
       resetForm({})
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)      
+      return toast(error?.message), { autoClose: 2000 }      
     }
   }
 
@@ -72,7 +72,7 @@ const AddTaskType = () => {
                   <div className="form-group col-12">
                       <div className="label-input-cont">
                       <p>Task Type Name</p>
-                      <div class="outer-input-div">
+                      <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Task Name"/> 
                       <ErrorMessage className="error-message" name="name" component="div" /> 
                       </div>  
@@ -121,8 +121,8 @@ const AddTaskType = () => {
                     }
                     <div className="form-group col-12 pr-0">
                         <div className="label-input-cont">
-                        <p></p>
-                        {taskType.length !== 0 && <div className="all-form-fl-w-ip remove-attribute-button" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
+                        {/* <p></p> */}
+                        {taskType.length !== 0 && <div className="add-attribute-btn" onClick={() => removeAttribute()}>Remove Attribute</div> }                               
                       </div>                  
                     </div>
                   <div className="add-conne-type-btn">

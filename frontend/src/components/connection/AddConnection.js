@@ -38,9 +38,9 @@ export const AddConnection = () => {
         }         
       });
       setConnectionTypeAttributes(result.data[0].attributes)
-      return toast(result.data.message);  
+      return toast(result.data.message, { autoClose: 2000 });  
     } catch (error) {
-      return toast(error?.message)      
+      return toast(error?.message, { autoClose: 2000 })      
     }
   }
 
@@ -54,6 +54,8 @@ export const AddConnection = () => {
       connectionTypeAttributes: newValues,
       connectionTypeId: selectValue
     }
+
+    console.log("connection payload", payload)
     try {    
       const result = await axios({
         method: 'post',    
@@ -64,9 +66,9 @@ export const AddConnection = () => {
         data: payload         
       });
       navigate('/connection');
-      return toast(result.data.message);  
+      return toast(result.data.message, { autoClose: 2000 });  
     } catch (error) {
-      return toast(error?.message)      
+      return toast(error?.message, { autoClose: 2000 })      
     }
   }
 
@@ -92,15 +94,15 @@ export const AddConnection = () => {
               <div className="row">
                 <div className="form-group col-12">
                     <div className="label-input-cont">
-                    <p>Connection Name</p>
-                    <div class="outer-input-div">
-                    <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
-                    <ErrorMessage className="error-message" name="name" component="div" /> 
+                      <p>Connection Name</p>
+                      <div className="outer-input-div">
+                      <Field className="form-control all-form-fl-w-ip" type="name" required name="name" placeholder="Enter Connection Name" /> 
+                      <ErrorMessage className="error-message" name="name" component="div" /> 
                     </div>   
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." /> 
                     <ErrorMessage className="error-message" name="description" component="div" /> 
                     </div>   

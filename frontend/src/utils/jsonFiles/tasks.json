@@ -1,0 +1,102 @@
+[
+    {
+    "name": "New Task One",
+    "description": "Description",
+    "taskTypeId": "8",
+    "taskTypeName": "SFTP_File_Get",
+    "taskTypeAttributes": [
+      {
+        "key": "Conn_Name",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "LocalDir",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "ArchiveDir",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "LocalFileName",
+        "fieldRequired": true,
+        "inputField": "textarea",
+        "value": "value"
+      },
+      {
+        "key": "RemoteFileName",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "DeleteAfterGet",
+        "fieldRequired": true,
+        "inputField": "checkbox",
+        "value": "true"
+      },
+      {
+        "key": "DaysInArchive",
+        "fieldRequired": false,
+        "inputField": "text",
+        "value": "sdf"
+      }
+    ]
+   },
+   {
+    "name": "New Task Two",
+    "description": "Description",
+    "taskTypeId": "8",
+    "taskTypeName": "SFTP_File_Get",
+    "taskTypeAttributes": [
+      {
+        "key": "Conn_Name",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "LocalDir",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "ArchiveDir",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "LocalFileName",
+        "fieldRequired": true,
+        "inputField": "textarea",
+        "value": "value"
+      },
+      {
+        "key": "RemoteFileName",
+        "fieldRequired": true,
+        "inputField": "text",
+        "value": "value"
+      },
+      {
+        "key": "DeleteAfterGet",
+        "fieldRequired": true,
+        "inputField": "checkbox",
+        "value": "true"
+      },
+      {
+        "key": "DaysInArchive",
+        "fieldRequired": false,
+        "inputField": "text",
+        "value": "sdf"
+      }
+    ]
+   }
+] 

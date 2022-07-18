@@ -56,14 +56,14 @@ const ConnectionType = () => {
         data: payload         
       });
       setLoader(false)
-      toast(result.data.message);
+      toast(result.data.message, { autoClose: 2000 });
       setConnectionType(connectionType.filter((item) => item.connectionTypeId !== connectionTypeId))
       $("#delete-confirmation-modal").modal("hide");
       
       return;
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -95,7 +95,7 @@ const ConnectionType = () => {
             <tbody>
               {
                 connectionType.map((item, index) => {
-                  return <tr>
+                  return <tr key={index}>
                     <th className="first-row" scope="row">{item.name}</th>
                     <td></td>
                     <td></td>

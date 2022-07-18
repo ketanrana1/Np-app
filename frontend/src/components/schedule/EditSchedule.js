@@ -78,10 +78,10 @@ const EditSchedule = () => {
       });
       setLoader(false)
       navigate('/schedule');
-      return toast(result.data.message);
+      return toast(result.data.message, { autoClose: 2000 });
     } catch (error) {
       setLoader(false)
-      return toast(error?.message)
+      return toast(error?.message, { autoClose: 2000 })
     }
 
   }
@@ -103,7 +103,7 @@ const EditSchedule = () => {
                   </div>
                   <div className="label-input-cont">
                     <p>Description</p>
-                    <div class="outer-input-div">
+                    <div className="outer-input-div">
                     <Field className="form-control all-form-fl-w-ip" type="textarea" required name="description" placeholder="Description here.." onChange={(e) => setScheduleDetails({ ...scheduleDetails, description: e.target.value })} value={scheduleDetails.description} />
                     <ErrorMessage className="error-message" name="name" component="div" />
                     </div>

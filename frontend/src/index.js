@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
@@ -9,10 +9,15 @@ import './assets/css/login.css';
 import App from './App';
 import { ToastContainer } from "react-toastify"
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <BrowserRouter>
   <ToastContainer />
     <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
+  </BrowserRouter>
+)
+
+// ReactDOM.render(
+// ,
+//   document.getElementById('root')
+// );
