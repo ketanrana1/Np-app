@@ -25,7 +25,7 @@ import TaskType from './pages/TaskType';
 import EditTaskType from './components/taskType/EditTaskType';
 import ConnectionType from './pages/ConnectionType';
 import EditConnectionType from './components/connectionType/EditConnectionType';
-import Monitor from './components/monitor/Monitor';
+import Monitor from './components/monitor/monitor';
 
 
 function App() {

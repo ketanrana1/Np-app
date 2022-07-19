@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { columns } from './columnsType';
 
-const FLowList = () => {
+const FlowList = () => {
   return (
-    <div>FLowList</div>
+    <div>
+      Recent run status
+    </div>
   )
 }
 
-export default FLowList
+export default FlowList
