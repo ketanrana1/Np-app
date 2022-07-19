@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { styled, useTheme} from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -21,8 +21,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import AccountsMenu from './accountMenu';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+
 const drawerWidth = 310;
 const LogoutText = "Logout"
+const AdminText = "Configure View"
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -47,7 +52,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-   
+
     ...theme.mixins.toolbar,
 }));
 
@@ -88,7 +93,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
     const theme = useTheme();
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false);
+    const [authRole, setauthRole] = useState(null)
+
+    useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -98,10 +107,21 @@ export default function MiniDrawer() {
         setOpen(false);
     };
 
+    const handleLogout = () => {
+        sessionStorage.setItem('Auth key', '');
+        sessionStorage.setItem('Role', '');
+
+        return [navigate("/login"),toast("Logout Successfully", { autoClose: 2000 })]
+    }
+
+    const handleAdminRoute = ()=>{
+        navigate('/connection')
+    }
+
     return (
         <Box sx={{ display: 'flex' }}>
             <AppBar position="fixed" open={open} style={{ backgroundColor: '#fff', color: "#575757" }}>
-                <Toolbar style={{minHeight: "55px"}}>
+                <Toolbar style={{ minHeight: "55px" }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -115,9 +135,9 @@ export default function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="subtitle1" noWrap component="div">
-                        NP App Drawer
+                        Np App
                     </Typography>
-                    <AccountsMenu/>
+                    <AccountsMenu />
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -127,6 +147,30 @@ export default function MiniDrawer() {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
+                {authRole === 'admin' && <><List>
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                            onClick={handleAdminRoute}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                {!open ? <Tooltip TransitionComponent={Zoom} title="Configure View" placement="right"><AdminPanelSettingsIcon /></Tooltip> : <AdminPanelSettingsIcon />}
+                            </ListItemIcon>
+                            <ListItemText primary={AdminText} sx={{ opacity: open ? 1 : 0 }} />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+                    <Divider /></>}
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
@@ -160,6 +204,7 @@ export default function MiniDrawer() {
                                 justifyContent: open ? 'initial' : 'center',
                                 px: 2.5,
                             }}
+                            onClick={handleLogout}
                         >
                             <ListItemIcon
                                 sx={{
@@ -168,7 +213,7 @@ export default function MiniDrawer() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                {!open ? <Tooltip TransitionComponent={Zoom} title="Logout" placement="right"><LogoutIcon /></Tooltip>:<LogoutIcon />}
+                                {!open ? <Tooltip TransitionComponent={Zoom} title="Logout" placement="right"><LogoutIcon /></Tooltip> : <LogoutIcon />}
                             </ListItemIcon>
                             <ListItemText primary={LogoutText} sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>

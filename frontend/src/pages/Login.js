@@ -8,7 +8,6 @@ import "../assets/css/global.css"
 import jwt from 'jsonwebtoken'
 import { REACT_APP_JWT_SECRET_KEY } from '../components/common/environment';
 
-
 const jwtKey = REACT_APP_JWT_SECRET_KEY
 const jwtExpirySeconds = 86400
 
@@ -24,54 +23,48 @@ const Login = () => {
   const [formState, setFormState] = useState(DEFAULT_STATE);
   const [changePassword, setChangePassword] = useState(false)
   const [loader, setLoader] = useState(false)
-  const loginButtonHandler = async () => {
-    const { email, password } = formState
+
+  const loginButtonHandler = async (e) => {
+   
     setLoader(true)
+    const { email, password } = formState
+
     try {
       const response = await signInWithEmailAndPassword(getAuth(firebaseConfig), email, password);
-
-      const responseToken = response._tokenResponse.refreshToken;    
-      const token = jwt.sign({ responseToken, email }, jwtKey, {
+      const responseToken = response._tokenResponse.refreshToken;
+      const { displayName: role } = response.user
+      const token = jwt.sign({ responseToken, email, role }, jwtKey, {
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds,
       })
+
+      sessionStorage.setItem('Role', role);
       sessionStorage.setItem('AccessToken', token);
       localStorage.setItem('AccessToken', token);
-      
       sessionStorage.setItem('Auth key', responseToken);
-      localStorage.setItem('AccessToken', token);
+      localStorage.setItem('Auth key', responseToken);
 
-      setLoader(false)
-      navigate('/connection')
-      return toast("Logged in Successfully", { autoClose: 2000 })
-
+      return [setLoader(false), navigate('/monitor'), toast("Logged in Successfully", { autoClose: 2000 })]
     } catch (error) {
-      setLoader(false)
-      return toast(error?.message, { autoClose: 2000 });
+      return [setLoader(false), toast(error?.message, { autoClose: 2000 })];
     }
   }
 
-  const forgotPasswordHandler = async () => {
-    setChangePassword(true)
-    setFormState(DEFAULT_STATE)
+  const forgotPasswordHandler = () => {
+    return [setChangePassword(true),setFormState(DEFAULT_STATE)]
   }
+
   const sendEmail = async () => {
     setLoader(true)
     const { email } = formState
     try {
       await sendPasswordResetEmail(getAuth(firebaseConfig), email)
-      setLoader(false)
-      toast("Reset Password email has been sent successfully", { autoClose: 2000 })
-      setTimeout(() => {
-        setChangePassword(false)
-      }, 1000)
-      return
+      return [setLoader(false),toast("Reset Password email has been sent successfully", { autoClose: 2000 }),setTimeout(() => setChangePassword(false), 1000)]
     } catch (error) {
-      console.log(error?.message);
-      setLoader(false)
-      return toast("Please Fill the Email Field", { autoClose: 2000 });
+      return [setLoader(false),toast("Please Fill the Email Field", { autoClose: 2000 })];
     }
   }
+
   const onInputChangeHandler = (e) => setFormState({ ...formState, [e.target.name]: e.target.value })
 
   return (
@@ -99,18 +92,17 @@ const Login = () => {
             (<div className='d-flex justify-content-between w-100'>
               <div className='py-2 px-4 btn btn-primary' onClick={() => setChangePassword(false)}>Go Back</div>
               <div className='py-2 px-4 btn btn-primary' onClick={sendEmail}>{loader ?
-                  <div className='loader'></div> : "Send Email"}</div>
-              </div>) : (
+                <div className='loader'></div> : "Send Email"}</div>
+            </div>) : (
               <div className='backgorund btn btn-primary' onClick={!loader && loginButtonHandler}>
                 {loader ?
                   <div className='loader'></div> : <div className='btn btn-primary py-2 px-4' >Login</div>}
-            </div>)
+              </div>)
           }
         </div>
       </div>
     </>
   )
 }
-
 
 export default Login

@@ -95,7 +95,7 @@ const Monitor = () => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          
+
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -103,7 +103,6 @@ const Monitor = () => {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: "100vh",
                   }}
                 >
                   <Log />
