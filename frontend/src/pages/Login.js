@@ -67,18 +67,14 @@ const Login = () => {
       }, 1000)
       return
     } catch (error) {
-      console.log(error?.message);
-      setLoader(false)
-      return toast("Please Fill the Email Field", { autoClose: 2000 });
+      return [setLoader(false), toast("Please Fill the Email Field", { autoClose: 2000 })];
     }
   }
   const onInputChangeHandler = (e) => setFormState({ ...formState, [e.target.name]: e.target.value })
 
   return (
     <>
-
       <div className="login-form-cont">
-
         <h3 className="logo-text">{changePassword ? 'Forget Password' : 'Logo'}</h3>
         <div className="form-group">
           <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />

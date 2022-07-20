@@ -15,7 +15,7 @@ async function AuthMiddleware(request: Request, response: Response, next: NextFu
     console.log("ERROR", error)
   }
 
-}
+} 
 
 export default AuthMiddleware;
 
