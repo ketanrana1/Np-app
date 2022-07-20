@@ -17,7 +17,7 @@ const Connection = () => {
   const [loader, setLoader] = useState(false)
   const [loadInitialData, setLoadInitialData ] = useState(false)
 
-  useEffect(() => {
+  useEffect(() => { 
     setLoader(true)
     const getConnectionType = async () => {
       try {

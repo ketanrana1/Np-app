@@ -479,3 +479,22 @@ a.edit-link-view {
 .single-view-table.table td, .single-view-table.table th {
     border-top:none;
 }
+
+
+
+/*Monitor View Starts*/
+
+.monitor-table-cont .monitor-table-head {
+    margin-bottom:15px;
+    margin-top:10px;
+}
+
+.monitor-log-cont {
+    padding:10px;
+    max-height: 80vh;
+    overflow-y:scroll;
+}
+
+/*Monitor View Ends*/
+
+

@@ -33,15 +33,13 @@ const ViewDetails = () => {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
                     }        
                   });
-                setDetails(data)
-               
+                setDetails(data)              
                 setLoader(false)
             } catch (error) {
                 setLoader(false)
                 console.log(error);
             }
         }
-
         getdetailsType();
         return () => {
             setDetails('')

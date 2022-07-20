@@ -32,6 +32,7 @@ const Monitor = () => {
                 : theme.palette.grey[900],
             flexGrow: 0.6,
             height: "100%",
+            width: "100%",
             // overflow: "auto",
           }}
         >
@@ -47,7 +48,7 @@ const Monitor = () => {
                     height: 500,
                   }}
                 >
-                  <FlowList />
+                  <RunStatus />
                 </Paper>
               </Grid>
 
@@ -68,10 +69,9 @@ const Monitor = () => {
                 <Paper
                   sx={{
                     p: 2,
-                    mb: 3,
                     display: "flex",
                     flexDirection: "column",
-                    height: 400,
+                    height: 500,
                   }}
                 >
                   <Actions />
@@ -90,7 +90,7 @@ const Monitor = () => {
                 : theme.palette.grey[900],
             flexGrow: 0.4,
             // height: "100%",
-            overflow: "auto",
+            // overflow: "auto",
           }}
         >
           <Toolbar />
@@ -103,7 +103,6 @@ const Monitor = () => {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: "100vh",
                   }}
                 >
                   <Log />
