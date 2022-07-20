@@ -24,6 +24,7 @@ import AccountsMenu from './accountMenu';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import FlowList from '../flowList/FlowList';
 
 const drawerWidth = 310;
 const LogoutText = "Logout"
@@ -96,7 +97,7 @@ export default function MiniDrawer() {
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [authRole, setauthRole] = useState(null)
-
+    
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
 
     const handleDrawerOpen = () => {
@@ -171,30 +172,8 @@ export default function MiniDrawer() {
                     </ListItem>
                 </List>
                     <Divider /></>}
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                
+                <FlowList open={open} />
                 <Divider />
                 <List style={{ position: "absolute", bottom: "10px" }}>
                     <ListItem disablePadding sx={{ display: 'block' }}>

@@ -69,9 +69,7 @@ const Login = () => {
 
   return (
     <>
-
       <div className="login-form-cont">
-
         <h3 className="logo-text">{changePassword ? 'Forget Password' : 'Logo'}</h3>
         <div className="form-group">
           <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />

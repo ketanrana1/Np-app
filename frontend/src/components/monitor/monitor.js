@@ -47,7 +47,7 @@ const Monitor = () => {
                     height: 500,
                   }}
                 >
-                  <FlowList />
+                  <RunStatus />
                 </Paper>
               </Grid>
 
