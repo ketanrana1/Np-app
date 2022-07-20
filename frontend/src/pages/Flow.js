@@ -62,8 +62,7 @@ const Flow = () => {
       
       return;
     } catch (error) {
-      setLoader(false)
-      return toast(error?.message, { autoClose: 2000 })
+      return [setLoader(false),toast(error?.message, { autoClose: 2000 })]
     }
   }
 
