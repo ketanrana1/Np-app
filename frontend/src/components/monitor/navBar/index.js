@@ -15,8 +15,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import MailIcon from '@mui/icons-material/Mail';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
@@ -100,23 +100,15 @@ export default function MiniDrawer() {
     
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const handleDrawerOpen = () => setOpen(true);
+    const handleDrawerClose = () => setOpen(false);
+    const handleAdminRoute = ()=> navigate('/connection')
 
     const handleLogout = () => {
         sessionStorage.setItem('Auth key', '');
         sessionStorage.setItem('Role', '');
 
         return [navigate("/login"),toast("Logout Successfully", { autoClose: 2000 })]
-    }
-
-    const handleAdminRoute = ()=>{
-        navigate('/connection')
     }
 
     return (
@@ -174,6 +166,7 @@ export default function MiniDrawer() {
                     <Divider /></>}
                 
                 <FlowList open={open} />
+
                 <Divider />
                 <List style={{ position: "absolute", bottom: "10px" }}>
                     <ListItem disablePadding sx={{ display: 'block' }}>

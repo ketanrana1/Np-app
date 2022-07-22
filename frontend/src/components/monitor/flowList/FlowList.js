@@ -35,7 +35,9 @@ const FlowList = ({ open }) => {
     getFlow()
   }, [])
 
-  const handleFlowList = () => {
+  const handleFlowList = (name) => {
+    const filteredFlowList = flowList.filter((list)=>{return list.name === name})
+    console.log(filteredFlowList);
     OpenExecuteModal(!openExecuteModal)
     console.log("ima console log")
   }
@@ -52,7 +54,7 @@ const FlowList = ({ open }) => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={handleFlowList}
+                onClick={()=>handleFlowList(text.name)}
               >
                 <ListItemIcon
                   sx={{
