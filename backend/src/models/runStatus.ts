@@ -11,7 +11,8 @@ const runStatusSchema = new Schema({
   startTime: Number, 
   endTime: Number,
   ranAt: Number,
-  flowName: String
+  flowName: String,
+  status: String,
 },
 {timestamps: true}
 );    

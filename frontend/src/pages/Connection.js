@@ -10,8 +10,7 @@ import Loader from '../components/field/loader';
 import AddInitialData from '../components/addInitialdata/AddInitialData';
 
 const Connection = () => {
-
-
+  
   const [connection, setConnection] = useState([]);
   const [connectionId, setConnectionId] = useState("");
   const [loader, setLoader] = useState(false)
@@ -111,8 +110,8 @@ const Connection = () => {
                           <span className="read-more-text" onClick={() => handleReadMoreClick(index)}> {item.description.length > 150 ? 'Read More...' : ''}</span>
                         </span>
                         <span style={{ display: item.readMore }} className="full-text">{item.description}</span></p></td>
-                      <td className="third-row"><p>{item.connectionName}</p></td>
-                      <td className="fourth-row">
+                        <td className="third-row"><p>{item.connectionName}</p></td>
+                        <td className="fourth-row">
                         <a onClick={() => setConnectionId(item.connectionId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                           <img src={require('../assets/images/delete.png')} alt="delete" />
                         </a>

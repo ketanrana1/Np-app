@@ -25,10 +25,14 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import FlowList from '../flowList/FlowList';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const drawerWidth = 310;
 const LogoutText = "Logout"
 const AdminText = "Configure View"
+const RefreshText = "Refresh Data"
+const ClearText = "Clear Logs"
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -119,6 +123,14 @@ export default function MiniDrawer() {
         navigate('/connection')
     }
 
+    const handleRefreshData = () => {
+
+    }
+
+    const handleClearData = () => {
+
+    }
+
     return (
         <Box sx={{ display: 'flex' }}>
             <AppBar position="fixed" open={open} style={{ backgroundColor: '#fff', color: "#575757" }}>
@@ -175,29 +187,80 @@ export default function MiniDrawer() {
                 
                 <FlowList open={open} />
                 <Divider />
-                <List style={{ position: "absolute", bottom: "10px" }}>
-                    <ListItem disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                            onClick={handleLogout}
-                        >
-                            <ListItemIcon
+
+                <div style={{position: "absolute", bottom: "10px"}}>
+                    <List >
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
+                                    minHeight: 28,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
                                 }}
+                                onClick={handleRefreshData}
                             >
-                                {!open ? <Tooltip TransitionComponent={Zoom} title="Logout" placement="right"><LogoutIcon /></Tooltip> : <LogoutIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={LogoutText} sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    {!open ? <Tooltip TransitionComponent={Zoom} title="Refresh Data" placement="right"><RefreshIcon /></Tooltip> : <RefreshIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={RefreshText} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+
+                    <List >
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 28,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                                onClick={handleRefreshData}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    {!open ? <Tooltip TransitionComponent={Zoom} title="Clear Logs" placement="right"><DeleteOutlineIcon /></Tooltip> : <DeleteOutlineIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={ClearText} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                    
+                    <List >
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 28,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                                onClick={handleLogout}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    {!open ? <Tooltip TransitionComponent={Zoom} title="Logout" placement="right"><LogoutIcon /></Tooltip> : <LogoutIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={LogoutText} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </div>
             </Drawer>
         </Box>
     );

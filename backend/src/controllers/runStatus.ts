@@ -23,16 +23,18 @@ export class RunStatusController {
   
       return {
         success: true,
-        message: "Run status is added."
+        message: "Run Status is added."
       };
   }
 
   @Get('/get-run-statuses')
+  @UseBefore(AuthMiddleware)
   async getAllStatuses() {
     return await RunStatus.aggregate([
       {
         '$project': {
           'id': "$runStatusId",
+          'status': 1,
           'name': 1,
           'flowName': 1,
           'startTime': 1,
