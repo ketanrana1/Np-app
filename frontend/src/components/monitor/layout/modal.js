@@ -5,29 +5,65 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { REACT_APP_BACKEND_URL } from '../../common/environment';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: '50%',
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-};
+    minHeight: '400px',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+};  
 
-export default function ExecuteModal({ openExecuteModal, OpenExecuteModal }) {
-    const handleClose = () => OpenExecuteModal(false);
+const handleExecuteClick = async (id, name, closePopup) => {
+
+    const currentTime = new Date().toLocaleString()
+    const paylaod = {
+        "ranAt": currentTime,
+        "startTime": currentTime,
+        "flowName": name,
+        "flowId": id,
+        "endTime": "",
+        "status": "In progress"
+    }
+    try {    
+        const result = await axios({
+          method: 'post',    
+          url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+          headers: {
+              'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          },   
+          data: paylaod         
+        });
+        closePopup(false)
+        return toast(result.data.message, { autoClose: 2000 });  
+      } catch (error) {
+        return toast(error?.message, { autoClose: 2000 })      
+    }
+}
+
+
+export default function ExecuteModal(props) {
+
+    const handleClose = () => props.OpenExecuteModal(false);
 
     return (
         <div>
-
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={openExecuteModal}
+                open={props.openExecuteModal}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -35,13 +71,14 @@ export default function ExecuteModal({ openExecuteModal, OpenExecuteModal }) {
                     timeout: 500,
                 }}
             >
-                <Fade in={openExecuteModal}>
+                <Fade in={props.openExecuteModal}>
                     <Box sx={style}>
                         <Typography id="transition-modal-title" variant="h6" component="h2">
-                            Text in a modal
+                            <h2>FLow Name: {props.flowName}</h2>
                         </Typography>
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            <br/>
+                            <Button variant="contained" onClick={() => handleExecuteClick( props.flowId, props.flowName, props.OpenExecuteModal )} >Execute</Button>
                         </Typography>
                     </Box>
                 </Fade>

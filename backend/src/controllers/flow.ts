@@ -21,7 +21,7 @@ export class FlowController {
         }
       }
     ]);
-  }
+  } 
 
   @Get('/get-flow/:id')
   @UseBefore(AuthMiddleware)
@@ -90,7 +90,7 @@ export class FlowController {
       success: true,
       message: "Flow is added."
     };
-  }
+  } 
 
   @Post('/edit-flow')
   @UseBefore(AuthMiddleware)

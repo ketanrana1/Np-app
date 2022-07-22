@@ -8,11 +8,12 @@ const runStatusSchema = new Schema({
     type: String,
     default: uuidv4 
   },
-  startTime: Number, 
-  endTime: Number,
-  ranAt: Number,
+  startTime: String, 
+  endTime: String,
+  ranAt: String,
   flowName: String,
   status: String,
+  flowId: String,
 },
 {timestamps: true}
 );    

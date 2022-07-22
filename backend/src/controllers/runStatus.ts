@@ -12,7 +12,7 @@ export class RunStatusController {
   @UseBefore(AuthMiddleware)
   async addRunStatus(@Body() body: any) {
     console.log("BODY", body)
-      const newRunStatus = new RunStatus(body.bodyData);
+      const newRunStatus = new RunStatus(body);
       const result = await newRunStatus.save();
   
       if (!result)
@@ -20,7 +20,7 @@ export class RunStatusController {
           success: false,
           message: "Run Status could not be added. Please try after some time."
         }
-  
+   
       return {
         success: true,
         message: "Run Status is added."

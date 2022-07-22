@@ -11,10 +11,16 @@ import Loader from '../../../components/field/loader';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import ExecuteModal from '../layout/modal';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 const FlowList = ({ open }) => {
   const [loader, setLoader] = useState(false)
   const [flowList, setFlowList] = useState()
   const [openExecuteModal, OpenExecuteModal] = useState(false);
+  const [flowName, setFlowName] = useState();
+  const [flowId, setFlowId] = useState();
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     setLoader(true)
@@ -37,9 +43,13 @@ const FlowList = ({ open }) => {
 
   const handleFlowList = (name) => {
     const filteredFlowList = flowList.filter((list)=>{return list.name === name})
-    console.log(filteredFlowList);
+   
+    setFlowName(filteredFlowList[0].name)
+    setFlowId(filteredFlowList[0].flowId)
+    setTasks(filteredFlowList[0].tasks)
+    console.log("KTR", filteredFlowList);
     OpenExecuteModal(!openExecuteModal)
-    console.log("ima console log")
+    // console.log("ima console log")
   }
 
   return (
@@ -78,6 +88,9 @@ const FlowList = ({ open }) => {
       <ExecuteModal
         openExecuteModal={openExecuteModal}
         OpenExecuteModal={OpenExecuteModal}
+        flowName={flowName}
+        flowId={flowId}
+        tasks={tasks}
       />
     </>
 
