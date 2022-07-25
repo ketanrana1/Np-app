@@ -8,6 +8,9 @@ import Typography from '@mui/material/Typography';
 import { REACT_APP_BACKEND_URL } from '../../common/environment';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from '../../../components/field/loader';
+import { useDispatch } from 'react-redux';
+import { runningStatus } from '../../../redux/actions/runningStatusAction';
 
 const style = {
     position: 'absolute',
@@ -26,37 +29,37 @@ const style = {
     alignItems: 'center'
 };
 
-const handleExecuteClick = async (id, name, closePopup) => {
-
-    const currentTime = new Date().toLocaleString()
-    const paylaod = {
-        "ranAt": currentTime,
-        "startTime": currentTime,
-        "flowName": name,
-        "flowId": id,
-        "endTime": "",
-        "status": "In progress"
-    }
-    try {
-        const result = await axios({
-            method: 'post',
-            url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-            headers: {
-                'Authorization': `${sessionStorage.getItem('AccessToken')}`
-            },
-            data: paylaod
-        });
-        return [closePopup(false), toast(result.data.message, { autoClose: 2000 })];
-    } catch (error) {
-        return toast(error?.message, { autoClose: 2000 })
-    }
-}
-
-
 export default function ExecuteModal(props) {
+    const dispatch = useDispatch()
     const { name, flowId } = props?.flowName
+    const [loader, setLoader] = useState(false)
     const handleClose = () => props.OpenExecuteModal(false);
-
+    const handleExecuteClick = async (id, name, closePopup) => {
+        setLoader(true)
+        const currentTime = new Date().toLocaleString()
+        const paylaod = {
+            "ranAt": currentTime,
+            "startTime": currentTime,
+            "flowName": name,
+            "flowId": id,
+            "endTime": "",
+            "status": "In progress"
+        }
+        try {
+            const { data } = await axios({
+                method: 'post',
+                url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                },
+                data: paylaod
+            });
+            dispatch(runningStatus(data))
+            return [closePopup(false), toast(data.message, { autoClose: 2000 })];
+        } catch (error) {
+            return [setLoader(false), toast(error?.message, { autoClose: 2000 })]
+        }
+    }
     return (
         <div>
             <Modal
@@ -81,6 +84,7 @@ export default function ExecuteModal(props) {
                     </Box>
                 </Fade>
             </Modal>
+            {loader && <Loader />}
         </div>
     );
 }

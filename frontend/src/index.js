@@ -8,12 +8,15 @@ import './assets/css/global.css';
 import './assets/css/login.css';
 import App from './App';
 import { ToastContainer } from "react-toastify"
-
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-  <ToastContainer />
-    <App />
+    <Provider store={store}>
+      <ToastContainer />
+      <App />
+    </Provider>
   </BrowserRouter>
 )
 

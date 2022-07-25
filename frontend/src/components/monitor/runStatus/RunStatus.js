@@ -4,6 +4,7 @@ import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
 import { toast } from 'react-toastify';
 import Loader from '../../../components/field/loader';
+import { useSelector } from 'react-redux';
 
 const columns = [
   { field: 'ranAt', headerName: 'Run At', width: 180 },
@@ -14,7 +15,7 @@ const columns = [
 ];
 
 const RunStatus = () => {
-
+  const state = useSelector((state)=>state?.runningStatusChanged)
   const [loader, setLoader] = useState(false)
   const [statuses, setStatuses] = useState([])
 
@@ -37,7 +38,7 @@ const RunStatus = () => {
       }
     }
     getAllStatuses()
-  }, [])
+  }, [state])
 
   // const rows = statuses 
 
