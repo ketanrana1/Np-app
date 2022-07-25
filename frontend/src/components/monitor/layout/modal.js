@@ -24,7 +24,7 @@ const style = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-};  
+};
 
 const handleExecuteClick = async (id, name, closePopup) => {
 
@@ -37,25 +37,24 @@ const handleExecuteClick = async (id, name, closePopup) => {
         "endTime": "",
         "status": "In progress"
     }
-    try {    
+    try {
         const result = await axios({
-          method: 'post',    
-          url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-          headers: {
-              'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          },   
-          data: paylaod         
+            method: 'post',
+            url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+            headers: {
+                'Authorization': `${sessionStorage.getItem('AccessToken')}`
+            },
+            data: paylaod
         });
-        closePopup(false)
-        return toast(result.data.message, { autoClose: 2000 });  
-      } catch (error) {
-        return toast(error?.message, { autoClose: 2000 })      
+        return [closePopup(false), toast(result.data.message, { autoClose: 2000 })];
+    } catch (error) {
+        return toast(error?.message, { autoClose: 2000 })
     }
 }
 
 
 export default function ExecuteModal(props) {
-
+    const { name, flowId } = props?.flowName
     const handleClose = () => props.OpenExecuteModal(false);
 
     return (
@@ -74,11 +73,10 @@ export default function ExecuteModal(props) {
                 <Fade in={props.openExecuteModal}>
                     <Box sx={style}>
                         <Typography id="transition-modal-title" variant="h6" component="h2">
-                            <h2>FLow Name: {props.flowName}</h2>
+                            FLow Name: {name}
                         </Typography>
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <br/>
-                            <Button variant="contained" onClick={() => handleExecuteClick( props.flowId, props.flowName, props.OpenExecuteModal )} >Execute</Button>
+                            <Button variant="contained" onClick={() => handleExecuteClick(flowId, name, props.OpenExecuteModal)} >Execute</Button>
                         </Typography>
                     </Box>
                 </Fade>

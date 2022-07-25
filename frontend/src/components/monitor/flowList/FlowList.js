@@ -19,8 +19,6 @@ const FlowList = ({ open }) => {
   const [flowList, setFlowList] = useState()
   const [openExecuteModal, OpenExecuteModal] = useState(false);
   const [flowName, setFlowName] = useState();
-  const [flowId, setFlowId] = useState();
-  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     setLoader(true)
@@ -42,14 +40,11 @@ const FlowList = ({ open }) => {
   }, [])
 
   const handleFlowList = (name) => {
-    const filteredFlowList = flowList.filter((list)=>{return list.name === name})
-   
-    setFlowName(filteredFlowList[0].name)
-    setFlowId(filteredFlowList[0].flowId)
-    setTasks(filteredFlowList[0].tasks)
-    console.log("KTR", filteredFlowList);
+    const filteredFlowList = flowList?.find((list) => { return list.name === name })
+
+    setFlowName(filteredFlowList)
     OpenExecuteModal(!openExecuteModal)
-    // console.log("ima console log")
+    console.log("ima console log", filteredFlowList)
   }
 
   return (
@@ -64,7 +59,7 @@ const FlowList = ({ open }) => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={()=>handleFlowList(text.name)}
+                onClick={() => handleFlowList(text.name)}
               >
                 <ListItemIcon
                   sx={{
@@ -85,13 +80,11 @@ const FlowList = ({ open }) => {
         ))}
         {loader && <Loader />}
       </List>
-      <ExecuteModal
+      {openExecuteModal && <ExecuteModal
         openExecuteModal={openExecuteModal}
         OpenExecuteModal={OpenExecuteModal}
         flowName={flowName}
-        flowId={flowId}
-        tasks={tasks}
-      />
+      />}
     </>
 
   )
