@@ -3,20 +3,28 @@ import mongoose from 'mongoose';
 const { v4: uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
-const flowSchema = new Schema({
-  flowId: {
+const taskStatusSchema = new Schema({
+  runStatusId: {   
     type: String,
-    default: uuidv4
+    default: uuidv4 
   },
-  name: String,
-  description: String,
-  tasksName: String,
-  ranAt: String,
+  startTime: String, 
   endTime: String,
-  startTime: String,
-  staus: String
+  ranAt: String,
+  flowName: String,
+  status: String,
+  flowId:{
+    type: String,
+    ref: 'Flow'
+  },
+  taskId:{
+    type: String,
+    ref: 'Task'
+  },
+  logs: [Object]
 },
-  { timestamps: true }
-);
+{timestamps: true} 
+);    
 
-export default mongoose.model('Flow', flowSchema);
+export default mongoose.model('TaskStatus', taskStatusSchema);
+

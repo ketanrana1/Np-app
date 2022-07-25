@@ -3,14 +3,20 @@ const { v4 : uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
 const logSchema = new Schema({
-        flowId: {   
+        logId: {   
             type: String,
             default: uuidv4 
+        },
+        flowId:{
+            type: String,
+            ref: 'Flow'
         },
         task: String,
         startDate: String, 
         endDate: String,
         status: String,
+        description: String,
+        logDate: String
     },
     {timestamps: true}
 );

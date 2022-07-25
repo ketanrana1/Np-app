@@ -2,7 +2,7 @@ import { RUNNING_STATUS } from "../constants/runningStatusType";
 
 
 const initialState = {
-    runningStatus: null
+    runningStatus: false
 }
 
 export const runningStatusChanged = (state = initialState, { type, payload }) => {

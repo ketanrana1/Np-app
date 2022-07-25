@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
@@ -15,34 +15,32 @@ const columns = [
 ];
 
 const RunStatus = () => {
-  const state = useSelector((state)=>state?.runningStatusChanged)
+  const state = useSelector((state) => state?.runningStatusChanged)
   const [loader, setLoader] = useState(false)
   const [statuses, setStatuses] = useState([])
 
   useEffect(() => {
-
     const getAllStatuses = async () => {
       try {
         setLoader(true)
         const { data } = await axios({
           method: 'get',
-          url: `http://localhost:5000/api/get-run-statuses`,
+          url: `${REACT_APP_BACKEND_URL}/api/get-run-statuses`,
           headers: {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-      return [setStatuses(data),setLoader(false)]
-        
+        setStatuses(data)
+        setLoader(false)
+
       } catch (error) {
-        return [setLoader(false),console.log(error)]
+        setLoader(false)
+        console.log(error)
       }
     }
     getAllStatuses()
   }, [state])
 
-  // const rows = statuses 
-
-  console.log("STATUSES", statuses);
 
   const handleClick = async (row) => {
     try {
@@ -52,12 +50,12 @@ const RunStatus = () => {
         bodyData
       }
       const response = await axios({
-        method: 'post',    
+        method: 'post',
         url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
         headers: {
-            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+          'Authorization': `${sessionStorage.getItem('AccessToken')}`
         },
-        data: payload              
+        data: payload
       });
       setLoader(false)
       toast(response.data.message, { autoClose: 2000 });

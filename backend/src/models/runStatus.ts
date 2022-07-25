@@ -13,9 +13,12 @@ const runStatusSchema = new Schema({
   ranAt: String,
   flowName: String,
   status: String,
-  flowId: String,
+  flowId:{
+    type: String,
+    ref: 'Flow'
 },
-{timestamps: true}
+},
+{timestamps: true} 
 );    
   
 export default mongoose.model('RunStatus', runStatusSchema);

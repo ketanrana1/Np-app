@@ -522,6 +522,10 @@ a.edit-link-view {
     overflow-y:scroll;
 }
 
+.Toastify__progress-bar {
+    background: black;
+}
+
 /*Monitor View Ends*/
 
 
