@@ -13,6 +13,8 @@ const columns = [
   { field: 'status', headerName: 'Status', width: 180 },
 ];
 
+
+
 const RunStatus = () => {
 
   const [loader, setLoader] = useState(false)
@@ -25,23 +27,22 @@ const RunStatus = () => {
         setLoader(true)
         const { data } = await axios({
           method: 'get',
-          url: `http://localhost:5000/api/get-run-statuses`,
+          url: `${REACT_APP_BACKEND_URL}/api/get-run-statuses`,
           headers: {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-      return [setStatuses(data),setLoader(false)]
+      setStatuses(data)
+      setLoader(false)
         
       } catch (error) {
-        return [setLoader(false),console.log(error)]
+        setLoader(false)
+        console.log(error)
       }
     }
     getAllStatuses()
   }, [])
 
-  // const rows = statuses 
-
-  console.log("STATUSES", statuses);
 
   const handleClick = async (row) => {
     try {

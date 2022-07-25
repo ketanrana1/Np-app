@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { REACT_APP_BACKEND_URL } from '../../common/environment';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from '../../../components/field/loader';
 
 const style = {
     position: 'absolute',
@@ -26,36 +27,95 @@ const style = {
     alignItems: 'center'
 };
 
-const handleExecuteClick = async (id, name, closePopup) => {
-
-    const currentTime = new Date().toLocaleString()
-    const paylaod = {
-        "ranAt": currentTime,
-        "startTime": currentTime,
-        "flowName": name,
-        "flowId": id,
-        "endTime": "",
-        "status": "In progress"
-    }
-    try {
-        const result = await axios({
-            method: 'post',
-            url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-            headers: {
-                'Authorization': `${sessionStorage.getItem('AccessToken')}`
-            },
-            data: paylaod
-        });
-        return [closePopup(false), toast(result.data.message, { autoClose: 2000 })];
-    } catch (error) {
-        return toast(error?.message, { autoClose: 2000 })
-    }
-}
 
 
 export default function ExecuteModal(props) {
     const { name, flowId } = props?.flowName
     const handleClose = () => props.OpenExecuteModal(false);
+    const [loader, setLoader] = useState(false)
+    const [logs, setLogs] = useState()
+
+
+    const handleExecuteClick = async (id, name, closePopup) => {
+
+        try {
+            const currentTime = new Date().toLocaleString()
+            const paylaod = {
+                "ranAt": currentTime,
+                "startTime": currentTime,
+                "flowName": name,
+                "flowId": id,
+                "endTime": "",
+                "status": "In progress"
+            }
+            const logData = await axios({
+            method: 'get',
+            url: `https://jsonplaceholder.typicode.com/posts/1`,
+            headers: {
+                'Authorization': `${sessionStorage.getItem('AccessToken')}`
+            }
+            });
+            setLogs(logData.data.body)
+                try {
+                    const payload = { 
+                        "description": logData.data.body,
+                        "flowId": id,
+                        "logDate": currentTime,
+                    }             
+                    const { data } = await axios({
+                    method: 'post',
+                    url: `${REACT_APP_BACKEND_URL}/api/add-log`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    },
+                    data: payload
+                    });
+                    setLogs(data)
+                    toast(data.message, { autoClose: 2000 })
+                    
+                } catch (error) {
+                    setLoader(false)
+                    console.log(error)
+                }
+                try {
+                    const result = await axios({
+                        method: 'post',
+                        url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+                        headers: {
+                            'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                        },
+                        data: paylaod
+                    });
+                    toast(result.data.message, { autoClose: 2000 })
+                        try {
+                            const result = await axios({
+                                method: 'get',
+                                url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
+                                headers: {
+                                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                                },
+                                data: paylaod
+                            });
+                            console.log("RESULTTTTTT", result.data[0].tasks)
+                            closePopup(false) 
+                            toast(result.data.message, { autoClose: 2000 })
+                                
+                        } catch (error) {
+                            toast(error?.message, { autoClose: 2000 })
+                        }
+                        
+                } catch (error) {
+                    toast(error?.message, { autoClose: 2000 })
+                }
+            
+        } catch (error) {
+            setLoader(false)
+            console.log(error)
+        }
+
+
+        
+    }
 
     return (
         <div>
@@ -81,6 +141,7 @@ export default function ExecuteModal(props) {
                     </Box>
                 </Fade>
             </Modal>
+            {loader && <Loader />}
         </div>
     );
 }
