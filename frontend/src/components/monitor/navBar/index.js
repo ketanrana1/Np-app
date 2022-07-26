@@ -15,8 +15,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
@@ -101,7 +99,7 @@ export default function MiniDrawer() {
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [authRole, setauthRole] = useState(null)
-    
+
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
 
     const handleDrawerOpen = () => {
@@ -116,10 +114,10 @@ export default function MiniDrawer() {
         sessionStorage.setItem('Auth key', '');
         sessionStorage.setItem('Role', '');
 
-        return [navigate("/login"),toast("Logout Successfully", { autoClose: 2000 })]
+        return [navigate("/login"), toast("Logout Successfully", { autoClose: 2000 })]
     }
 
-    const handleAdminRoute = ()=>{
+    const handleAdminRoute = () => {
         navigate('/connection')
     }
 
@@ -184,11 +182,11 @@ export default function MiniDrawer() {
                     </ListItem>
                 </List>
                     <Divider /></>}
-                
+
                 <FlowList open={open} />
                 <Divider />
 
-                <div style={{position: "absolute", bottom: "10px"}}>
+                <div style={{ position: "absolute", bottom: "10px" }}>
                     <List >
                         <ListItem disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
@@ -197,7 +195,7 @@ export default function MiniDrawer() {
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
                                 }}
-                                onClick={handleRefreshData}
+                                onClick={() => window.location.reload()}
                             >
                                 <ListItemIcon
                                     sx={{
@@ -236,7 +234,7 @@ export default function MiniDrawer() {
                             </ListItemButton>
                         </ListItem>
                     </List>
-                    
+
                     <List >
                         <ListItem disablePadding sx={{ display: 'block' }}>
                             <ListItemButton

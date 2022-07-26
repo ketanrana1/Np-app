@@ -99,7 +99,7 @@ export default function ExecuteModal(props) {
                                 data: paylaod
                             });
                             dispatch(runningStatus(logData.data))
-                            console.log("RESULTTTTTT", data[0].tasks)
+                            
                             closePopup(false) 
                             toast(data.message, { autoClose: 2000 })
                                 
@@ -115,9 +115,6 @@ export default function ExecuteModal(props) {
             setLoader(false)
             console.log(error)
         }
-
-
-        
     }
 
     return (

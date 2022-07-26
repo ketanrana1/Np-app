@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "bootstrap": "^4.6.1",
+    "dotenv": "^16.0.1",
     "firebase": "^9.8.3",
     "formik": "^2.2.9",
     "joi-browser": "^13.4.0",
