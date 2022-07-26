@@ -21,7 +21,10 @@ const taskStatusSchema = new Schema({
     type: String,
     ref: 'Task'
   },
-  logs: [Object]
+  StatusLogs: String,
+  Actions: [Object],
+  taskLog: String,
+
 },
 {timestamps: true} 
 );    

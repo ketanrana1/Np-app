@@ -1,6 +1,7 @@
 import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
 import AuthMiddleware from 'middlewares/AuthMiddleware';
 import RunStatus from 'models/runStatus';
+import TaskStatus from 'models/taskStatus'
 import Log from 'models/log';
 
 // UPDATE 
@@ -77,6 +78,47 @@ export class RunStatusController {
         }
       }
     ]);
+  }
+
+
+  @Post('/add-task-status')
+  @UseBefore(AuthMiddleware)
+  async addTaskStatus(@Body() body: any) {
+    console.log("BODY", body)
+      const newTaskStatus = new TaskStatus(body);
+      const result = await newTaskStatus.save();
+  
+      if (!result)
+        return {
+          success: false,
+          message: "Task Status could not be added. Please try after some time."
+        }
+   
+      return {
+        success: true,
+        message: "Task Status is added."
+      };
+  }
+
+
+  @Post('/update-run-status')
+  @UseBefore(AuthMiddleware)
+  async updateRunStatusById(@Body() body: any) {
+    const { runStatusId } = body;
+    const updateItems = { ...body }
+    delete updateItems.runStatusId;
+    try {
+      await RunStatus.findOneAndUpdate({ runStatusId }, { ...updateItems })
+      return {
+        success: true,
+        message: "Run Status updated successfully"
+      }
+    } catch (error) {
+      return { 
+        success: false,
+        message: "Run Status could not be updated. Please try after some time."
+      }
+    }
   }
 
 

@@ -20,7 +20,7 @@ export class TaskTypeController {
           '__v': 0
         }
       }
-    ]);
+    ]); 
   }
 
   @Get('/get-taskType/:id')
