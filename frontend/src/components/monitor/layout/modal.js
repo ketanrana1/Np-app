@@ -71,10 +71,8 @@ export default function ExecuteModal(props) {
                     },
                     data: payload
                     });
-                    setLogs(data)
-                    
-                    toast(data.message, { autoClose: 2000 })
-                    
+                    setLogs(data)          
+                    toast(data.message, { autoClose: 2000 })   
                 } catch (error) {
                     setLoader(false)
                     console.log(error)
@@ -99,7 +97,7 @@ export default function ExecuteModal(props) {
                                 data: paylaod
                             });
                             dispatch(runningStatus(logData.data))
-                            console.log("RESULTTTTTT", data[0].tasks)
+                            console.log("RESULTTT", data[0].tasks)
                             closePopup(false) 
                             toast(data.message, { autoClose: 2000 })
                                 
