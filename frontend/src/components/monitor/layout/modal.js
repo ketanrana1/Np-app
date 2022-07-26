@@ -34,8 +34,6 @@ export default function ExecuteModal(props) {
     const { name, flowId } = props?.flowName
     const [loader, setLoader] = useState(false)
     const handleClose = () => props.OpenExecuteModal(false);
-    const [logs, setLogs] = useState()
-
 
     const handleExecuteClick = async (id, name, closePopup) => {
 

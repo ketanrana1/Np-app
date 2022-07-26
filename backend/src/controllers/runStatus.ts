@@ -3,6 +3,7 @@ import AuthMiddleware from 'middlewares/AuthMiddleware';
 import RunStatus from 'models/runStatus';
 import TaskStatus from 'models/taskStatus'
 import Log from 'models/log';
+import flow from 'models/flow';
 
 // UPDATE 
 // DELETE
@@ -100,26 +101,97 @@ export class RunStatusController {
       };
   }
 
-
-  @Post('/update-run-status')
+  @Get('/get-floww/:id')
   @UseBefore(AuthMiddleware)
-  async updateRunStatusById(@Body() body: any) {
-    const { runStatusId } = body;
-    const updateItems = { ...body }
-    delete updateItems.runStatusId;
-    try {
-      await RunStatus.findOneAndUpdate({ runStatusId }, { ...updateItems })
-      return {
-        success: true,
-        message: "Run Status updated successfully"
-      }
-    } catch (error) {
-      return { 
-        success: false,
-        message: "Run Status could not be updated. Please try after some time."
-      }
-    }
+  async getFlowByIds(@Param('id') id: string) {
+    return await flow.aggregate([
+      {
+        '$match': {
+          'flowId': id
+        }
+      },
+    ]);
   }
+
+  @Get('/get-task-statuses')
+  @UseBefore(AuthMiddleware)
+  async getTaskStatuses() {
+    return await TaskStatus.aggregate([
+      {
+        '$project': {
+          'taskStatusId': 1,
+          'startTime': 1,
+          'endTime': 1,
+          'ranAt': 1,
+          'flowName': 1,
+          'status': 1,
+          'flowId': 1,
+          'actions': 1,
+          'taskLog': 1,
+
+        }
+      }
+    ]); 
+  }
+
+  @Get('/get-task-status-details/:id')
+  @UseBefore(AuthMiddleware)
+  async getTaskStatuseLog(@Param('id') id: string) {
+
+    return await TaskStatus.aggregate([
+      {
+        '$match': {
+          'taskStatusId': id
+        }
+      }
+    ]);
+  }
+
+
+  @Get('/get-single-action-details/:name/:id')
+  async getSingleActionDetails(@Param('name') name: string, @Param('id') id: string) {
+
+    return await TaskStatus.aggregate([
+      {
+        '$unwind': {
+          'path': '$actions'
+        }
+      }, {
+        '$match': {
+          'actions.actionName': name,
+          'taskStatusId': id
+          
+          
+        }
+      }, {
+        '$project': {
+          'actions': 1
+        }
+      }
+    ]);
+  }
+
+
+
+  // @Post('/update-run-status')
+  // @UseBefore(AuthMiddleware)
+  // async updateRunStatusById(@Body() body: any) {
+  //   const { runStatusId } = body;
+  //   const updateItems = { ...body }
+  //   delete updateItems.runStatusId;
+  //   try {
+  //     await RunStatus.findOneAndUpdate({ runStatusId }, { ...updateItems })
+  //     return {
+  //       success: true,
+  //       message: "Run Status updated successfully"
+  //     }
+  //   } catch (error) {
+  //     return { 
+  //       success: false,
+  //       message: "Run Status could not be updated. Please try after some time."
+  //     }
+  //   }
+  // }
 
 
 }
