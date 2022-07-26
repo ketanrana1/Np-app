@@ -11,7 +11,7 @@ const logSchema = new Schema({
             type: String,
             ref: 'Flow'
         },
-        task: String,
+        taskName: String,
         startDate: String, 
         endDate: String,
         status: String,

@@ -40,6 +40,7 @@ export default function ExecuteModal(props) {
     const handleExecuteClick = async (id, name, closePopup) => {
 
         try {
+            /* */
             const currentTime = new Date().toLocaleString()
             const paylaod = {
                 "ranAt": currentTime,
@@ -56,63 +57,78 @@ export default function ExecuteModal(props) {
                 'Authorization': `${sessionStorage.getItem('AccessToken')}`
             }
             });
-            setLogs(logData.data.body)
-                try {
-                    const payload = { 
-                        "description": logData.data.body,
-                        "flowId": id,
-                        "logDate": currentTime,
-                    }             
-                    const { data } = await axios({
-                    method: 'post',
-                    url: `${REACT_APP_BACKEND_URL}/api/add-log`,
+            const result = await axios({
+                method: 'post',
+                url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                },
+                data: paylaod 
+            });
+            /* */
+
+            /* */
+            const singleFlowDetails = await axios({
+                method: 'get',
+                url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                },
+                data: paylaod
+            });
+            dispatch(runningStatus(logData.data))
+            const tasks = singleFlowDetails.data[0].tasks
+            tasks.map( async (task, index) => {
+
+                const singleTasKLogData = await axios({
+                    method: 'get',
+                    url: `https://jsonplaceholder.typicode.com/posts/100`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    },
-                    data: payload
-                    });
-                    setLogs(data)          
-                    toast(data.message, { autoClose: 2000 })   
-                } catch (error) {
-                    setLoader(false)
-                    console.log(error)
+                    }
+                });
+
+                const actionsData = await axios({
+                    method: 'get',
+                    url: `https://jsonplaceholder.typicode.com/posts/${index + 1}`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    }
+                });
+
+                const actionDetails = [ 
+                    { "actionName" : actionsData.data.title , "logDate": currentTime, "logDescription": actionsData.data.body},
+                    { "actionName" : actionsData.data.id , "logDate": currentTime, "logDescription": actionsData.data.body},
+                    { "actionName" : actionsData.data.userId , "logDate": currentTime, "logDescription": actionsData.data.body}
+                ]
+                const singleTasKLogDataPayload = {
+                    "taskLog": singleTasKLogData.data.body,
+                    "taskName": task,
+                    "ranAt": currentTime,
+                    "startTime": currentTime,
+                    "endTime": "",
+                    "status": "In progress",
+                    "actions": actionDetails
                 }
-                try {
-                    const result = await axios({
-                        method: 'post',
-                        url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-                        headers: {
-                            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                        },
-                        data: paylaod
-                    });
-                    toast(result.data.message, { autoClose: 2000 })
-                        try {
-                            const {data} = await axios({
-                                method: 'get',
-                                url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
-                                headers: {
-                                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                                },
-                                data: paylaod
-                            });
-                            dispatch(runningStatus(logData.data))
-                            
-                            closePopup(false) 
-                            toast(data.message, { autoClose: 2000 })
-                                
-                        } catch (error) {
-                            toast(error?.message, { autoClose: 2000 })
-                        }
-                        
-                } catch (error) {
-                    toast(error?.message, { autoClose: 2000 })
-                }
+
+                const singleTasKStatusData = await axios({
+                    method: 'post',
+                    url: `${REACT_APP_BACKEND_URL}/api/add-task-status`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    }, 
+                    data: singleTasKLogDataPayload
+                });
+
+            })
+            closePopup(false) 
+            toast("Flow is executed", { autoClose: 2000 })
+            /* */
             
         } catch (error) {
             setLoader(false)
             console.log(error)
-        }
+        }       
     }
 
     return (
