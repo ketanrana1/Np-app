@@ -71,10 +71,8 @@ export default function ExecuteModal(props) {
                     },
                     data: payload
                     });
-                    setLogs(data)
-                    
-                    toast(data.message, { autoClose: 2000 })
-                    
+                    setLogs(data)          
+                    toast(data.message, { autoClose: 2000 })   
                 } catch (error) {
                     setLoader(false)
                     console.log(error)

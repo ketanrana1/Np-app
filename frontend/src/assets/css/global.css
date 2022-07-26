@@ -325,10 +325,10 @@ a.commn-btn:hover {
     width: 30px;
     position: static;
     display: inline-block;
-  }
+}
 
 
-  .form-control.all-form-fl-w-ip.schedule-email-field {
+.form-control.all-form-fl-w-ip.schedule-email-field {
     width: 71%;
 }
 
