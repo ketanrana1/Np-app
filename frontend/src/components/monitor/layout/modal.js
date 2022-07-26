@@ -12,6 +12,9 @@ import Loader from '../../../components/field/loader';
 import { useDispatch } from 'react-redux';
 import { runningStatus } from '../../../redux/actions/runningStatusAction';
 import { getFlow } from '../../../api/getFlow';
+import { runStatus } from '../../../api/runStatus';
+import { addLogs } from '../../../api/addLog';
+import { thirdParty } from '../../../api/thirdParty';
 
 const style = {
     position: 'absolute',
@@ -50,46 +53,25 @@ export default function ExecuteModal(props) {
                 "endTime": "",
                 "status": "In progress"
             }
-            const logData = await axios({
-                method: 'get',
-                url: `https://jsonplaceholder.typicode.com/posts/1`,
-                headers: {
-                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                }
-            });
-            setLogs(logData.data.body)
+            const response = await thirdParty()
+            setLogs(response.body)
             try {
                 const payload = {
-                    "description": logData.data.body,
+                    "description": response.body,
                     "flowId": id,
                     "logDate": currentTime,
                 }
-                const { data } = await axios({
-                    method: 'post',
-                    url: `${REACT_APP_BACKEND_URL}/api/add-log`,
-                    headers: {
-                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    },
-                    data: payload
-                });
-                setLogs(data)
-                toast(data.message, { autoClose: 2000 })
+                const responce = await addLogs(payload)
+                setLogs(responce)
             } catch (error) {
                 setLoader(false)
                 console.log(error)
             }
             try {
-                const result = await axios({
-                    method: 'post',
-                    url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-                    headers: {
-                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    },
-                    data: paylaod
-                });
-                toast(result.data.message, { autoClose: 2000 })
-                const flowRes = await getFlow(id)
-                console.log("flowRes", flowRes)
+                await runStatus(paylaod)
+                await getFlow(id)
+                dispatch(runningStatus(response))
+                props.OpenExecuteModal(false)
             } catch (error) {
                 toast(error?.message, { autoClose: 2000 })
             }

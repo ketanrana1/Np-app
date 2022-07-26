@@ -8,7 +8,6 @@ export const roles = [
 export const DEFAULT_ERROR_NOTIFICATION = 'Something gone wrong!';
 
 export const TOASTR_OPTIONS = {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_RIGHT,
     transition: Bounce,
-    theme: 'colored',
   };
