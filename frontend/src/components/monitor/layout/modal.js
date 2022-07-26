@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Loader from '../../../components/field/loader';
 import { useDispatch } from 'react-redux';
 import { runningStatus } from '../../../redux/actions/runningStatusAction';
+import { getFlow } from '../../../api/getFlow';
 
 const style = {
     position: 'absolute',
@@ -50,65 +51,49 @@ export default function ExecuteModal(props) {
                 "status": "In progress"
             }
             const logData = await axios({
-            method: 'get',
-            url: `https://jsonplaceholder.typicode.com/posts/1`,
-            headers: {
-                'Authorization': `${sessionStorage.getItem('AccessToken')}`
-            }
+                method: 'get',
+                url: `https://jsonplaceholder.typicode.com/posts/1`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                }
             });
             setLogs(logData.data.body)
-                try {
-                    const payload = { 
-                        "description": logData.data.body,
-                        "flowId": id,
-                        "logDate": currentTime,
-                    }             
-                    const { data } = await axios({
+            try {
+                const payload = {
+                    "description": logData.data.body,
+                    "flowId": id,
+                    "logDate": currentTime,
+                }
+                const { data } = await axios({
                     method: 'post',
                     url: `${REACT_APP_BACKEND_URL}/api/add-log`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
                     },
                     data: payload
-                    });
-                    setLogs(data)          
-                    toast(data.message, { autoClose: 2000 })   
-                } catch (error) {
-                    setLoader(false)
-                    console.log(error)
-                }
-                try {
-                    const result = await axios({
-                        method: 'post',
-                        url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-                        headers: {
-                            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                        },
-                        data: paylaod
-                    });
-                    toast(result.data.message, { autoClose: 2000 })
-                        try {
-                            const {data} = await axios({
-                                method: 'get',
-                                url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
-                                headers: {
-                                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                                },
-                                data: paylaod
-                            });
-                            dispatch(runningStatus(logData.data))
-                            
-                            closePopup(false) 
-                            toast(data.message, { autoClose: 2000 })
-                                
-                        } catch (error) {
-                            toast(error?.message, { autoClose: 2000 })
-                        }
-                        
-                } catch (error) {
-                    toast(error?.message, { autoClose: 2000 })
-                }
-            
+                });
+                setLogs(data)
+                toast(data.message, { autoClose: 2000 })
+            } catch (error) {
+                setLoader(false)
+                console.log(error)
+            }
+            try {
+                const result = await axios({
+                    method: 'post',
+                    url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+                    headers: {
+                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                    },
+                    data: paylaod
+                });
+                toast(result.data.message, { autoClose: 2000 })
+                const flowRes = await getFlow(id)
+                console.log("flowRes", flowRes)
+            } catch (error) {
+                toast(error?.message, { autoClose: 2000 })
+            }
+
         } catch (error) {
             setLoader(false)
             console.log(error)

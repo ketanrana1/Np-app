@@ -4,7 +4,7 @@ import { DEFAULT_ERROR_NOTIFICATION } from '../utils/constent';
 
 const qs = require('qs')
 
-require('dotenv').config({ path: process.cwd() + '/.env.local' });
+// require('dotenv').config({ path: process.cwd() + '/.env' });
 
 const API_BASE_URI =
   process.env.REACT_APP_BACKEND_URL;
@@ -56,9 +56,7 @@ http.interceptors.response.use(
 
     switch (response.status) {
       case 401:
-      case 403:
-        logOut();
-        break;
+     
       case 406:
         FlashMessage.error('Invalid or missing values');
         break;
