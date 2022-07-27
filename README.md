@@ -17,12 +17,3 @@ For Frontend -:
 ## Usage
 
 Visit http://localhost:3000/ 
-
-
-const test= await createUserWithEmailAndPassword(getAuth(firebaseConfig), email, password);
-      console.log(test.user)
-      test.user["role"] = "admin"
-
-secret Key = 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
-
-
