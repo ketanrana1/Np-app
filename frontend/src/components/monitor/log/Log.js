@@ -18,9 +18,8 @@ const Log = () => {
   const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
   const [logDetails, setLogDetails] = useState([])
   const [loader, setLoader] = useState(false)
+  
   useEffect(() => {
-    console.log("logsStatus", logsStatus)
-
     if (!logsStatus) return
     const { id, taskType, actionId, actionName } = logsStatus
     if (!id) return

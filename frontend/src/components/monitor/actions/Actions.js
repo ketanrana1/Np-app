@@ -33,12 +33,12 @@ const Actions = () => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-        console.log("action 1", data)
+      console.log("actions",data)
         data?.map((action) => {
-          const { startTime, endTime, actions, id: actionId } = action
+          const { startTime,ranAt, endTime, actions, id: actionId } = action
           const filteredList = actions.map((act, index) => {
             const { actionName, logDate, logDescription } = act
-            return { id: index+1, actionName, startTime, endTime, logDate, logDescription, actionId }
+            return { id: index+1, actionName, startTime, endTime, logDate, logDescription, actionId,ranAt }
           })
 
           setFilterAction(filteredList)
