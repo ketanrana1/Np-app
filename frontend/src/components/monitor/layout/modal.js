@@ -95,9 +95,9 @@ export default function ExecuteModal(props) {
                 });
 
                 const actionDetails = [ 
-                    { "actionName" : actionsData.data.title , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
-                    { "actionName" : actionsData.data.id , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
-                    { "actionName" : actionsData.data.userId , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false}
+                    { "actionName" : actionsData.data.title.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                    { "actionName" : actionsData.data.id.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                    { "actionName" : actionsData.data.userId.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false}
                 ]
                 const singleTasKLogDataPayload = {
                     "taskLog": singleTasKLogData.data.body,

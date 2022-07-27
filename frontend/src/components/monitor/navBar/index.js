@@ -25,12 +25,18 @@ import { toast } from 'react-toastify';
 import FlowList from '../flowList/FlowList';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
 
 const drawerWidth = 310;
 const LogoutText = "Logout"
 const AdminText = "Configure View"
 const RefreshText = "Refresh Data"
 const ClearText = "Clear Logs"
+const CLEAR_LOG_TASK = `${REACT_APP_BACKEND_URL}/api/edit-task-log-status`
+const CLEAR_LOG_ACTION = `${REACT_APP_BACKEND_URL}/api//edit-action-log-status`
+
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -97,10 +103,38 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
     const theme = useTheme();
     const navigate = useNavigate()
+    const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
     const [open, setOpen] = useState(false);
     const [authRole, setauthRole] = useState(null)
 
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
+    useEffect(() => {
+        
+        if (!logsStatus) return
+        const { id, taskType, actionId, actionName } = logsStatus
+        if (!id) return
+        const getLogs = async () => {
+          try {
+           
+            const { data } = await axios({
+              method: 'get',
+              url: taskType ? `${CLEAR_LOG_TASK}/${id}` : `${CLEAR_LOG_ACTION}/${actionName}/${actionId}`,
+              headers: {
+                'Authorization': `${sessionStorage.getItem('AccessToken')}`
+              }
+            });
+            console.log("logs", data)
+           
+          } catch (error) {
+            return [console.log(error)]
+          }
+        }
+        getLogs()
+    
+        return () => {
+    
+        }
+      }, [logsStatus])
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -122,7 +156,7 @@ export default function MiniDrawer() {
     }
 
     const handleRefreshData = () => {
-
+        
     }
 
     const handleClearData = () => {

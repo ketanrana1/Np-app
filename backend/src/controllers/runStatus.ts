@@ -182,13 +182,26 @@ export class RunStatusController {
     ]);
   }
 
-  @Get('/get-task-status-log-details/:id')
+  @Get('/get-task-status-log-details/:id') // show task logs
   async getTaskStatuseLogDetails(@Param('id') id: string) {
     const result =  await TaskStatus.aggregate([
       {
         '$match': {
           'taskStatusId': id,
           'isLogDeleted': false,
+        }
+      },
+      {
+        '$project': {
+          'id': "$taskStatusId",
+          'flowName': 1,
+          'status': 1,
+          'flowId': 1,
+          'logDescription': '$taskLog',
+          'logDate':"$ranAt",
+          'taskName': 1,
+          'isLogDeleted': 1,
+          '_id': 0,
         }
       }
     ]);
@@ -203,7 +216,7 @@ export class RunStatusController {
   }
 
 
-  @Post('/edit-task-log-status/:id')
+  @Post('/edit-task-log-status/:id') /// claer log of task
   async editTaskLogStatus(@Param('id') id: string) {
 
     const result = await TaskStatus.findOneAndUpdate({ 'taskStatusId': id }, {
@@ -226,8 +239,8 @@ export class RunStatusController {
 
 
 
-  @Get('/get-single-action-details/:name/:id')
-  @UseBefore(AuthMiddleware)
+  @Get('/get-single-action-details/:name/:id') //show action logs
+  // @UseBefore(AuthMiddleware)
   async getSingleActionDetails(@Param('name') name: string, @Param('id') id: string) {
     return await TaskStatus.aggregate([
       {
@@ -256,9 +269,9 @@ export class RunStatusController {
         }
       }, {
         '$match': {
-          'actions.actionName': name,
+          'actions.actionName':name,
           'taskStatusId': id,
-          'actions.isLogDeleted': false 
+         'actions.isLogDeleted': false 
         }
       }, {
         '$project': {
@@ -278,7 +291,7 @@ export class RunStatusController {
 
   }
 
-  @Post('/edit-action-log-status/:id/:name')
+  @Post('/edit-action-log-status/:id/:name')  /// action log clear 
   async editActionLogStatus(@Param('id') id: string, @Param('name') name: string) {
 
     const taskStatusDetails: any = await TaskStatus.aggregate([

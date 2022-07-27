@@ -12,7 +12,6 @@ const columns = [
   { field: 'startTime', headerName: 'Start Time', width: 200 },
   { field: 'taskName', headerName: 'Task Name', width: 200 },
   { field: 'endTime', headerName: 'End Time', width: 200 },
-
 ];
 const Tasks = () => {
   const state = useSelector((state) => state?.flowListChanged)
@@ -32,7 +31,7 @@ const Tasks = () => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-        return [dispatch(logStatus(data[0] && [data[0]])), dispatch(taskStatusAction(data[0])), setTaskStatus(data), setLoader(false)]
+        return [dispatch(logStatus(data[0] && {...data[0],taskType:"task"})), dispatch(taskStatusAction(data[0])), setTaskStatus(data), setLoader(false)]
 
       } catch (error) {
         return [setLoader(false), console.log(error)]
@@ -42,7 +41,7 @@ const Tasks = () => {
   }, [state])
 
   const handleClick = ({ row }) => {
-    dispatch(logStatus([row]))
+    dispatch(logStatus({...row,taskType:"task"}))
     dispatch(taskStatusAction(row))
   }
 

@@ -3,7 +3,7 @@ import { LOG_STATUS } from "../constants/logStatusType";
 
 
 const initialState = {
-    logsStatus: [],
+    logsStatus: {},
 }
 
 export const logsStatusChanged = (state = initialState, { type, payload }) => {

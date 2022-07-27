@@ -23,7 +23,7 @@ const Actions = () => {
   const [filterAction, setFilterAction] = useState([])
   useEffect(() => {
     const getTaskLists = async () => {
-      if(!state?.id) return 
+      if (!state?.id) return
       try {
         setLoader(true)
         const { data } = await axios({
@@ -33,12 +33,12 @@ const Actions = () => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-
+        console.log("action 1", data)
         data?.map((action) => {
-          const { startTime, endTime, actions, id } = action
+          const { startTime, endTime, actions, id: actionId } = action
           const filteredList = actions.map((act, index) => {
             const { actionName, logDate, logDescription } = act
-            return { id: index, actionName, startTime, endTime, logDate, logDescription }
+            return { id: index+1, actionName, startTime, endTime, logDate, logDescription, actionId }
           })
 
           setFilterAction(filteredList)
@@ -59,8 +59,9 @@ const Actions = () => {
 
   }, [state])
 
-  const handleClick = ({row}) => {
-    dispatch(logStatus([row]))
+  const handleClick = ({ row }) => {
+    console.log("row",row)
+    dispatch(logStatus(row))
   }
   return (
     <>
