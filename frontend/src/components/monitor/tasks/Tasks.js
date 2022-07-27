@@ -15,30 +15,27 @@ const columns = [
 
 ];
 const Tasks = () => {
-  const state = useSelector((state) => state?.runningStatusChanged)
+  const state = useSelector((state) => state?.flowListChanged)
   const dispatch = useDispatch()
   const [loader, setLoader] = useState(false)
   const [taskStatus, setTaskStatus] = useState([])
 
   useEffect(() => {
+    const { flowId } = state?.flowList
     const getTaskLists = async () => {
       try {
         setLoader(true)
         const { data } = await axios({
           method: 'get',
-          url: `${REACT_APP_BACKEND_URL}/api/get-task-statuses`,
+          url: `${REACT_APP_BACKEND_URL}/api/get-task-statuses/${flowId}`,
           headers: {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-        dispatch(logStatus(data[0] && [data[0]]))
-        dispatch(taskStatusAction(data[0]))
-        setTaskStatus(data)
-        setLoader(false)
+        return [dispatch(logStatus(data[0] && [data[0]])), dispatch(taskStatusAction(data[0])), setTaskStatus(data), setLoader(false)]
 
       } catch (error) {
-        setLoader(false)
-        console.log(error)
+        return [setLoader(false), console.log(error)]
       }
     }
     getTaskLists()

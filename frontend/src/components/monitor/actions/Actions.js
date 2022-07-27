@@ -23,6 +23,7 @@ const Actions = () => {
   const [filterAction, setFilterAction] = useState([])
   useEffect(() => {
     const getTaskLists = async () => {
+      if(!state?.id) return 
       try {
         setLoader(true)
         const { data } = await axios({

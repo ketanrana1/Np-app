@@ -42,7 +42,8 @@ export class RunStatusController {
           'startTime': 1,
           'endTime': 1,
           'ranAt': 1,
-          '_id': 0
+          '_id': 0,
+          'flowId': 1
         }
       }
     ]);

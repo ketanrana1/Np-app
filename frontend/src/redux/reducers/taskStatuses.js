@@ -2,7 +2,7 @@ import { TASK_STATUSES_SPECIFIC_LIST } from "../constants/taskStatusesType"
 
 
 const initialState = {
-    taskStatus: {},
+    taskStatus: [],
 }
 
 export const taskStatusChanged = (state = initialState, { type, payload }) => {
