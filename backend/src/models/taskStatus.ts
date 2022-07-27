@@ -19,6 +19,8 @@ const taskStatusSchema = new Schema({
   },
   actions: [Object],
   taskLog: String,
+  taskName: String,
+  isLogDeleted: Boolean,
 
 },
 {timestamps: true}  

@@ -88,16 +88,16 @@ export default function ExecuteModal(props) {
 
                 const actionsData = await axios({
                     method: 'get',
-                    url: `https://jsonplaceholder.typicode.com/posts/${index + 1}`,
+                    url: `https://jsonplaceholder.typicode.com/posts/${index + 2}`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
                     }
                 });
 
                 const actionDetails = [ 
-                    { "actionName" : actionsData.data.title , "logDate": currentTime, "logDescription": actionsData.data.body},
-                    { "actionName" : actionsData.data.id , "logDate": currentTime, "logDescription": actionsData.data.body},
-                    { "actionName" : actionsData.data.userId , "logDate": currentTime, "logDescription": actionsData.data.body}
+                    { "actionName" : actionsData.data.title , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                    { "actionName" : actionsData.data.id , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                    { "actionName" : actionsData.data.userId , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false}
                 ]
                 const singleTasKLogDataPayload = {
                     "taskLog": singleTasKLogData.data.body,
@@ -106,7 +106,7 @@ export default function ExecuteModal(props) {
                     "startTime": currentTime,
                     "endTime": "",
                     "status": "In progress",
-                    "actions": actionDetails
+                    "actions": actionDetails 
                 }
 
                 const singleTasKStatusData = await axios({
@@ -117,7 +117,6 @@ export default function ExecuteModal(props) {
                     }, 
                     data: singleTasKLogDataPayload
                 });
-
             })
             closePopup(false) 
             toast("Flow is executed", { autoClose: 2000 })

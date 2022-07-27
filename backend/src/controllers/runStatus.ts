@@ -14,20 +14,19 @@ export class RunStatusController {
   @Post('/add-run-status')
   @UseBefore(AuthMiddleware)
   async addRunStatus(@Body() body: any) {
-    console.log("BODY", body)
-      const newRunStatus = new RunStatus(body);
-      const result = await newRunStatus.save();
-  
-      if (!result)
-        return {
-          success: false,
-          message: "Run Status could not be added. Please try after some time."
-        }
-   
+    const newRunStatus = new RunStatus(body);
+    const result = await newRunStatus.save();
+
+    if (!result)
       return {
-        success: true,
-        message: "Run Status is added."
-      };
+        success: false,
+        message: "Run Status could not be added. Please try after some time."
+      }
+
+    return {
+      success: true,
+      message: "Run Status is added."
+    };
   }
 
   @Get('/get-run-statuses')
@@ -52,20 +51,19 @@ export class RunStatusController {
   @Post('/add-log')
   @UseBefore(AuthMiddleware)
   async addLog(@Body() body: any) {
-    console.log("BODY", body)
-      const newLog = new Log(body);
-      const result = await newLog.save();
-  
-      if (!result)
-        return {
-          success: false,
-          message: "Log could not be added. Please try after some time."
-        }
-   
+    const newLog = new Log(body);
+    const result = await newLog.save();
+
+    if (!result)
       return {
-        success: true,
-        message: "Log is added."
-      };
+        success: false,
+        message: "Log could not be added. Please try after some time."
+      }
+  
+    return {
+      success: true,
+      message: "Log is added."
+    };
   }
 
   @Get('/get-logs')
@@ -85,32 +83,23 @@ export class RunStatusController {
   @Post('/add-task-status')
   @UseBefore(AuthMiddleware)
   async addTaskStatus(@Body() body: any) {
-    console.log("BODY", body)
-      const newTaskStatus = new TaskStatus(body);
-      const result = await newTaskStatus.save();
-  
-      if (!result)
-        return {
-          success: false,
-          message: "Task Status could not be added. Please try after some time."
-        }
-   
-      return {
-        success: true,
-        message: "Task Status is added."
-      };
-  }
+    const newBody = {
+      ...body,
+      "isLogDeleted": false,
 
-  @Get('/get-floww/:id')
-  @UseBefore(AuthMiddleware)
-  async getFlowByIds(@Param('id') id: string) {
-    return await flow.aggregate([
-      {
-        '$match': {
-          'flowId': id
-        }
-      },
-    ]);
+    }
+    const newTaskStatus = new TaskStatus(newBody);
+    const result = await newTaskStatus.save();
+
+    if (!result)
+      return {
+        success: false,
+        message: "Task Status could not be added. Please try after some time."
+      }
+    return {
+      success: true,
+      message: "Task Status is added."
+    };
   }
 
   @Get('/get-task-statuses')
@@ -118,7 +107,8 @@ export class RunStatusController {
   async getTaskStatuses() {
     return await TaskStatus.aggregate([
       {
-        '$project': {
+          '$project': {
+          '_id': 0,
           'taskStatusId': 1,
           'startTime': 1,
           'endTime': 1,
@@ -128,7 +118,6 @@ export class RunStatusController {
           'flowId': 1,
           'actions': 1,
           'taskLog': 1,
-
         }
       }
     ]); 
@@ -137,7 +126,6 @@ export class RunStatusController {
   @Get('/get-task-status-details/:id')
   @UseBefore(AuthMiddleware)
   async getTaskStatuseLog(@Param('id') id: string) {
-
     return await TaskStatus.aggregate([
       {
         '$match': {
@@ -147,10 +135,53 @@ export class RunStatusController {
     ]);
   }
 
+  @Get('/get-task-status-log-details/:id')
+  async getTaskStatuseLogDetails(@Param('id') id: string) {
+    const result =  await TaskStatus.aggregate([
+      {
+        '$match': {
+          'taskStatusId': id,
+          'isLogDeleted': false,
+        }
+      }
+    ]);
+
+    if (result.length === 0)
+      return {
+        success: false,
+        message: "No Logs Found"
+      }
+
+    return result
+  }
+
+
+  @Post('/edit-task-log-status/:id')
+  async editTaskLogStatus(@Param('id') id: string) {
+
+    const result = await TaskStatus.findOneAndUpdate({ 'taskStatusId': id }, {
+      isLogDeleted: true,
+    });
+
+    if (!result)
+      return {
+        success: false,
+        message: "Log status could not be updated. Please try after some time."
+      }
+
+    return {
+      success: true,
+      message: "Log Status is updated."
+    };
+  }
+
+
+
+
 
   @Get('/get-single-action-details/:name/:id')
+  @UseBefore(AuthMiddleware)
   async getSingleActionDetails(@Param('name') name: string, @Param('id') id: string) {
-
     return await TaskStatus.aggregate([
       {
         '$unwind': {
@@ -159,9 +190,7 @@ export class RunStatusController {
       }, {
         '$match': {
           'actions.actionName': name,
-          'taskStatusId': id
-          
-          
+          'taskStatusId': id  
         }
       }, {
         '$project': {
@@ -171,27 +200,78 @@ export class RunStatusController {
     ]);
   }
 
+  @Get('/get-single-action-log-details/:name/:id')
+  async getSingleActionLogDetails(@Param('name') name: string, @Param('id') id: string) {
+    const result = await TaskStatus.aggregate([
+      {
+        '$unwind': {
+          'path': '$actions'
+        }
+      }, {
+        '$match': {
+          'actions.actionName': name,
+          'taskStatusId': id,
+          'actions.isLogDeleted': false 
+        }
+      }, {
+        '$project': {
+          'actions': 1,
+          '_id': 0
+        }
+      }
+    ]);
 
+    if (result.length === 0)
+      return {
+        success: false,
+        message: "No Logs Found"
+      }
 
-  // @Post('/update-run-status')
-  // @UseBefore(AuthMiddleware)
-  // async updateRunStatusById(@Body() body: any) {
-  //   const { runStatusId } = body;
-  //   const updateItems = { ...body }
-  //   delete updateItems.runStatusId;
-  //   try {
-  //     await RunStatus.findOneAndUpdate({ runStatusId }, { ...updateItems })
-  //     return {
-  //       success: true,
-  //       message: "Run Status updated successfully"
-  //     }
-  //   } catch (error) {
-  //     return { 
-  //       success: false,
-  //       message: "Run Status could not be updated. Please try after some time."
-  //     }
-  //   }
-  // }
+    return result
+
+  }
+
+  @Post('/edit-action-log-status/:id/:name')
+  async editActionLogStatus(@Param('id') id: string, @Param('name') name: string) {
+
+    const taskStatusDetails: any = await TaskStatus.aggregate([
+      {
+        '$match': {
+          'taskStatusId': id
+        }
+      } 
+    ]);
+
+    const allActions = taskStatusDetails[0].actions
+
+    const newAllActions = allActions.map((item: any, index: any) => {
+
+      if(item.actionName == name) {  
+        item.isLogDeleted = true  
+      }
+      return item 
+    })
+
+    taskStatusDetails.actions = newAllActions
+
+    console.log("New Details", taskStatusDetails)
+
+    const result = await TaskStatus.findOneAndUpdate({ 'taskStatusId': id }, { 'actions': newAllActions })
+
+        if (!result)
+          return {
+            success: false,
+            message: "Log status could not be updated. Please try after some time."
+          }
+
+        return {
+          success: true,
+          message: "Log Status is updated."
+       };
+  }
+
+    
+
 
 
 }
