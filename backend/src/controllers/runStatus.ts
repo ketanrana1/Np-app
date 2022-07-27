@@ -119,7 +119,7 @@ export class RunStatusController {
     return await TaskStatus.aggregate([
       {
         '$project': {
-          'taskStatusId': 1,
+          'id': "$taskStatusId",
           'startTime': 1,
           'endTime': 1,
           'ranAt': 1,
@@ -127,8 +127,10 @@ export class RunStatusController {
           'status': 1,
           'flowId': 1,
           'actions': 1,
-          'taskLog': 1,
-
+          'taskName': 1,
+          'logDescription': '$taskLog',
+          'logDate':"$ranAt",
+          '_id': 0,
         }
       }
     ]); 
@@ -141,7 +143,23 @@ export class RunStatusController {
     return await TaskStatus.aggregate([
       {
         '$match': {
-          'taskStatusId': id
+          'taskStatusId': id,
+        }
+      },
+      {
+        '$project': {
+          'id': "$taskStatusId",
+          'startTime': 1,
+          'endTime': 1,
+          'ranAt': 1,
+          'flowName': 1,
+          'status': 1,
+          'flowId': 1,
+          'actions': 1,
+          'logDescription': '$taskLog',
+          'logDate':"$ranAt",
+          'taskName': 1,
+          '_id': 0,
         }
       }
     ]);

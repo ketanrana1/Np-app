@@ -42,27 +42,27 @@ const RunStatus = () => {
   }, [state])
 
 
-  const handleClick = async (row) => {
-    try {
-      setLoader(true)
-      const bodyData = row.row
-      const payload = {
-        bodyData
-      }
-      const response = await axios({
-        method: 'post',
-        url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-        headers: {
-          'Authorization': `${sessionStorage.getItem('AccessToken')}`
-        },
-        data: payload
-      });
-      setLoader(false)
-      toast(response.data.message, { autoClose: 2000 });
-    } catch (error) {
-      setLoader(false)
-      console.log(error);
-    }
+  const handleClick = (row) => {
+    console.log("row",row)
+    // try {
+    //   setLoader(true)
+    //   const bodyData = row.row
+    //   const payload = {
+    //     bodyData
+    //   }
+    //   const response = await axios({
+    //     method: 'post',
+    //     url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
+    //     headers: {
+    //       'Authorization': `${sessionStorage.getItem('AccessToken')}`
+    //     },
+    //     data: payload
+    //   });
+    //   setLoader(false)
+    //   toast(response.data.message, { autoClose: 2000 });
+    // } catch (error) {
+    //   setLoader(false)
+    // }
   }
 
 
@@ -76,7 +76,7 @@ const RunStatus = () => {
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
-          // onCellClick={handleClick}
+            onCellClick={handleClick}
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import Loader from '../../../components/field/loader';
 import { useDispatch } from 'react-redux';
 import { runningStatus } from '../../../redux/actions/runningStatusAction';
-
+import Grid from '@mui/material/Grid';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -31,7 +31,7 @@ const style = {
 
 export default function ExecuteModal(props) {
     const dispatch = useDispatch()
-    const { name, flowId } = props?.flowName
+    const { name, flowId, tasks } = props?.flowName
     const [loader, setLoader] = useState(false)
     const handleClose = () => props.OpenExecuteModal(false);
 
@@ -49,11 +49,11 @@ export default function ExecuteModal(props) {
                 "status": "In progress"
             }
             const logData = await axios({
-            method: 'get',
-            url: `https://jsonplaceholder.typicode.com/posts/1`,
-            headers: {
-                'Authorization': `${sessionStorage.getItem('AccessToken')}`
-            }
+                method: 'get',
+                url: `https://jsonplaceholder.typicode.com/posts/1`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                }
             });
             const result = await axios({
                 method: 'post',
@@ -61,7 +61,7 @@ export default function ExecuteModal(props) {
                 headers: {
                     'Authorization': `${sessionStorage.getItem('AccessToken')}`
                 },
-                data: paylaod 
+                data: paylaod
             });
             /* */
 
@@ -74,9 +74,9 @@ export default function ExecuteModal(props) {
                 },
                 data: paylaod
             });
-            dispatch(runningStatus(logData.data))
+            // last time
             const tasks = singleFlowDetails.data[0].tasks
-            tasks.map( async (task, index) => {
+            tasks.map(async (task, index) => {
 
                 const singleTasKLogData = await axios({
                     method: 'get',
@@ -88,16 +88,16 @@ export default function ExecuteModal(props) {
 
                 const actionsData = await axios({
                     method: 'get',
-                    url: `https://jsonplaceholder.typicode.com/posts/${index + 1}`,
+                    url: `https://jsonplaceholder.typicode.com/posts/${index + 2}`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
                     }
                 });
 
-                const actionDetails = [ 
-                    { "actionName" : actionsData.data.title , "logDate": currentTime, "logDescription": actionsData.data.body},
-                    { "actionName" : actionsData.data.id , "logDate": currentTime, "logDescription": actionsData.data.body},
-                    { "actionName" : actionsData.data.userId , "logDate": currentTime, "logDescription": actionsData.data.body}
+                const actionDetails = [
+                    { "actionName": actionsData.data.title, "logDate": currentTime, "logDescription": actionsData.data.body },
+                    { "actionName": actionsData.data.id, "logDate": currentTime, "logDescription": actionsData.data.body },
+                    { "actionName": actionsData.data.userId, "logDate": currentTime, "logDescription": actionsData.data.body }
                 ]
                 const singleTasKLogDataPayload = {
                     "taskLog": singleTasKLogData.data.body,
@@ -108,25 +108,25 @@ export default function ExecuteModal(props) {
                     "status": "In progress",
                     "actions": actionDetails
                 }
-
+                dispatch(runningStatus(logData.data))
                 const singleTasKStatusData = await axios({
                     method: 'post',
                     url: `${REACT_APP_BACKEND_URL}/api/add-task-status`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    }, 
+                    },
                     data: singleTasKLogDataPayload
                 });
 
             })
-            closePopup(false) 
+            closePopup(false)
             toast("Flow is executed", { autoClose: 2000 })
             /* */
-            
+
         } catch (error) {
             setLoader(false)
             console.log(error)
-        }       
+        }
     }
 
     return (
@@ -144,12 +144,32 @@ export default function ExecuteModal(props) {
             >
                 <Fade in={props.openExecuteModal}>
                     <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                            FLow Name: {name}
-                        </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <Button variant="contained" onClick={() => handleExecuteClick(flowId, name, props.OpenExecuteModal)} >Execute</Button>
-                        </Typography>
+
+                        <Grid
+                            container
+                            spacing={2}
+                            justifyContent="center">
+                            <Grid item xs={6}>
+                                <Typography id="transition-modal-title" variant="h6" component="h2">FLow Name</Typography>
+                                <Typography sx={{ border: 1, borderColor: 'primary.main', borderRadius: 1, mt: 1, p: 1 }}>
+                                    {name}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography id="transition-modal-title" variant="h6" component="h2">Task Name</Typography>
+                                {tasks && tasks.map((task,index) => (
+                                    <Typography key={index} sx={{ border: 1, borderColor: 'primary.main', borderRadius: 1, mt: 1, p: 1 }}>
+                                        {task}
+                                    </Typography>
+                                ))}
+                                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                    <Button variant="contained" onClick={() => handleExecuteClick(flowId, name, props.OpenExecuteModal)} >Execute</Button>
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
+
+
                     </Box>
                 </Fade>
             </Modal>

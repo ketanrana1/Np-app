@@ -55,7 +55,6 @@ export const AddConnection = () => {
       connectionTypeId: selectValue
     }
 
-    console.log("connection payload", payload)
     try {    
       const result = await axios({
         method: 'post',    

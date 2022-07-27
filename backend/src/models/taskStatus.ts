@@ -19,7 +19,7 @@ const taskStatusSchema = new Schema({
   },
   actions: [Object],
   taskLog: String,
-
+  taskName: String,
 },
 {timestamps: true}  
 );    

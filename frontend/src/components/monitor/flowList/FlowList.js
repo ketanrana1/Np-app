@@ -42,7 +42,6 @@ const FlowList = ({ open }) => {
 
     setFlowName(filteredFlowList)
     OpenExecuteModal(!openExecuteModal)
-    console.log("ima console log", filteredFlowList)
   }
 
   return (
