@@ -106,7 +106,8 @@ export default function ExecuteModal(props) {
                     "startTime": currentTime,
                     "endTime": "",
                     "status": "In progress",
-                    "actions": actionDetails 
+                    "actions": actionDetails,
+                    "flowId": id,
                 }
                 dispatch(runningStatus(logData.data))
                 const singleTasKStatusData = await axios({

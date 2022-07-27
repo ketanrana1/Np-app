@@ -153,6 +153,34 @@ export class RunStatusController {
     ]);
   }
 
+
+  @Get('/get-task-statuses/:id')
+  async getTaskStatusess(@Param('id') id: string) {
+    return await TaskStatus.aggregate([
+      {
+        '$match': {
+          'flowId': id,
+        }
+      },
+      {
+        '$project': {
+          'id': "$taskStatusId",
+          'startTime': 1,
+          'endTime': 1,
+          'ranAt': 1,
+          'flowName': 1,
+          'status': 1,
+          'flowId': 1,
+          'actions': 1,
+          'logDescription': '$taskLog',
+          'logDate':"$ranAt",
+          'taskName': 1,
+          '_id': 0,
+        }
+      }
+    ]);
+  }
+
   @Get('/get-task-status-log-details/:id')
   async getTaskStatuseLogDetails(@Param('id') id: string) {
     const result =  await TaskStatus.aggregate([
@@ -269,10 +297,6 @@ export class RunStatusController {
       }
       return item 
     })
-
-    taskStatusDetails.actions = newAllActions
-
-    console.log("New Details", taskStatusDetails)
 
     const result = await TaskStatus.findOneAndUpdate({ 'taskStatusId': id }, { 'actions': newAllActions })
 
