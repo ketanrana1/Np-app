@@ -6,11 +6,13 @@ import { logStatus } from '../../../redux/actions/logStatusAction';
 import { getTaskStatus } from '../../../api/tasksDetails';
 
 const columns = [
-  { field: 'ranAt', headerName: 'Run At', width: 200 },
-  { field: 'startTime', headerName: 'Start Time', width: 200 },
-  { field: 'taskName', headerName: 'Task Name', width: 200 },
-  { field: 'endTime', headerName: 'End Time', width: 200 },
-  { field: 'log', headerName: 'Log Des', width: 200 }
+  { field: 'log', headerName: 'Log Des', width: 230 },
+  
+  // { field: 'startTime', headerName: 'Start Time', width: 230 },
+  { field: 'taskName', headerName: 'Task Name', width: 230 },
+  { field: 'ranAt', headerName: 'Run At', width: 230 },
+  { field: 'endTime', headerName: 'End Time', width: 230 },
+  
 ];
 
 const Tasks = () => {
