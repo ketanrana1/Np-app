@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
-import { toast } from 'react-toastify';
+
 import Loader from '../../../components/field/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { taskStatusAction } from '../../../redux/actions/taskStatusesAction';

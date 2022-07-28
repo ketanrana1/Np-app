@@ -1,21 +1,11 @@
 import React from 'react'
-import FlowList from './flowList/FlowList'
 import RunStatus from './runStatus/RunStatus'
 import Tasks from './tasks/Tasks'
 import Actions from './actions/Actions'
 import Log from './log/Log'
 import Navbar from './navBar'
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
-import Box from '@mui/material/Box';
-
-import Toolbar from '@mui/material/Toolbar';
-
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-
+import { Box, CssBaseline, Grid, Paper, Toolbar, ThemeProvider, Container, createTheme } from '../common/muiImports'
 const mdTheme = createTheme();
 const Monitor = () => {
   return (
@@ -33,7 +23,6 @@ const Monitor = () => {
             flexGrow: 0.6,
             height: "100%",
             width: "100%",
-            // overflow: "auto",
           }}
         >
           <Toolbar />
@@ -89,8 +78,6 @@ const Monitor = () => {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 0.4,
-            // height: "100%",
-            // overflow: "auto",
           }}
         >
           <Toolbar />
@@ -113,12 +100,6 @@ const Monitor = () => {
         </Box>
       </Box>
     </ThemeProvider>
-    // <div className="monitor-cont">
-
-
-    //     <RunStatus />
-    //     <Log />
-    // </div>
   )
 }
 

@@ -207,10 +207,10 @@ export class RunStatusController {
     ]);
 
     if (result.length === 0)
-      return {
+      return [{
         success: false,
         message: "No Logs Found"
-      }
+      }]
 
     return result
   }
@@ -282,10 +282,10 @@ export class RunStatusController {
     ]);
 
     if (result.length === 0)
-      return {
+      return [{
         success: false,
         message: "No Logs Found"
-      }
+      }]
 
     return result
 
