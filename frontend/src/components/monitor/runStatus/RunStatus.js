@@ -9,7 +9,6 @@ import { flowLists } from '../../../redux/actions/flowListAction';
 
 
 const columns = [
-  // { field: 'startTime', headerName: 'Start Time', width: 180 },
   { field: 'flowName', headerName: 'Flow Name', width: 230 },
   { field: 'status', headerName: 'Status', width: 230 },
   { field: 'endTime', headerName: 'End Time', width: 230 },

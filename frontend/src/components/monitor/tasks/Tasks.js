@@ -6,13 +6,11 @@ import { logStatus } from '../../../redux/actions/logStatusAction';
 import { getTaskStatus } from '../../../api/tasksDetails';
 
 const columns = [
-  { field: 'log', headerName: 'Log Des', width: 230 },
-  
-  // { field: 'startTime', headerName: 'Start Time', width: 230 },
+
   { field: 'taskName', headerName: 'Task Name', width: 230 },
   { field: 'ranAt', headerName: 'Run At', width: 230 },
   { field: 'endTime', headerName: 'End Time', width: 230 },
-  
+  { field: 'logDescription', headerName: 'Log Des', width: 230 },
 ];
 
 const Tasks = () => {
@@ -27,7 +25,7 @@ const Tasks = () => {
     const { flowId } = state?.flowList
     if (!flowId) return
     const { data } = await getTaskStatus(flowId)
-
+    console.log("task Desc", data)
     return [
       dispatch(logStatus(data[0] && {
         ...data[0],
