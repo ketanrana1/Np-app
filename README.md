@@ -17,7 +17,3 @@ For Frontend -:
 ## Usage
 
 Visit http://localhost:3000/ 
-
-
-
-

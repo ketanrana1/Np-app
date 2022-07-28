@@ -11,8 +11,11 @@ import Loader from '../../../components/field/loader';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import ExecuteModal from '../layout/modal';
+import { useDispatch } from 'react-redux';
+import { flowLists } from '../../../redux/actions/flowListAction';
 
 const FlowList = ({ open }) => {
+  const dispatch = useDispatch()
   const [loader, setLoader] = useState(false)
   const [flowList, setFlowList] = useState()
   const [openExecuteModal, OpenExecuteModal] = useState(false);
@@ -29,7 +32,8 @@ const FlowList = ({ open }) => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-        return [setLoader(false), setFlowList(data)]
+
+        return [dispatch(flowLists(data[0])), setLoader(false), setFlowList(data)]
       } catch (error) {
         return [setLoader(false), console.log(error)]
       }
@@ -42,7 +46,6 @@ const FlowList = ({ open }) => {
 
     setFlowName(filteredFlowList)
     OpenExecuteModal(!openExecuteModal)
-    console.log("ima console log", filteredFlowList)
   }
 
   return (

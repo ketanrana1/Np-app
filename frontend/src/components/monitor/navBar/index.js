@@ -1,36 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Tooltip from '@mui/material/Tooltip';
-import Zoom from '@mui/material/Zoom';
-import AccountsMenu from './accountMenu';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import FlowList from '../flowList/FlowList';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useSelector } from 'react-redux';
+import AccountsMenu from './accountMenu';
+import axios from 'axios';
+import {
+    drawerWidth,
+    LogoutText,
+    AdminText,
+    RefreshText,
+    ClearText,
+    CLEAR_LOG_TASK,
+    CLEAR_LOG_ACTION
+} from '../../../utils/constent';
+import {
+    Box,
+    styled,
+    Zoom,
+    useTheme,
+    IconButton,
+    MenuIcon,
+    MuiDrawer,
+    MuiAppBar,
+    AdminPanelSettingsIcon,
+    ChevronRightIcon,
+    ChevronLeftIcon,
+    Divider,
+    DeleteOutlineIcon,
+    List,
+    ListItem,
+    LogoutIcon,
+    ListItemIcon,
+    ListItemText,
+    ListItemButton,
+    Tooltip,
+    Toolbar,
+    Typography,
+    RefreshIcon,
+} from '../../common/muiImports'
 
-const drawerWidth = 310;
-const LogoutText = "Logout"
-const AdminText = "Configure View"
-const RefreshText = "Refresh Data"
-const ClearText = "Clear Logs"
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -97,6 +107,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
     const theme = useTheme();
     const navigate = useNavigate()
+    const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
     const [open, setOpen] = useState(false);
     const [authRole, setauthRole] = useState(null)
 
@@ -113,20 +124,30 @@ export default function MiniDrawer() {
     const handleLogout = () => {
         sessionStorage.setItem('Auth key', '');
         sessionStorage.setItem('Role', '');
-
         return [navigate("/login"), toast("Logout Successfully", { autoClose: 2000 })]
     }
 
     const handleAdminRoute = () => {
         navigate('/connection')
     }
+    const getLogs = async () => {
+        const { id, taskType, actionId, actionName } = logsStatus
+        try {
 
-    const handleRefreshData = () => {
+            await axios({
+                method: 'post',
+                url: taskType ? `${CLEAR_LOG_TASK}/${id}` : `${CLEAR_LOG_ACTION}/${actionId}/${actionName}`,
+                headers: {
+                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                }
+            });
 
+        } catch (error) {
+            return [console.log(error)]
+        }
     }
-
-    const handleClearData = () => {
-
+    const handleRefreshData = () => {
+        getLogs()
     }
 
     return (

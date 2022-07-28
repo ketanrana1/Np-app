@@ -4,7 +4,9 @@ import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
 import { toast } from 'react-toastify';
 import Loader from '../../../components/field/loader';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { flowLists } from '../../../redux/actions/flowListAction';
+
 
 const columns = [
   { field: 'ranAt', headerName: 'Run At', width: 180 },
@@ -16,6 +18,7 @@ const columns = [
 
 const RunStatus = () => {
   const state = useSelector((state) => state?.runningStatusChanged)
+  const dispatch = useDispatch()
   const [loader, setLoader] = useState(false)
   const [statuses, setStatuses] = useState([])
 
@@ -30,6 +33,7 @@ const RunStatus = () => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
+        data[0]?.flowId && dispatch(flowLists(data[0]))
         setStatuses(data)
         setLoader(false)
 
@@ -42,27 +46,8 @@ const RunStatus = () => {
   }, [state])
 
 
-  const handleClick = async (row) => {
-    try {
-      setLoader(true)
-      const bodyData = row.row
-      const payload = {
-        bodyData
-      }
-      const response = await axios({
-        method: 'post',
-        url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
-        headers: {
-          'Authorization': `${sessionStorage.getItem('AccessToken')}`
-        },
-        data: payload
-      });
-      setLoader(false)
-      toast(response.data.message, { autoClose: 2000 });
-    } catch (error) {
-      setLoader(false)
-      console.log(error);
-    }
+  const handleClick = async ({ row }) => {
+    dispatch(flowLists(row))
   }
 
 
@@ -76,7 +61,7 @@ const RunStatus = () => {
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
-          // onCellClick={handleClick}
+            onCellClick={handleClick}
           />
         </div>
       </div>

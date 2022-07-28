@@ -7,71 +7,72 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Loader from '../../../components/field/loader';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
-import { useSelector } from 'react-redux';
-
-
+import Loader from '../../field/loader';
+const TASK_LOGS = `${REACT_APP_BACKEND_URL}/api/get-task-status-log-details`
+const ACTION_LOGS = `${REACT_APP_BACKEND_URL}/api/get-single-action-log-details`
 const Log = () => {
-  const state = useSelector((state)=>state?.runningStatusChanged)
+
+  const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
+  const [logDetails, setLogDetails] = useState([])
   const [loader, setLoader] = useState(false)
-  const [logs, setLogs] = useState([])
-
+  
   useEffect(() => {
-
-    const getAllLogs = async () => {
+    if (!logsStatus) return
+    const { id, taskType, actionId, actionName } = logsStatus
+    if (!id) return
+    const getLogs = async () => {
       try {
         setLoader(true)
         const { data } = await axios({
           method: 'get',
-          url: `${REACT_APP_BACKEND_URL}/api/get-logs`,
+          url: taskType ? `${TASK_LOGS}/${id}` : `${ACTION_LOGS}/${actionName}/${actionId}`,
           headers: {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-      setLogs(data)
-      setLoader(false)
-        
-      } catch (error) {
+        const logList = taskType ? data : data.map((des) => des.actions)
+        setLogDetails(logList)
         setLoader(false)
-        console.log(error)
+      } catch (error) {
+        return [setLoader(false), console.log(error)]
       }
     }
-    getAllLogs()
-  }, [state])
-  function createData(logDate, description) {
-    return { logDate, description };
-  }
-  
-  const rows = logs.map(({logDate, description})=>createData(logDate, description))
+    getLogs()
+
+    return () => {
+
+    }
+  }, [logsStatus])
+
 
   return (
     <div className="monitor-table-cont">
-      <h5 className="monitor-table-head">Logs </h5>  
+      <h5 className="monitor-table-head">Logs </h5>
       <div className="monitor-log-cont">
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Log Date</TableCell>
-              <TableCell align="left">Description</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          { rows.map(({logDate,description},index)=>(
-              <TableRow
-                key={index}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-               
-              <TableCell align="left">{logDate}</TableCell>
-              <TableCell align="left">{description}</TableCell>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Log Date</TableCell>
+                <TableCell>Description</TableCell>
               </TableRow>
-            )) } 
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {logDetails && logDetails?.map(({ logDate, logDescription }, index) => (
+                <TableRow
+                  key={index}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell>{logDate}</TableCell>
+                  <TableCell>{logDescription}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
       {loader && <Loader />}
     </div>

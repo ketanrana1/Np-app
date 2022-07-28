@@ -27,7 +27,7 @@ const EditConnectionType = () => {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
                     }        
                   });
-                console.log("respose", response)
+            
                 setLoader(false)
                 setConnectionType(response.data[0])
             }
