@@ -21,6 +21,7 @@ const RunStatus = () => {
   const dispatch = useDispatch()
   const [loader, setLoader] = useState(false)
   const [statuses, setStatuses] = useState([])
+  const [isHiglight, setIsHighLight] = useState("")
 
   useEffect(() => {
     const getAllStatuses = async () => {
@@ -33,8 +34,10 @@ const RunStatus = () => {
             'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }
         });
-        data[0]?.flowId && dispatch(flowLists(data[0]))
-        setStatuses(data)
+        const currentRunStatus = data.reverse()
+        currentRunStatus[0]?.flowId && dispatch(flowLists(currentRunStatus[0]))
+        setStatuses(currentRunStatus)
+        setIsHighLight(currentRunStatus[0]?.id)
         setLoader(false)
 
       } catch (error) {
@@ -48,6 +51,7 @@ const RunStatus = () => {
 
   const handleClick = async ({ row }) => {
     dispatch(flowLists(row))
+    setIsHighLight(row.id)
   }
 
 
@@ -62,6 +66,7 @@ const RunStatus = () => {
             pageSize={5}
             rowsPerPageOptions={[5]}
             onCellClick={handleClick}
+            selectionModel={isHiglight}
           />
         </div>
       </div>

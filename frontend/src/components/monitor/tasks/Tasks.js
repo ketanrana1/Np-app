@@ -1,48 +1,48 @@
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
-
-import Loader from '../../../components/field/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { taskStatusAction } from '../../../redux/actions/taskStatusesAction';
 import { logStatus } from '../../../redux/actions/logStatusAction';
+import { getTaskStatus } from '../../../api/tasksDetails';
+
 const columns = [
   { field: 'ranAt', headerName: 'Run At', width: 200 },
   { field: 'startTime', headerName: 'Start Time', width: 200 },
   { field: 'taskName', headerName: 'Task Name', width: 200 },
   { field: 'endTime', headerName: 'End Time', width: 200 },
+  { field: 'log', headerName: 'Log Des', width: 200 }
 ];
+
 const Tasks = () => {
   const state = useSelector((state) => state?.flowListChanged)
   const dispatch = useDispatch()
-  const [loader, setLoader] = useState(false)
+
   const [taskStatus, setTaskStatus] = useState([])
+  const [isHiglight, setIsHighLight] = useState("")
+  useEffect(() => { getTaskList() }, [state])
 
-  useEffect(() => {
+  const getTaskList = async () => {
     const { flowId } = state?.flowList
-    const getTaskLists = async () => {
-      try {
-        setLoader(true)
-        const { data } = await axios({
-          method: 'get',
-          url: `${REACT_APP_BACKEND_URL}/api/get-task-statuses/${flowId}`,
-          headers: {
-            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          }
-        });
-        return [dispatch(logStatus(data[0] && {...data[0],taskType:"task"})), dispatch(taskStatusAction(data[0])), setTaskStatus(data), setLoader(false)]
+    if (!flowId) return
+    const { data } = await getTaskStatus(flowId)
 
-      } catch (error) {
-        return [setLoader(false), console.log(error)]
-      }
-    }
-    getTaskLists()
-  }, [state])
+    return [
+      dispatch(logStatus(data[0] && {
+        ...data[0],
+        taskType: "task"
+      })),
+      dispatch(taskStatusAction(data[0])),
+      setTaskStatus(data),
+      setIsHighLight(data[0]?.id)
+    ]
+  }
 
   const handleClick = ({ row }) => {
-    dispatch(logStatus({...row,taskType:"task"}))
-    dispatch(taskStatusAction(row))
+    return [
+      dispatch(logStatus({ ...row, taskType: "task" })),
+      dispatch(taskStatusAction(row)),
+      setIsHighLight(row.id)
+    ]
   }
 
   return (
@@ -55,9 +55,9 @@ const Tasks = () => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           onCellClick={handleClick}
+          selectionModel={isHiglight}
         />}
       </div>
-      {loader && <Loader />}
     </div>
   )
 }

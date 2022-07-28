@@ -5,15 +5,12 @@ import { toast } from 'react-toastify';
 import FlowList from '../flowList/FlowList';
 import { useSelector } from 'react-redux';
 import AccountsMenu from './accountMenu';
-import axios from 'axios';
 import {
     drawerWidth,
     LogoutText,
     AdminText,
     RefreshText,
     ClearText,
-    CLEAR_LOG_TASK,
-    CLEAR_LOG_ACTION
 } from '../../../utils/constent';
 import {
     Box,
@@ -40,6 +37,7 @@ import {
     Typography,
     RefreshIcon,
 } from '../../common/muiImports'
+import { clearTaskActions, clearTaskLogs } from '../../../api/logs';
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -113,41 +111,19 @@ export default function MiniDrawer() {
 
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
     const handleLogout = () => {
         sessionStorage.setItem('Auth key', '');
         sessionStorage.setItem('Role', '');
         return [navigate("/login"), toast("Logout Successfully", { autoClose: 2000 })]
     }
 
-    const handleAdminRoute = () => {
-        navigate('/connection')
-    }
     const getLogs = async () => {
         const { id, taskType, actionId, actionName } = logsStatus
-        try {
-
-            await axios({
-                method: 'post',
-                url: taskType ? `${CLEAR_LOG_TASK}/${id}` : `${CLEAR_LOG_ACTION}/${actionId}/${actionName}`,
-                headers: {
-                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                }
-            });
-
-        } catch (error) {
-            return [console.log(error)]
-        }
+        taskType ? await clearTaskLogs(id) : await clearTaskActions(actionName, actionId)
     }
-    const handleRefreshData = () => {
-        getLogs()
+
+    const handleRefreshData = async () => {
+        await getLogs()
     }
 
     return (
@@ -157,7 +133,7 @@ export default function MiniDrawer() {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        onClick={() => setOpen(true)}
                         edge="start"
                         sx={{
                             marginRight: 5,
@@ -174,7 +150,7 @@ export default function MiniDrawer() {
             </AppBar>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={() => setOpen(false)}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </DrawerHeader>
@@ -187,7 +163,7 @@ export default function MiniDrawer() {
                                 justifyContent: open ? 'initial' : 'center',
                                 px: 2.5,
                             }}
-                            onClick={handleAdminRoute}
+                            onClick={() => navigate('/connection')}
                         >
                             <ListItemIcon
                                 sx={{

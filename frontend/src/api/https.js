@@ -4,18 +4,16 @@ import { DEFAULT_ERROR_NOTIFICATION } from '../utils/constent';
 
 const qs = require('qs')
 
-// require('dotenv').config({ path: process.cwd() + '/.env' });
-
 const API_BASE_URI =
   process.env.REACT_APP_BACKEND_URL;
 
 const http = axios.create({
-  baseURL: API_BASE_URI,
+  baseURL: `${API_BASE_URI}/api`,
 });
 
-http.interceptors.request.use(function(config) {
+http.interceptors.request.use(function (config) {
   // Get fresh token every request
-  const user =sessionStorage.getItem('Role');
+  const user = sessionStorage.getItem('Role');
 
   if (user) {
     config.headers.common['Authorization'] = sessionStorage.getItem('AccessToken');
@@ -27,13 +25,15 @@ http.interceptors.request.use(function(config) {
 // notify the store that the JWT token is no longer valid in case of HTTP 401
 http.interceptors.response.use(
   (response) => {
+    const { data: { message } } = response
+    // console.log("response from http", response)
     switch (response.config.method) {
       case 'put':
       case 'patch':
         FlashMessage.success('Updated item');
         break;
       case 'post':
-        FlashMessage.success(response.status === 201 ? 'Item created' : 'Updated item');
+        FlashMessage.success(response.status === 201 ? 'Item created' : message);
         break;
       case 'delete':
         FlashMessage.success('Item deleted');
@@ -56,7 +56,7 @@ http.interceptors.response.use(
 
     switch (response.status) {
       case 401:
-     
+
       case 406:
         FlashMessage.error('Invalid or missing values');
         break;
@@ -81,7 +81,6 @@ export const createCRUDEndpoints = (URL_ROOT) => {
   };
 
   const listAction = () => async (filters, pageSize, page, sorting) => {
-    // TODO: fix this
     if (!page) {
       page = 0;
     }
@@ -97,7 +96,7 @@ export const createCRUDEndpoints = (URL_ROOT) => {
       method: 'GET',
       url: URL_ROOT,
       params: params,
-      paramsSerializer: function(params) {
+      paramsSerializer: function (params) {
         return qs.stringify(params, { encode: false });
       },
     });
@@ -139,7 +138,7 @@ export const createCRUDEndpoints = (URL_ROOT) => {
   const updateAction = () => async (data) => {
     const response = await http({
       method: 'PUT',
-      url:`${URL_ROOT}/${data.id}`,
+      url: `${URL_ROOT}/${data.id}`,
       data,
     });
 

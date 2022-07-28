@@ -1,4 +1,4 @@
-import { NavLink,useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const MainNavigation = () => {
@@ -13,6 +13,11 @@ const MainNavigation = () => {
     <>
       <nav className="main-nav navbar bg-light px-0">
         <ul className="navbar-nav">
+          <li className="nav-item">
+            <NavLink to='/monitor' className={navData => navData.isActive ? 'active' : ''}>
+              <img src={require('../../assets/images/connection.png')} alt="connection" /> Dashboard
+            </NavLink>
+          </li>
           <li className="nav-item">
             <NavLink to='/connection' className={navData => navData.isActive ? 'active' : ''}>
               <img src={require('../../assets/images/connection.png')} alt="connection" /> Connection

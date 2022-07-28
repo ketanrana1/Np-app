@@ -32,6 +32,7 @@ const style = {
 export default function ExecuteModal(props) {
     const dispatch = useDispatch()
     const { name, flowId, tasks } = props?.flowName
+    console.log("tasks",props?.flowName)
     const [loader, setLoader] = useState(false)
     const handleClose = () => props.OpenExecuteModal(false);
 
@@ -48,13 +49,13 @@ export default function ExecuteModal(props) {
                 "endTime": "",
                 "status": "In progress"
             }
-            const logData = await axios({
-                method: 'get',
-                url: `https://jsonplaceholder.typicode.com/posts/1`,
-                headers: {
-                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                }
-            });
+            // const logData = await axios({
+            //     method: 'get',
+            //     url: `https://jsonplaceholder.typicode.com/posts/1`,
+            //     headers: {
+            //         'Authorization': `${sessionStorage.getItem('AccessToken')}`
+            //     }
+            // });
             const result = await axios({
                 method: 'post',
                 url: `${REACT_APP_BACKEND_URL}/api/add-run-status`,
@@ -66,16 +67,16 @@ export default function ExecuteModal(props) {
             /* */
 
             /* */
-            const singleFlowDetails = await axios({
-                method: 'get',
-                url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
-                headers: {
-                    'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                },
-                data: paylaod
-            });
+            // const singleFlowDetails = await axios({
+            //     method: 'get',
+            //     url: `${REACT_APP_BACKEND_URL}/api/get-flow/${id}`,
+            //     headers: {
+            //         'Authorization': `${sessionStorage.getItem('AccessToken')}`
+            //     },
+            //     data: paylaod
+            // });
             // last time
-            const tasks = singleFlowDetails.data[0].tasks
+            // const tasks = singleFlowDetails.data[0].tasks
             tasks.map(async (task, index) => {
 
                 const singleTasKLogData = await axios({
@@ -86,19 +87,20 @@ export default function ExecuteModal(props) {
                     }
                 });
 
-                const actionsData = await axios({
-                    method: 'get',
-                    url: `https://jsonplaceholder.typicode.com/posts/${index + 2}`,
-                    headers: {
-                        'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    }
-                });
+                // const actionsData = await axios({
+                //     method: 'get',
+                //     url: `https://jsonplaceholder.typicode.com/posts/${index + 2}`,
+                //     headers: {
+                //         'Authorization': `${sessionStorage.getItem('AccessToken')}`
+                //     }
+                // });
 
-                const actionDetails = [ 
-                    { "actionName" : actionsData.data.title.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
-                    { "actionName" : actionsData.data.id.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
-                    { "actionName" : actionsData.data.userId.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false}
-                ]
+                // const actionDetails = [ 
+                //     { "actionName" : actionsData.data.title.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                //     { "actionName" : actionsData.data.id.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false},
+                //     { "actionName" : actionsData.data.userId.toString() , "logDate": currentTime, "logDescription": actionsData.data.body, "isLogDeleted": false}
+                // ]
+                
                 const singleTasKLogDataPayload = {
                     "taskLog": singleTasKLogData.data.body,
                     "taskName": task,
@@ -106,16 +108,16 @@ export default function ExecuteModal(props) {
                     "startTime": currentTime,
                     "endTime": "",
                     "status": "In progress",
-                    "actions": actionDetails,
-                    "flowId": id,
+                    // "actions": actionDetails,
+                    "flowId": flowId,
                 }
-                dispatch(runningStatus(logData.data))
+                 dispatch(runningStatus(result.data))
                 const singleTasKStatusData = await axios({
                     method: 'post',
                     url: `${REACT_APP_BACKEND_URL}/api/add-task-status`,
                     headers: {
                         'Authorization': `${sessionStorage.getItem('AccessToken')}`
-                    },
+                    },  
                     data: singleTasKLogDataPayload
                 });
             })

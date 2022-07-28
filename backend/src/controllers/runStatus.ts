@@ -325,9 +325,4 @@ export class RunStatusController {
           message: "Log Status is updated."
        };
   }
-
-    
-
-
-
 }

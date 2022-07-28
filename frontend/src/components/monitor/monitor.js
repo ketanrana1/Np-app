@@ -1,13 +1,21 @@
 import React from 'react'
-import RunStatus from './runStatus/RunStatus'
-import Tasks from './tasks/Tasks'
-import Actions from './actions/Actions'
 import Log from './log/Log'
 import Navbar from './navBar'
+import {
+  Box,
+  CssBaseline,
+  Grid,
+  Paper,
+  Toolbar,
+  ThemeProvider,
+  Container,
+  createTheme
+} from '../common/muiImports'
+import { renderComponent } from '../layout/mainComponents';
 
-import { Box, CssBaseline, Grid, Paper, Toolbar, ThemeProvider, Container, createTheme } from '../common/muiImports'
-const mdTheme = createTheme();
 const Monitor = () => {
+  const mdTheme = createTheme();
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex", overflow: "auto" }}>
@@ -28,44 +36,23 @@ const Monitor = () => {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 500,
-                  }}
-                >
-                  <RunStatus />
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 500,
-                  }}
-                >
-                  <Tasks />
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 500,
-                  }}
-                >
-                  <Actions />
-                </Paper>
-              </Grid>
+              {renderComponent.map((component,index) => {
+                const { componentType } = component
+                return (
+                  <Grid key={index} item xs={12}>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        height: 500,
+                      }}
+                    >
+                      {componentType}
+                    </Paper>
+                  </Grid>
+                )
+              })}
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
@@ -82,7 +69,6 @@ const Monitor = () => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -90,8 +76,7 @@ const Monitor = () => {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                  }}
-                >
+                  }}>
                   <Log />
                 </Paper>
               </Grid>

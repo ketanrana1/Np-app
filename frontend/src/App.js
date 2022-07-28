@@ -37,7 +37,7 @@ function App() {
   return (
     
       <Routes>
-        <Route path='/' element={<Layout><Navigate replace to='/connection' /></Layout>} />
+        <Route path='/' element={<Layout><Navigate replace to='/monitor' /></Layout>} />
 
         <Route path='/connection-type' element={<Layout><ConnectionType/></Layout>} />
         <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
