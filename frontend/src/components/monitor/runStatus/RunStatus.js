@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
-import { toast } from 'react-toastify';
-import Loader from '../../../components/field/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { flowLists } from '../../../redux/actions/flowListAction';
-
+import { getRunStatus } from '../../../api/recentRun';
 
 const columns = [
   { field: 'flowName', headerName: 'Flow Name', width: 230 },
@@ -16,43 +12,45 @@ const columns = [
 ];
 
 const RunStatus = () => {
-  const state = useSelector((state) => state?.runningStatusChanged)
+  const selector = useSelector((state) => state)
+  const { runningStatusChanged, filterRunningStatus: { fromDate, toDate } } = selector
+
   const dispatch = useDispatch()
-  const [loader, setLoader] = useState(false)
   const [statuses, setStatuses] = useState([])
+  const [filterList, setFilterList] = useState([])
   const [isHiglight, setIsHighLight] = useState("")
 
+  useEffect(() => { getAllStatuses() }, [runningStatusChanged])
+
   useEffect(() => {
-    const getAllStatuses = async () => {
-      try {
-        setLoader(true)
-        const { data } = await axios({
-          method: 'get',
-          url: `${REACT_APP_BACKEND_URL}/api/get-run-statuses`,
-          headers: {
-            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          }
-        });
-        const currentRunStatus = data.reverse()
-        currentRunStatus[0]?.flowId && dispatch(flowLists(currentRunStatus[0]))
-        setStatuses(currentRunStatus)
-        setIsHighLight(currentRunStatus[0]?.id)
-        setLoader(false)
-
-      } catch (error) {
-        setLoader(false)
-        console.log(error)
+    const filterList = statuses.filter(
+      user => {
+        const { ranAt } = user
+        return (new Date(ranAt).getTime()) >= fromDate && (new Date(ranAt).getTime()) <= toDate
       }
+    )
+    if (toDate && fromDate) {
+      setFilterList(filterList)
+      dispatch(flowLists(filterList[0]))
     }
-    getAllStatuses()
-  }, [state])
 
+  }, [toDate])
+
+  const getAllStatuses = async () => {
+    const { data } = await getRunStatus()
+    const currentRunStatus = data.reverse()
+    currentRunStatus[0]?.flowId && dispatch(flowLists(currentRunStatus[0]))
+    return [
+      setFilterList(currentRunStatus),
+      setStatuses(currentRunStatus),
+      setIsHighLight(currentRunStatus[0]?.id)
+    ]
+  }
 
   const handleClick = async ({ row }) => {
     dispatch(flowLists(row))
     setIsHighLight(row.id)
   }
-
 
   return (
     <>
@@ -60,7 +58,7 @@ const RunStatus = () => {
         <h5 className="monitor-table-head">Recent Run status </h5>
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={statuses}
+            rows={filterList}
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
@@ -69,7 +67,6 @@ const RunStatus = () => {
           />
         </div>
       </div>
-      {loader && <Loader />}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { runningStatusChanged } from './reducers/runningStatus'
+import { runningStatusChanged, filterRunningStatus } from './reducers/runningStatus'
 import { taskStatusChanged } from './reducers/taskStatuses'
 import { logsStatusChanged } from './reducers/logStatus'
 import { flowListChanged } from './reducers/flowList'
@@ -8,6 +8,7 @@ const rootReducers = combineReducers({
     taskStatusChanged,
     logsStatusChanged,
     flowListChanged,
+    filterRunningStatus
 })
 
 export default rootReducers

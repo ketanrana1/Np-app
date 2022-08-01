@@ -2,8 +2,6 @@ import axios from 'axios';
 import FlashMessage from '../utils/flashmessages';
 import { DEFAULT_ERROR_NOTIFICATION } from '../utils/constent';
 
-const qs = require('qs')
-
 const API_BASE_URI =
   process.env.REACT_APP_BACKEND_URL;
 
@@ -69,88 +67,3 @@ http.interceptors.response.use(
 );
 
 export { http };
-
-export const createCRUDEndpoints = (URL_ROOT) => {
-  const allAction = () => async () => {
-    const response = await http({
-      method: 'GET',
-      url: URL_ROOT,
-    });
-
-    return response.data;
-  };
-
-  const listAction = () => async (filters, pageSize, page, sorting) => {
-    if (!page) {
-      page = 0;
-    }
-
-    const params = {
-      filters,
-      page_size: pageSize,
-      page: page + 1,
-      sorting,
-    };
-
-    const response = await http({
-      method: 'GET',
-      url: URL_ROOT,
-      params: params,
-      paramsSerializer: function (params) {
-        return qs.stringify(params, { encode: false });
-      },
-    });
-
-    return response.data;
-  };
-
-  const getAction = () => async (id) => {
-    if (!id) {
-      throw Error('No id passed');
-    }
-    const response = await http({
-      method: 'GET',
-      url: `${URL_ROOT}/${id}`,
-    });
-    response.data.id = id;
-
-    return response.data;
-  };
-
-  const createAction = () => async (data) => {
-    const response = await http({
-      method: 'POST',
-      url: `${URL_ROOT}`,
-      data,
-    });
-
-    return response.data;
-  };
-
-  const deleteAction = () => async (id) => {
-    const response = await http({
-      method: 'DELETE',
-      url: `${URL_ROOT}/${id}`,
-    });
-    return response.data;
-  };
-
-  const updateAction = () => async (data) => {
-    const response = await http({
-      method: 'PUT',
-      url: `${URL_ROOT}/${data.id}`,
-      data,
-    });
-
-    return response.data;
-  };
-
-  return {
-    all: allAction,
-    list: listAction,
-    create: createAction,
-    update: updateAction,
-    get: getAction,
-    remove: deleteAction,
-  };
-};

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Log from './log/Log'
 import Navbar from './navBar'
 import {
@@ -12,10 +12,11 @@ import {
   createTheme
 } from '../common/muiImports'
 import { renderComponent } from '../layout/mainComponents';
+import FilterDate from '../layout/DatePicker';
 
 const Monitor = () => {
   const mdTheme = createTheme();
-
+ 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex", overflow: "auto" }}>
@@ -28,15 +29,18 @@ const Monitor = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            flexGrow: 0.6,
+            flexGrow: 1,
             height: "100%",
-            width: "100%",
+            width: "55%",
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
+            <FilterDate/>
+
             <Grid container spacing={3}>
-              {renderComponent.map((component,index) => {
+              {renderComponent.map((component, index) => {
                 const { componentType } = component
                 return (
                   <Grid key={index} item xs={12}>
@@ -46,6 +50,7 @@ const Monitor = () => {
                         display: "flex",
                         flexDirection: "column",
                         height: 500,
+                       
                       }}
                     >
                       {componentType}
@@ -64,7 +69,9 @@ const Monitor = () => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            flexGrow: 0.4,
+            // flexGrow: 0.4,
+            width: "42%",
+            right: "2%",
           }}
         >
           <Toolbar />
@@ -76,6 +83,7 @@ const Monitor = () => {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
+                   position: "fixed",
                   }}>
                   <Log />
                 </Paper>

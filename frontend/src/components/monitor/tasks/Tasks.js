@@ -23,9 +23,10 @@ const Tasks = () => {
 
   const getTaskList = async () => {
     const { flowId } = state?.flowList
+
     if (!flowId) return
     const { data } = await getTaskStatus(flowId)
-    console.log("task Desc", data)
+
     return [
       dispatch(logStatus(data[0] && {
         ...data[0],
