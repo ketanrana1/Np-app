@@ -101,8 +101,12 @@ const TaskType = () => {
                     <td></td>
                     <td></td>
                     <td className="fourth-row">
-                      <Link to={`/task-type/view-task-type/${item.taskTypeId}`} state={{ tab: "task-type", name: item.name }} className="view-link" >View</Link>
-                      <Link to={`/task-type/edit-task-type/${item.taskTypeId}`} className="view-link" >Edit</Link>
+                      <Link to={`/task-type/view-task-type/${item.taskTypeId}`} state={{ tab: "task-type", name: item.name }} className="view-link" >
+                        <img src={require('../assets/images/search.png')} alt="View" />
+                      </Link>
+                      <Link to={`/task-type/edit-task-type/${item.taskTypeId}`} className="view-link" >
+                        <img src={require('../assets/images/edit.png')} alt="edit" />
+                      </Link>
                       <a onClick={() => setTaskTypeId(item.taskTypeId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>

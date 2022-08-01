@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './assets/css/global.css';
+import './assets/css/stylesheet.css';
 import './assets/css/login.css';
 import App from './App';
 import { ToastContainer } from "react-toastify"

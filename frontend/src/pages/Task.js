@@ -103,8 +103,12 @@ const Task = () => {
                       <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                       <td className="third-row"><p>{item.taskName}</p></td>
                       <td className="fourth-row">
-                      <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name}} className="view-link" >View</Link>
-                      <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >Edit</Link>
+                      <Link to={`/task/view-task/${item.taskId}`} state={{ tab: "task", name: item.name}} className="view-link" >
+                        <img src={require('../assets/images/search.png')} alt="view" />
+                      </Link>
+                      <Link to={`/task/edit-task/${item.taskId}`} className="view-link" >
+                        <img src={require('../assets/images/edit.png')} alt="edit" />
+                      </Link>
                       <a onClick={() => setTaskId(item.taskId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>

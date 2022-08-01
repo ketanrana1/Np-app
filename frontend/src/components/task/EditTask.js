@@ -78,26 +78,32 @@ const EditTask = () => {
             <Form>
               <div className="row">
                 <div className="form-group col-12">
-                  <div className="label-input-cont">
+
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="label-input-cont">
                     <p>Task Name</p>
                     <p className="all-form-fl-w-ip title-edit">{taskDetails.name}</p>
                   </div>
-                  <div className="label-input-cont">
+                    </div>
+                    <div className="col-md-6">
+                      <div className="label-input-cont">
                     <p>Description</p>
                     <div className="outer-input-div">
                       <Field className="form-control all-form-fl-w-ip" component="textarea" required name="description" placeholder="Description here.." onChange={(e) => setTaskDetails({ ...taskDetails, description: e.target.value })} value={taskDetails.description} />
                       <ErrorMessage className="error-message" name="name" component="div" />
                     </div>
                   </div>
-
-                  <div className="label-input-cont">
+                    </div>
+                    <div className="col-md-6">
+                      <div className="label-input-cont">
                     <p>Task Type Name</p>
                     <p className="all-form-fl-w-ip title-edit">{taskDetails.taskTypeName}</p>
                   </div>
-                </div>
+                    </div>
                 {
                   taskDetails?.taskTypeAttributes?.map((item, index) => {
-                    return <div className="form-group col-12">
+                    return <div className="col-md-6">
                       <div className="label-input-cont">
                         <p>{item.key}</p>
                         <Field className="form-control all-form-fl-w-ip" checked={item.value === true ? "checked" : ""} type={item.inputField} name={item.name} required={item.fieldRequired} placeholder={`Enter Attribute value`}
@@ -121,9 +127,14 @@ const EditTask = () => {
                   }
                   )
                 }
-                <div className="submit-cont">
-                  <input type="submit" value="Save" />
+                    <div className="col-md-12">
+                      <div className="submit-cont">
+                        <input type="submit" value="Save" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </Form>
           </Formik>

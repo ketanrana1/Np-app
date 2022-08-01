@@ -100,8 +100,12 @@ const ConnectionType = () => {
                     <td></td>
                     <td></td>
                     <td className="fourth-row">
-                      <Link to={`/connection-type/view-connection-type/${item.connectionTypeId}`} state={{ tab: "connection-type", name: item.name }} className="view-link" >View</Link>
-                      <Link to={`/connection-type/edit-connection-type/${item.connectionTypeId}`} className="view-link" >Edit</Link>
+                      <Link to={`/connection-type/view-connection-type/${item.connectionTypeId}`} state={{ tab: "connection-type", name: item.name }} className="view-link" >
+                        <img src={require('../assets/images/search.png')} alt="View" />
+                      </Link>
+                      <Link to={`/connection-type/edit-connection-type/${item.connectionTypeId}`} className="view-link" >
+                        <img src={require('../assets/images/edit.png')} alt="edit" />
+                      </Link>
                       <a onClick={() => setConnectionTypeId(item.connectionTypeId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>

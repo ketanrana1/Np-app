@@ -74,18 +74,20 @@ const EditTaskType = () => {
                     >
                         <Form>
                             <div className="row">
-                                <div className="form-group col-12">
+                                <div className="col-md-12">
                                     <div className="label-input-cont">
                                         <p>Task Name</p>
                                         <p className="all-form-fl-w-ip title-edit">{taskDetails.name}</p>
                                     </div>
-                                    <div className="label-input-cont">
+                                </div>
 
+                                    <div className="label-input-cont">
                                         {taskDetails?.attributes?.map((attr, index) => {
                                             const { name, fieldRequired, inputField } = attr
                                             return (
-                                                <><div className="form-group col-12">
-                                                    <div className="label-input-cont">
+                                                <>
+                                                    <div className="col-12">
+                                                        <div className="label-input-cont">
                                                         <p>Task attribute Name</p>
                                                         <Field className="form-control all-form-fl-w-ip" type="name" name={`attribute_${index + 1}`} required placeholder={`Enter Attribute ${index + 1} Name`} onChange={(e) => {
                                                             const task = [...taskDetails?.attributes]
@@ -97,7 +99,7 @@ const EditTaskType = () => {
                                                         }} value={name} />
                                                         <ErrorMessage name={`attribute_${index + 1}`} component="div" />
                                                     </div>
-                                                </div>
+                                                    </div>
                                                     <div className="form-group col-6 task-type-checkbox">
                                                         <div className="label-input-cont">
                                                             <div role="group" aria-labelledby="my-radio-group">
@@ -189,9 +191,8 @@ const EditTaskType = () => {
                                                 </>
                                             )
                                         })}
-
                                     </div>
-                                </div>
+
                                 <div className="submit-cont">
                                     <input type="submit" value="Save" />
                                 </div>

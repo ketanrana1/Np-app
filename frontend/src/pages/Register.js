@@ -39,22 +39,30 @@ const Register = () => {
       <div className="col-12">
         <h1 className="page-head">Register</h1>
         <div className="inner-body-cont">
-          <div className="form-group mt-3">
-            <label>Email</label>
-            <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} value={formState.password} />
-          </div>
-          <div className="form-group mt-3 d-flex flex-column">
-            <label>Role</label>
-            <select onChange={onInputChangeHandler} name="role" className="form-control">
-              {roles.map((role) => <option value={role.value}>{role.label}</option>)}
-            </select>
-          </div>
-          <div className='mt-5'>
-            <input className="register-submit" type="submit" value="Register" onClick={registerButtonHandler} />
+          <div className="row w-100">
+            <div className="col-md-6">
+              <div className="common-input-field-wrapper input-wrapper">
+                <label>Email</label>
+                <input type="email" name="email" className="form-control" placeholder="Email" required onChange={onInputChangeHandler} value={formState.email} />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="common-input-field-wrapper input-wrapper">
+                <label>Password</label>
+                <input type="password" name="password" className="form-control" placeholder="Password" required onChange={onInputChangeHandler} value={formState.password} />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="common-input-field-wrapper select-box-wrapper">
+                <label>Role</label>
+                <select onChange={onInputChangeHandler} name="role" className="form-control">
+                  {roles.map((role) => <option value={role.value}>{role.label}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="col-md-12">
+                <input className="register-submit" type="submit" value="Register" onClick={registerButtonHandler} />
+            </div>
           </div>
         </div>
       </div>

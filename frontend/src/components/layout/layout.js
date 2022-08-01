@@ -6,15 +6,26 @@ const Layout = (props) => {
   return (
 
     <Fragment>
-    <header>
-          <div className="top-bar"><h2 className="px-1">Logo</h2></div>
-    </header>
-    <div className="content-cont row">
-      <div className="col-2 px-0">
-      <MainNavigation />
+    <header className="top-bar d-flex align-items-center">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-2 d-flex justify-content-center">
+              <h2 className="px-1">Logo</h2>
+          </div>
+          <div className="col-md-10">
+          </div>
+        </div>
       </div>
-      <div className="col-12 col-md-10 px-5 main-body-cont">
-      <main>{props.children}</main>
+
+    </header>
+    <div className="content-cont container-fluid">
+      <div className="content-cont-wrapper">
+        <div className="content-sidebar-wrapper">
+          <MainNavigation />
+        </div>
+        <div className="content-right-wrapper">
+          <main>{props.children}</main>
+        </div>
       </div>
     </div> 
     </Fragment>

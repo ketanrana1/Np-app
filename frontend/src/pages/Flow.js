@@ -62,7 +62,8 @@ const Flow = () => {
       
       return;
     } catch (error) {
-      return [setLoader(false),toast(error?.message, { autoClose: 2000 })]
+      setLoader(false)
+      return toast(error?.message, { autoClose: 2000 })
     }
   }
 
@@ -104,8 +105,12 @@ const Flow = () => {
                       <span style={{display: item.readMore }}className="full-text">{item.description}</span></p></td>
                     <td className="third-row"><p>{item.tasks.map((_item,index) => index !== item.tasks.length - 1 ? `${_item}, ` : _item)}</p></td>
                     <td className="fourth-row">
-                      <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >View</Link>
-                      <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >Edit</Link>
+                      <Link to={`/flow/view-flow/${item.flowId}`} state={{ tab: "flow", name: item.name }} className="view-link" >
+                      <img src={require('../assets/images/search.png')} alt="View" />
+                      </Link>
+                      <Link to={`/flow/edit-flow/${item.flowId}`} className="view-link" >
+                        <img src={require('../assets/images/edit.png')} alt="edit" />
+                        </Link>
                       <a onClick={() => setFlowId(item.flowId)} className="delete-link" data-toggle="modal" data-target="#delete-confirmation-modal">
                         <img src={require('../assets/images/delete.png')} alt="delete" />
                       </a>
