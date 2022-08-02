@@ -85,7 +85,7 @@ export const AddFlow = () => {
           >
             <Form>
               <div className="row">
-                <div className="form-group col-12">
+                <div className="col-md-6">
                   <div className="label-input-cont">
                     <p>Flow Name</p>
                     <div className="outer-input-div">
@@ -93,6 +93,14 @@ export const AddFlow = () => {
                       <ErrorMessage className="error-message" name="name" component="div" />
                     </div>
                   </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="label-input-cont">
+                    <p>VariableSel</p>
+                    <Field className="form-control all-form-fl-w-ip" type="name" name="variableSel" placeholder="Enter Comma Seprated Values" />
+                  </div>
+                </div>
+                <div className="col-md-6">
                   <div className="label-input-cont">
                     <p>Description</p>
                     <div className="outer-input-div">
@@ -100,27 +108,25 @@ export const AddFlow = () => {
                       <ErrorMessage className="error-message" name="description" component="div" />
                     </div>
                   </div>
-                  <div className="label-input-cont col-12">
+                </div>
+                <div className="col-md-6">
+                  <div className="label-input-cont">
                     <p>Task</p>
                     <Field
-                      className="custom-select-schedule"
-                      name="tasks"
-                      options={flows}
-                      component={CustomSelect}
-                      placeholder="Please Select"
-                      isMulti={true}
+                        className="custom-select-schedule"
+                        name="tasks"
+                        options={flows}
+                        component={CustomSelect}
+                        placeholder="Please Select"
+                        isMulti={true}
                     />
                     <ErrorMessage name="tasks" component="div" />
                   </div>
                 </div>
-                <div className="form-group col-12">
-                  <div className="label-input-cont">
-                    <p>VariableSel</p>
-                    <Field className="form-control all-form-fl-w-ip" type="name" name="variableSel" placeholder="Enter Comma Seprated Values" />
+                <div className="col-md-6">
+                  <div className="submit-cont">
+                    <input type="submit" value="Save" />
                   </div>
-                </div>
-                <div className="submit-cont">
-                  <input type="submit" value="Save" />
                 </div>
               </div>
             </Form>

@@ -16,7 +16,7 @@ const Log = () => {
 
   const [logDetails, setLogDetails] = useState([])
 
-  useEffect(() => { getLogs() }, [logsStatus])
+  useEffect(() => { getLogs(); return () => { setLogDetails([]) } }, [logsStatus])
 
   const getLogs = async () => {
     if (!logsStatus) return

@@ -1,98 +1,24 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { REACT_APP_BACKEND_URL } from '../common/environment';
 import Connections from "../../utils/jsonFiles/connections.json"
 import ConnectionTypes from "../../utils/jsonFiles/connectionTypes.json"
 import Tasks from "../../utils/jsonFiles/tasks.json"
 import TaskTypes from "../../utils/jsonFiles/taskTypes.json"
+import { addTask, addTaskType } from '../../api/tasksDetails';
+import { addConnection, addConnectionType } from '../../api/connections';
 
-const AddInitialData = (props) => {
-
+const AddInitialData = () => {
   const hasBeenLoaded = localStorage.getItem('hasBeenLoaded');
-  
-  if( hasBeenLoaded === null && sessionStorage.getItem('Auth key') ) {
-    
-    TaskTypes.map(async (item, index) => {
-        try {
-        const result = await axios({
-          method: 'post',    
-          url: `${REACT_APP_BACKEND_URL}/api/add-task-type`,
-          headers: {
-              'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          },
-          data: item     
-        }); 
-        
-      } catch (error) {
-        console.log(error)    
-      }
 
-    }) 
+  if (hasBeenLoaded === null && sessionStorage.getItem('Auth key')) {
+    TaskTypes.map(async (item) => await addTaskType(item))
 
-    Tasks.map(async (item, index) => {
-        try {
-        const result = await axios({
-          method: 'post',    
-          url: `${REACT_APP_BACKEND_URL}/api/add-task`,
-          headers: {
-              'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          },
-          data: item     
-        });
-        
-      } catch (error) {
-        console.log(error)    
-      }
+    Tasks.map(async (item) => await addTask(item))
 
-    })
+    ConnectionTypes.map(async (item) => await addConnectionType(item))
 
-    ConnectionTypes.map(async (item, index) => {
-      try {
-      const result = await axios({
-        method: 'post',    
-        url: `${REACT_APP_BACKEND_URL}/api/add-connection-type`,
-        headers: {
-            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-        },
-        data: item     
-      });
-    
-      
-    } catch (error) {
-      console.log(error)    
-    }
+    Connections.map(async (item, index) => await addConnection(item))
 
-  })
-
-  Connections.map(async (item, index) => {
-    try {
-    const result = await axios({
-      method: 'post',    
-      url: `${REACT_APP_BACKEND_URL}/api/add-connection`,
-      headers: {
-          'Authorization': `${sessionStorage.getItem('AccessToken')}`
-      },
-      data: item     
-    });
-    
-
-  } catch (error) {
-    console.log(error)    
+    localStorage.setItem('hasBeenLoaded', 'true')
   }
-
-})
-
-localStorage.setItem('hasBeenLoaded', 'true')
-}
-
-
-    
-
-    
-  return (
-    <>
-    </>
-  )
 }
 
 export default AddInitialData

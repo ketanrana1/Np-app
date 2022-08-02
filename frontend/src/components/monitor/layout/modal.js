@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { runningStatus } from '../../../redux/actions/runningStatusAction';
-import { runStatus } from '../../../api/recentRun';
+import { addRunStatus } from '../../../api/recentRun';
 import { getResponse } from '../../../api/thirdParty';
 import { addTaskStatus } from '../../../api/tasksDetails';
-import { Fade, Backdrop, Modal, Grid, Box, Typography, Button } from "../../common/muiImports"
+import { Fade, Backdrop, Modal, Grid, Box, Typography, Button, CloseIcon, Divider } from "../../common/muiImports"
 const style = {
     position: 'absolute',
     top: '50%',
@@ -38,7 +38,7 @@ export default function ExecuteModal(props) {
             "endTime": "",
             "status": "In progress"
         }
-        const result = await runStatus(paylaod)
+        const result = await addRunStatus(paylaod)
 
         tasks.map(async (task) => {
             const singleTasKLogData = await getResponse()
@@ -72,24 +72,22 @@ export default function ExecuteModal(props) {
             >
                 <Fade in={props.openExecuteModal}>
                     <Box sx={style}>
+                        <CloseIcon onClick={handleClose} sx={{ cursor: "pointer", position: "absolute", top: "10px", right: "10px" }} />
                         <Grid
                             container
                             spacing={2}
-                            justifyContent="center">
-                            <Grid item xs={6}>
-                                <Typography id="transition-modal-title" variant="h6" component="h2">FLow Name</Typography>
-                                <Typography>
+                        >
+                            <Grid item xs={12}>
+                                <Typography id="transition-modal-title" variant="h6" component="h2">
                                     {name}
                                 </Typography>
-                                <Typography id="transition-modal-title" variant="h6" component="h2" sx={{ mt: 2 }}>Task Name</Typography>
+                                <Divider />
+                                <Typography id="transition-modal-title" variant="h6" component="h2" sx={{ mt: 3 }}>Tasks</Typography>
                                 {tasks && tasks.map((task, index) => (
-                                    <Typography key={index} sx={{ border: 1, borderColor: 'primary.main', borderRadius: 1, mt: 1, p: 1 }}>
+                                    <Typography key={index} sx={{p: 1 }}>
                                         {task}
                                     </Typography>
                                 ))}
-                            </Grid>
-
-                            <Grid item xs={4}>
                                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                                     <Button variant="contained" onClick={() => handleExecuteClick(flowId, name, props.OpenExecuteModal)} >Execute</Button>
                                 </Typography>

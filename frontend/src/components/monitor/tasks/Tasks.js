@@ -19,7 +19,8 @@ const Tasks = () => {
 
   const [taskStatus, setTaskStatus] = useState([])
   const [isHiglight, setIsHighLight] = useState("")
-  useEffect(() => { getTaskList() }, [state])
+  
+  useEffect(() => { getTaskList(); return () => { setTaskStatus([]) } }, [state])
 
   const getTaskList = async () => {
     const { flowId } = state?.flowList

@@ -779,35 +779,20 @@ body::-webkit-scrollbar-thumb {
 /*Monitor View Ends*/
 
 /* Navigation active */
-/* .nav-item{
-    width: 0;
-    transition: 0.5s ease-in-out;
-} */
 
-/* a.active::after {
-    
-  content: '';
-   background: #0055FF !important;
-} */
 .nav-item a{
     padding: 0.5rem 0;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     transition: 0.5 ease-in;
 }
-.nav-item a::after{
-    width: 0;
-    padding: 0.5rem 0;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    transition: 0.5 ease-in;
-}
+
 .nav-item a.active {
     width: 100%;
     transform-origin: center;
     transition: 0.5s ease-out;
     padding: 0.5rem 1rem;
-    border: 1px solid rgb(1, 122, 235);
+    border: 1px solid #446397;
     border-left: none;
 }
 

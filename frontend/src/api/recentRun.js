@@ -1,7 +1,7 @@
 import { http } from './https';
 const { get, post } = http
 
-export const runStatus = async (payload) => {
+export const addRunStatus = async (payload) => {
     const response = await post(`/add-run-status`, payload);
     return response;
 };

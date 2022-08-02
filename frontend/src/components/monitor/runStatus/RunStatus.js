@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { flowLists } from '../../../redux/actions/flowListAction';
 import { getRunStatus } from '../../../api/recentRun';
+import { filterDate } from '../../field/dateFormat';
 
 const columns = [
   { field: 'flowName', headerName: 'Flow Name', width: 230 },
@@ -26,7 +27,7 @@ const RunStatus = () => {
     const filterList = statuses.filter(
       user => {
         const { ranAt } = user
-        return (new Date(ranAt).getTime()) >= fromDate && (new Date(ranAt).getTime()) <= toDate
+        return filterDate(ranAt, fromDate, toDate)
       }
     )
     if (toDate && fromDate) {
@@ -34,7 +35,7 @@ const RunStatus = () => {
       dispatch(flowLists(filterList[0]))
     }
 
-  }, [toDate])
+  }, [fromDate, toDate])
 
   const getAllStatuses = async () => {
     const { data } = await getRunStatus()

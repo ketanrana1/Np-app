@@ -180,7 +180,7 @@ export default function MiniDrawer() {
                 </List>
                     <Divider /></>}
 
-                <FlowList open={open} />
+                <FlowList open={open}/>
                 <Divider />
 
                 <div style={{ position: "absolute", bottom: "10px" }}>
