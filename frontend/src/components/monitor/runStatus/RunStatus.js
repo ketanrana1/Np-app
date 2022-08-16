@@ -40,7 +40,7 @@ const RunStatus = () => {
   const getAllStatuses = async () => {
     const { data } = await getRunStatus()
     const currentRunStatus = data.reverse()
-    currentRunStatus[0]?.flowId && dispatch(flowLists(currentRunStatus[0]))
+    currentRunStatus[0]?.flowId && dispatch(flowLists({ ...currentRunStatus[0], runStatusLength: currentRunStatus.length }))
     return [
       setFilterList(currentRunStatus),
       setStatuses(currentRunStatus),

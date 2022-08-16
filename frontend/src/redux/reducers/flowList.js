@@ -1,8 +1,5 @@
 import { FLOW_LIST } from "../constants/flowListType";
 
-
-
-
 const initialState = {
     flowList: [],
 }

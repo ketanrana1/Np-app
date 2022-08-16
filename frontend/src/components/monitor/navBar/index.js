@@ -106,7 +106,7 @@ export default function MiniDrawer() {
     const theme = useTheme();
     const navigate = useNavigate()
     const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [authRole, setauthRole] = useState(null)
 
     useEffect(() => setauthRole(sessionStorage.getItem('Role')), [])
