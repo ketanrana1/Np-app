@@ -13,7 +13,6 @@ import { getTaskActions, getTaskLogs } from '../../../api/logs';
 
 const Log = () => {
   const selector = useSelector((state) => state?.logsStatusChanged)
-
   const { logsStatus,isLoggedClear } = selector
 
   const [logDetails, setLogDetails] = useState([])

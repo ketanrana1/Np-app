@@ -85,8 +85,8 @@ export class RunStatusController {
   @Post('/add-task-status')
   @UseBefore(AuthMiddleware)
   async addTaskStatus(@Body() body: any) {
-    const { taskType } = body
-    const runningApi = thirdPartyApi(taskType)
+    const { taskType, selectedMonthPeriod } = body // selectedMonthPeriod: '08' Means => Aug
+    const runningApi = thirdPartyApi(taskType)     // runningApi will be according To Task type  
 
     const { data: { body: logDec } }: any = await axios({
       method: 'get',
