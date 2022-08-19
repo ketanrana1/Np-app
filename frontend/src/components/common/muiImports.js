@@ -47,6 +47,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Fade from '@mui/material/Fade';
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import FolderIcon from '@mui/icons-material/Folder';
 export {
     createTheme,
     ThemeProvider,
@@ -101,4 +102,5 @@ export {
     DateFnsUtils,
     MuiPickersUtilsProvider, 
     DatePicker,
+    FolderIcon,
 }

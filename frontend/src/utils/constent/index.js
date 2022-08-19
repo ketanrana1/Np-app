@@ -19,4 +19,5 @@ export const LogoutText = "Logout"
 export const AdminText = "Configure View"
 export const RefreshText = "Refresh Data"
 export const ClearLogs = "Clear Logs"
+export const fileExplorer = "File Explorer"
 

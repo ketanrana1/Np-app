@@ -11,6 +11,7 @@ import {
     AdminText,
     RefreshText,
     ClearLogs,
+    fileExplorer,
 } from '../../../utils/constent';
 import {
     Box,
@@ -36,9 +37,12 @@ import {
     Toolbar,
     Typography,
     RefreshIcon,
+    FolderIcon,
 } from '../../common/muiImports'
 import { clearTaskActions, clearTaskLogs } from '../../../api/logs';
 import { isLogClear } from '../../../redux/actions/logStatusAction';
+import { Link } from 'react-router-dom';
+import { REACT_APP_BACKEND_URL } from '../../common/environment';
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -183,10 +187,36 @@ export default function MiniDrawer() {
                 </List>
                     <Divider /></>}
 
-                <FlowList open={open}/>
+                <FlowList open={open} />
                 <Divider />
 
-                <div style={{ position: "absolute", bottom: "10px" }}>
+                <div style={{ position: "absolute", bottom: "10px",width:"100%" }}>
+                    <List >
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 28,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                            >
+                                <a href={`${REACT_APP_BACKEND_URL}/file-explorer/`} target="_blank" style={{ width:"100%",display: "flex" }}>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {!open ? <Tooltip TransitionComponent={Zoom} title="File Explorer" placement="right"><FolderIcon /></Tooltip> : <FolderIcon />}
+                                    </ListItemIcon>
+                                    <ListItemText primary={fileExplorer} sx={{ opacity: open ? 1 : 0 }} />
+                                </a>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+
+
                     <List >
                         <ListItem disablePadding sx={{ display: 'block' }}>
                             <ListItemButton

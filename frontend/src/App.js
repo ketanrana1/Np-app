@@ -19,23 +19,20 @@ import EditTask from './components/task/EditTask';
 import Login from './pages/Login';
 import { useEffect } from 'react';
 import Register from './pages/Register';
-import AddTaskType from './components/taskType/AddTaskType';
 import ViewDetails from './pages/ViewDetails';
-import TaskType from './pages/TaskType';
-import EditTaskType from './components/taskType/EditTaskType';
 import ConnectionType from './pages/ConnectionType';
 import EditConnectionType from './components/connectionType/EditConnectionType';
 import Monitor from './components/monitor/monitor';
 
 function App() {
-  
+
   useEffect(() => {
-    if(!sessionStorage.getItem('Auth key') && window.location.pathname !== "/login") return window.location.href = "/login"
-  },[])
+    if (!sessionStorage.getItem('Auth key') && window.location.pathname !== "/login") return window.location.href = "/login"
+  }, [])
 
   return (
     <Routes>
-       <Route path='/' element={<Layout><Navigate replace to='/monitor' /></Layout>} />
+      <Route path='/' element={<Layout><Navigate replace to='/monitor' /></Layout>} />
 
       <Route path='/connection-type' element={<Layout><ConnectionType /></Layout>} />
       <Route path='/connection-type/:add-connection-type' element={<Layout><AddConnectionType /></Layout>} />
@@ -51,26 +48,17 @@ function App() {
       <Route path='/task/view-task/:id' element={<Layout><ViewDetails /></Layout>} />
       <Route path='/task/:add-task' element={<Layout><AddTask /></Layout>} />
 
-        <Route path='/flow' element={<Layout><Flow /></Layout>} />
-        <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
-        <Route path='/flow/view-flow/:id' element={<Layout><ViewDetails /></Layout>} />
-        <Route path='/flow/:edit-flow/:id' element={<Layout><EditFlow /></Layout>} />
-        
-        <Route path='/schedule' element={<Layout><Schedule /></Layout>} />
-        <Route path='/schedule/:add-schedule' element={<Layout><AddSchedule /></Layout>} />
-        <Route path='/schedule/view-schedule/:id' element={<Layout><ViewDetails /></Layout>} />
-        <Route path='/schedule/:edit-schedule/:id' element={<Layout><EditSchedule /></Layout>} />
-       
-        <Route path='*' element={<Layout><NotFound /></Layout>} />
-        <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
-        <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />
+      <Route path='/flow' element={<Layout><Flow /></Layout>} />
+      <Route path='/flow/:add-flow' element={<Layout><AddFlow /></Layout>} />
+      <Route path='/flow/view-flow/:id' element={<Layout><ViewDetails /></Layout>} />
+      <Route path='/flow/:edit-flow/:id' element={<Layout><EditFlow /></Layout>} />
 
       <Route path='/schedule' element={<Layout><Schedule /></Layout>} />
       <Route path='/schedule/:add-schedule' element={<Layout><AddSchedule /></Layout>} />
       <Route path='/schedule/view-schedule/:id' element={<Layout><ViewDetails /></Layout>} />
       <Route path='/schedule/:edit-schedule/:id' element={<Layout><EditSchedule /></Layout>} />
 
-      <Route path='*' element={<Layout><NotFound /></Layout>} />
+      <Route path='*' element={<MonitorLayout><NotFound /></MonitorLayout>} />
       <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
       <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />
 
