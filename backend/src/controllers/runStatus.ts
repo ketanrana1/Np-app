@@ -1,8 +1,10 @@
 import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
+import axios from 'axios'
 import AuthMiddleware from 'middlewares/AuthMiddleware';
 import RunStatus from 'models/runStatus';
 import TaskStatus from 'models/taskStatus'
 import Log from 'models/log';
+import { thirdPartyApi } from './thirdPartyApi';
 import flow from 'models/flow';
 
 // UPDATE 
@@ -60,7 +62,7 @@ export class RunStatusController {
         success: false,
         message: "Log could not be added. Please try after some time."
       }
-  
+
     return {
       success: true,
       message: "Log is added."
@@ -80,14 +82,21 @@ export class RunStatusController {
     ]);
   }
 
-
   @Post('/add-task-status')
   @UseBefore(AuthMiddleware)
   async addTaskStatus(@Body() body: any) {
+    const { taskType } = body
+    const runningApi = thirdPartyApi(taskType)
+
+    const { data: { body: logDec } }: any = await axios({
+      method: 'get',
+      url: `${runningApi}`,
+    });
+
     const newBody = {
       ...body,
+      "taskLog": logDec,
       "isLogDeleted": false,
-
     }
     const newTaskStatus = new TaskStatus(newBody);
     const result = await newTaskStatus.save();
@@ -119,11 +128,11 @@ export class RunStatusController {
           'actions': 1,
           'taskName': 1,
           'logDescription': '$taskLog',
-          'logDate':"$ranAt",
+          'logDate': "$ranAt",
           '_id': 0,
         }
       }
-    ]); 
+    ]);
   }
 
   @Get('/get-task-status-details/:id')
@@ -146,14 +155,13 @@ export class RunStatusController {
           'flowId': 1,
           'actions': 1,
           'logDescription': '$taskLog',
-          'logDate':"$ranAt",
+          'logDate': "$ranAt",
           'taskName': 1,
           '_id': 0,
         }
       }
     ]);
   }
-
 
   @Get('/get-task-statuses/:id')
   async getTaskStatusess(@Param('id') id: string) {
@@ -174,7 +182,7 @@ export class RunStatusController {
           'flowId': 1,
           'actions': 1,
           'logDescription': '$taskLog',
-          'logDate':"$ranAt",
+          'logDate': "$ranAt",
           'taskName': 1,
           '_id': 0,
         }
@@ -184,7 +192,7 @@ export class RunStatusController {
 
   @Get('/get-task-status-log-details/:id') // show task logs
   async getTaskStatuseLogDetails(@Param('id') id: string) {
-    const result =  await TaskStatus.aggregate([
+    const result = await TaskStatus.aggregate([
       {
         '$match': {
           'taskStatusId': id,
@@ -198,7 +206,7 @@ export class RunStatusController {
           'status': 1,
           'flowId': 1,
           'logDescription': '$taskLog',
-          'logDate':"$ranAt",
+          'logDate': "$ranAt",
           'taskName': 1,
           'isLogDeleted': 1,
           '_id': 0,
@@ -250,7 +258,7 @@ export class RunStatusController {
       }, {
         '$match': {
           'actions.actionName': name,
-          'taskStatusId': id  
+          'taskStatusId': id
         }
       }, {
         '$project': {
@@ -269,9 +277,9 @@ export class RunStatusController {
         }
       }, {
         '$match': {
-          'actions.actionName':name,
+          'actions.actionName': name,
           'taskStatusId': id,
-         'actions.isLogDeleted': false 
+          'actions.isLogDeleted': false
         }
       }, {
         '$project': {
@@ -299,30 +307,30 @@ export class RunStatusController {
         '$match': {
           'taskStatusId': id
         }
-      } 
+      }
     ]);
 
     const allActions = taskStatusDetails[0].actions
 
     const newAllActions = allActions.map((item: any, index: any) => {
 
-      if(item.actionName == name) {  
-        item.isLogDeleted = true  
+      if (item.actionName == name) {
+        item.isLogDeleted = true
       }
-      return item 
+      return item
     })
 
     const result = await TaskStatus.findOneAndUpdate({ 'taskStatusId': id }, { 'actions': newAllActions })
 
-        if (!result)
-          return {
-            success: false,
-            message: "Log status could not be updated. Please try after some time."
-          }
+    if (!result)
+      return {
+        success: false,
+        message: "Log status could not be updated. Please try after some time."
+      }
 
-        return {
-          success: true,
-          message: "Log Status is updated."
-       };
+    return {
+      success: true,
+      message: "Log Status is updated."
+    };
   }
 }

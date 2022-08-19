@@ -23,12 +23,12 @@ export class TaskController {
         }
       }
     ]);
-   }
+  }
 
-   @Get('/get-task')
-   @UseBefore(AuthMiddleware)
-   async getTask() {
-     return await Task.aggregate([
+  @Get('/get-task')
+  @UseBefore(AuthMiddleware)
+  async getTask() {
+    return await Task.aggregate([
       {
         '$lookup': {
           'from': 'tasktypes', 
@@ -48,77 +48,93 @@ export class TaskController {
         }
       }
     ]);
-    }
+  }
 
-   @Get('/get-task/:id')
-   @UseBefore(AuthMiddleware)
-   async getTaskById(@Param('id') id: string) {
-     return await Task.aggregate([
-       {
-          '$match': {
-            'taskId': id
-          }
-       },
-     ]);
-    }
-
-    @Get('/get-task-type/:id')
-    @UseBefore(AuthMiddleware)
-    async getTaskTypeById(@Param('id') id: string) {
-      return await TaskType.aggregate([
-        {
-           '$match': {
-             'taskTypeId': id
-           }
-        },
-      ]);
-     }
-
-    @Post('/update-task')
-    @UseBefore(AuthMiddleware)
-    async updateTaskById( @Body() body: any ) {
-      const { taskTypeId } = body;
-      const updateItems = { ...body }
-      delete updateItems.taskTypeId;
-      try {
-        await Task.findOneAndUpdate({ taskTypeId }, { ...updateItems })
-        return {
-          success: true,
-          message: "Task updated successfully"
+  @Get('/get-task-type-name/:name')
+  @UseBefore(AuthMiddleware)
+  async getTaskTypeName(@Param('name') name: string) {
+    return await Task.aggregate([
+      {
+        '$match': {
+          'name': name,
         }
-      } catch (error) {
-        return {
-          success: false,
-          message: "Task could not be updated. Please try after some time."
+      }, {
+        '$project': {
+          'taskTypeName': 1,
         }
       }
-    }
+    ]);
+  }
 
-    @Post('/delete-task')
-    @UseBefore(AuthMiddleware)
-    async deleteTaskById( @Body() body: any ) {
-      const { taskId } = body;
-      try {
-        await Task.findOneAndDelete({ taskId })
-        return {
-          success: true,
-          message: "Task deleted successfully"
+  @Get('/get-task/:id')
+  @UseBefore(AuthMiddleware)
+  async getTaskById(@Param('id') id: string) {
+    return await Task.aggregate([
+      {
+        '$match': {
+          'taskId': id
         }
-      } catch (error) {
-        return {
-          success: false,
-          message: "Task could not be deleted. Please try after some time."
+      },
+    ]);
+  }
+
+  @Get('/get-task-type/:id')
+  @UseBefore(AuthMiddleware)
+  async getTaskTypeById(@Param('id') id: string) {
+    return await TaskType.aggregate([
+      {
+        '$match': {
+          'taskTypeId': id
         }
+      },
+    ]);
+  }
+
+  @Post('/update-task')
+  @UseBefore(AuthMiddleware)
+  async updateTaskById(@Body() body: any) {
+    const { taskTypeId } = body;
+    const updateItems = { ...body }
+    delete updateItems.taskTypeId;
+    try {
+      await Task.findOneAndUpdate({ taskTypeId }, { ...updateItems })
+      return {
+        success: true,
+        message: "Task updated successfully"
       }
-    } 
+    } catch (error) {
+      return {
+        success: false,
+        message: "Task could not be updated. Please try after some time."
+      }
+    }
+  }
+
+  @Post('/delete-task')
+  @UseBefore(AuthMiddleware)
+  async deleteTaskById(@Body() body: any) {
+    const { taskId } = body;
+    try {
+      await Task.findOneAndDelete({ taskId })
+      return {
+        success: true,
+        message: "Task deleted successfully"
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: "Task could not be deleted. Please try after some time."
+      }
+    }
+  }
 
   @Post('/add-task-type')
   @UseBefore(AuthMiddleware)
-  async addTaskType( @Body() body: any ) {
+  async addTaskType(@Body() body: any) {
     const newTaskType = new TaskType(body);
     const result = await newTaskType.save();
 
-    if(!result) 
+    if (!result)
       return {
         success: false,
         message: "Task type could not be added. Please try after some time."
@@ -128,11 +144,11 @@ export class TaskController {
       success: true,
       message: "Task type is added."
     };
-   } 
+  }
 
   @Post('/add-task')
   @UseBefore(AuthMiddleware)
-  async addTask( @Body() body: any ) {
+  async addTask(@Body() body: any) {
     const { taskTypeId, taskTypeAttributes } = body;
     const findTaskType = await TaskType.aggregate([
       {
@@ -141,7 +157,7 @@ export class TaskController {
         }
       }
     ])
-    if(findTaskType.length === 0) return {
+    if (findTaskType.length === 0) return {
       success: false,
       message: "Task could not be added as Task Type does not exist"
     }
@@ -149,21 +165,21 @@ export class TaskController {
     const newTask = new Task(body);
     const result = await newTask.save();
 
-    if(!result) 
+    if (!result)
       return {
         success: false,
         message: "Task could not be added. Please try after some time."
       }
- 
+
     return {
       success: true,
       message: "Task is added."
     };
-   }
+  }
 
-   @Post('/edit-task')
-   @UseBefore(AuthMiddleware)
-  async editTask( @Body() body: any ) {
+  @Post('/edit-task')
+  @UseBefore(AuthMiddleware)
+  async editTask(@Body() body: any) {
 
     const payload = {
       ...body
@@ -176,17 +192,17 @@ export class TaskController {
 
     });
 
-    if(!result) 
+    if (!result)
       return {
         success: false,
         message: "Task could not be updated. Please try after some time."
       }
- 
+
     return {
       success: true,
       message: "Task is updated."
     };
-   }
+  }
 
 
 }

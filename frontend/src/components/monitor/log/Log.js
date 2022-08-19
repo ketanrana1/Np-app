@@ -12,11 +12,13 @@ import { useSelector } from 'react-redux';
 import { getTaskActions, getTaskLogs } from '../../../api/logs';
 
 const Log = () => {
-  const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
+  const selector = useSelector((state) => state?.logsStatusChanged)
+
+  const { logsStatus,isLoggedClear } = selector
 
   const [logDetails, setLogDetails] = useState([])
 
-  useEffect(() => { getLogs(); return () => { setLogDetails([]) } }, [logsStatus])
+  useEffect(() => { getLogs(); return () => { setLogDetails([]) } }, [logsStatus,isLoggedClear])
 
   const getLogs = async () => {
     if (!logsStatus) return

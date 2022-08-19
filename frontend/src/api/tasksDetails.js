@@ -21,4 +21,9 @@ export const addTaskStatus = async (payload) => {
     return response;
 };
 
+export const getTaskType = async (name) => {
+    const response = await get(`/get-task-type-name/${name}`);
+    return response;
+};
+
 

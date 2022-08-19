@@ -1,10 +1,12 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { runningStatus } from '../../../redux/actions/runningStatusAction';
 import { addRunStatus } from '../../../api/recentRun';
-import { getResponse } from '../../../api/thirdParty';
-import { addTaskStatus } from '../../../api/tasksDetails';
+import { addTaskStatus, getTaskType } from '../../../api/tasksDetails';
 import { Fade, Backdrop, Modal, Grid, Box, Typography, Button, CloseIcon, Divider } from "../../common/muiImports"
+import { ExecuteDatepicker } from '../../layout/DatePicker';
+import { useState } from 'react';
+import { formatDate } from '../../field/dateFormat';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -24,10 +26,11 @@ const style = {
 
 export default function ExecuteModal(props) {
     const dispatch = useDispatch()
-    const { name, flowId, tasks } = props?.flowName
+    const { name, flowId, tasks, variableSel } = props?.flowName
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
+    const handleDateChange = (date) => { setSelectedDate(date) };
     const handleClose = () => props.OpenExecuteModal(false);
-
     const handleExecuteClick = async (id, name, closePopup) => {
         const currentTime = new Date().toLocaleString()
         const paylaod = {
@@ -38,21 +41,23 @@ export default function ExecuteModal(props) {
             "endTime": "",
             "status": "In progress"
         }
-        const result = await addRunStatus(paylaod)
 
+        const result = await addRunStatus(paylaod)
+        const splitSelectedMonthPeriod = formatDate(selectedDate).split("-")[1]
         tasks.map(async (task) => {
-            const singleTasKLogData = await getResponse()
-            dispatch(runningStatus(result.data))
-            const singleTasKLogDataPayload = {
-                "taskLog": singleTasKLogData.data.body,
+            const { data } = await getTaskType(task)
+            const singleTaskLogDataPayload = {
                 "taskName": task,
+                "taskType": data[0]?.taskTypeName,
                 "ranAt": currentTime,
                 "startTime": currentTime,
+                "selectedMonthPeriod": splitSelectedMonthPeriod,
                 "endTime": "",
                 "status": "In progress",
                 "flowId": flowId,
             }
-            await addTaskStatus(singleTasKLogDataPayload)
+            await addTaskStatus(singleTaskLogDataPayload)
+            dispatch(runningStatus(result.data))
         })
         closePopup(false)
     }
@@ -78,13 +83,17 @@ export default function ExecuteModal(props) {
                             spacing={2}
                         >
                             <Grid item xs={12}>
-                                <Typography id="transition-modal-title" variant="h6" component="h2">
-                                    {name}
-                                </Typography>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", }}>
+                                    <Typography id="transition-modal-title" variant="h6" component="h2">
+                                        {name}
+                                    </Typography>
+                                    {variableSel.length !== 0 && <ExecuteDatepicker selectedDate={selectedDate} handleDateChange={handleDateChange} />}
+                                </Box>
+
                                 <Divider />
                                 <Typography id="transition-modal-title" variant="h6" component="h2" sx={{ mt: 3 }}>Tasks</Typography>
                                 {tasks && tasks.map((task, index) => (
-                                    <Typography key={index} sx={{p: 1 }}>
+                                    <Typography key={index} sx={{ p: 1 }}>
                                         {task}
                                     </Typography>
                                 ))}

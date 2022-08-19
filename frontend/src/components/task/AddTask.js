@@ -81,7 +81,6 @@ const AddTask = () => {
       taskTypeId: selectValue,
       taskTypeName: taskTypeName,
     }
-    console.log("PAYLOAD", payload)
 
     try {
       const result = await axios({

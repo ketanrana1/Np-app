@@ -17,9 +17,10 @@ const RunStatus = () => {
   const { runningStatusChanged, filterRunningStatus: { fromDate, toDate } } = selector
 
   const dispatch = useDispatch()
-  const [statuses, setStatuses] = useState([])
-  const [filterList, setFilterList] = useState([])
-  const [isHiglight, setIsHighLight] = useState("")
+  const [statuses, Statuses] = useState([])
+  const [filterList, FilterList] = useState([])
+  const [noOfLength, NoOFLength] = useState(null)
+  const [isHiglight, IsHighLight] = useState("")
 
   useEffect(() => { getAllStatuses() }, [runningStatusChanged])
 
@@ -30,9 +31,10 @@ const RunStatus = () => {
         return filterDate(ranAt, fromDate, toDate)
       }
     )
+    
     if (toDate && fromDate) {
-      setFilterList(filterList)
-      dispatch(flowLists(filterList[0]))
+      FilterList(filterList)
+      dispatch(flowLists({ ...filterList[0], runStatusLength: noOfLength }))
     }
 
   }, [fromDate, toDate])
@@ -42,15 +44,16 @@ const RunStatus = () => {
     const currentRunStatus = data.reverse()
     currentRunStatus[0]?.flowId && dispatch(flowLists({ ...currentRunStatus[0], runStatusLength: currentRunStatus.length }))
     return [
-      setFilterList(currentRunStatus),
-      setStatuses(currentRunStatus),
-      setIsHighLight(currentRunStatus[0]?.id)
+      FilterList(currentRunStatus),
+      Statuses(currentRunStatus),
+      IsHighLight(currentRunStatus[0]?.id),
+      NoOFLength(currentRunStatus.length)
     ]
   }
 
   const handleClick = async ({ row }) => {
-    dispatch(flowLists(row))
-    setIsHighLight(row.id)
+    dispatch(flowLists({...row,runStatusLength: noOfLength}))
+    IsHighLight(row.id)
   }
 
   return (

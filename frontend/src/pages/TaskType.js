@@ -23,7 +23,7 @@ const TaskType = () => {
               'Authorization': `${sessionStorage.getItem('AccessToken')}`
           }       
         });
-        console.log(response);
+    
         setLoader(false)
         setTaskType(response.data.reverse().map((item) => {
           return {

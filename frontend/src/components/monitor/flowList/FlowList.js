@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { REACT_APP_BACKEND_URL } from '../../../components/common/environment';
 import Loader from '../../../components/field/loader';
 import ExecuteModal from '../layout/modal';
 import { useDispatch } from 'react-redux';
 import { flowLists } from '../../../redux/actions/flowListAction';
 import { makeStyles } from "@material-ui/core/styles";
-import axios from 'axios';
 import {
   List,
   ListItem,
@@ -16,6 +14,7 @@ import {
   Tooltip,
   Zoom,
 } from '../../common/muiImports'
+import { getFlow } from '../../../api/flows';
 const FlowList = ({ open }) => {
   const dispatch = useDispatch()
   const [loader, setLoader] = useState(false)
@@ -23,25 +22,17 @@ const FlowList = ({ open }) => {
   const [openExecuteModal, OpenExecuteModal] = useState(false);
   const [flowName, setFlowName] = useState();
 
-  useEffect(() => {
-    setLoader(true)
-    const getFlow = async () => {
-      try {
-        const { data } = await axios({
-          method: 'get',
-          url: `${REACT_APP_BACKEND_URL}/api/get-flow`,
-          headers: {
-            'Authorization': `${sessionStorage.getItem('AccessToken')}`
-          }
-        });
+  useEffect(() => { setLoader(true); getFlowList() }, [])
 
-        return [dispatch(flowLists(data[0])), setLoader(false), setFlowList(data)]
-      } catch (error) {
-        return [setLoader(false), console.log(error)]
-      }
+  const getFlowList = async () => {
+    setLoader(true)
+    try {
+      const { data } = await getFlow()
+      return [dispatch(flowLists(data[0])), setLoader(false), setFlowList(data)]
+    } catch (error) {
+      return [setLoader(false), console.log(error)]
     }
-    getFlow()
-  }, [])
+  }
 
   const handleFlowList = (name) => {
     const filteredFlowList = flowList?.find((list) => { return list.name === name })

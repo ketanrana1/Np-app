@@ -45,7 +45,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Fade from '@mui/material/Fade';
-
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 export {
     createTheme,
     ThemeProvider,
@@ -97,4 +98,7 @@ export {
     LocalizationProvider,
     DesktopDatePicker,
     CloseIcon,
+    DateFnsUtils,
+    MuiPickersUtilsProvider, 
+    DatePicker,
 }

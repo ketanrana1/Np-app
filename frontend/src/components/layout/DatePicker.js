@@ -1,8 +1,6 @@
-import { useSelect } from '@mui/base';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterFromDate, filterToDate } from '../../redux/actions/runningStatusAction';
-
 import {
     LocalizationProvider,
     DesktopDatePicker,
@@ -12,13 +10,15 @@ import {
     Grid,
     Paper,
     Box,
-    Typography
+    Typography,
+    MuiPickersUtilsProvider,
+    DatePicker,
+    DateFnsUtils
 } from '../common/muiImports'
-
-export default function FilterDate(props) {
-    const { runStatusLength } = useSelector((state) => state?.flowListChanged?.flowList)
-    console.log("runStatusLength", runStatusLength)
+export default function FilterDate() {
     const dispatch = useDispatch()
+    const selector = useSelector((state) => state?.flowListChanged?.flowList)
+
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
 
@@ -26,6 +26,7 @@ export default function FilterDate(props) {
         dispatch(filterFromDate(new Date(date).getTime()))
         setFromDate(date);
     };
+
     const handleToDate = (date) => {
         setToDate(date);
         dispatch(filterToDate(new Date(date).getTime()))
@@ -42,12 +43,12 @@ export default function FilterDate(props) {
                             display: "flex",
                             justifyContent: "space-between"
 
-                        }}
-                    ><Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: 'column',
                         }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: 'column',
+                            }}>
                             <p className="monitor-table-head">Filter Run status </p>
                             <div>
                                 <DesktopDatePicker
@@ -56,7 +57,6 @@ export default function FilterDate(props) {
                                     value={fromDate}
                                     onChange={handelFromDate}
                                     renderInput={(params) => <TextField {...params} />}
-
                                 />
                                 <DesktopDatePicker
                                     label="To"
@@ -71,10 +71,10 @@ export default function FilterDate(props) {
                         <Box
                             sx={{
                                 display: "flex",
-                                alignItems:"flex-end"
+                                alignItems: "flex-end",
                             }}>
-                            <Typography id="transition-modal-title" sm={{fontWeight: ""}}>
-                                No. of Records: {runStatusLength}
+                            <Typography id="transition-modal-title" sx={{ fontWeight: 500 }}>
+                                No. of Records: {selector?.runStatusLength ?? 0}
                             </Typography>
                         </Box>
 
@@ -82,5 +82,27 @@ export default function FilterDate(props) {
                 </Grid>
             </Stack>
         </LocalizationProvider>
+    );
+}
+
+export const ExecuteDatepicker = (props) => {
+    const { selectedDate, handleDateChange } = props
+    const lastYearDateFormat = new Date(new Date().getFullYear() - 1, 0, 1);
+
+    return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid>
+                <DatePicker
+                    variant="inline"
+                    openTo="month"
+                    views={["year", "month"]}
+                    label="Year and Month"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    maxDate={new Date()}
+                    minDate={lastYearDateFormat}
+                />
+            </Grid>
+        </MuiPickersUtilsProvider>
     );
 }

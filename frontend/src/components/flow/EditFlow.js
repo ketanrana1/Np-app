@@ -92,7 +92,7 @@ const EditFlow = () => {
 
   return (
     <div>
-      <h1 className="page-head">Edit task</h1>
+      <h1 className="page-head">Edit Flow</h1>
       <div className="inner-body-cont">
         <div className="flow-form-cont cont-form-all">
           <Formik

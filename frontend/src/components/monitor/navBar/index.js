@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import FlowList from '../flowList/FlowList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AccountsMenu from './accountMenu';
 import {
     drawerWidth,
     LogoutText,
     AdminText,
     RefreshText,
-    ClearText,
+    ClearLogs,
 } from '../../../utils/constent';
 import {
     Box,
@@ -38,6 +38,7 @@ import {
     RefreshIcon,
 } from '../../common/muiImports'
 import { clearTaskActions, clearTaskLogs } from '../../../api/logs';
+import { isLogClear } from '../../../redux/actions/logStatusAction';
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -103,9 +104,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
+    const dispatch = useDispatch()
     const theme = useTheme();
     const navigate = useNavigate()
-    const { logsStatus } = useSelector((state) => state?.logsStatusChanged)
+    const selector = useSelector((state) => state?.logsStatusChanged)
     const [open, setOpen] = useState(true);
     const [authRole, setauthRole] = useState(null)
 
@@ -118,12 +120,13 @@ export default function MiniDrawer() {
     }
 
     const getLogs = async () => {
-        const { id, taskType, actionId, actionName } = logsStatus
+        const { id, taskType, actionId, actionName } = selector?.logsStatus
         taskType ? await clearTaskLogs(id) : await clearTaskActions(actionName, actionId)
     }
 
     const handleRefreshData = async () => {
         await getLogs()
+        dispatch(isLogClear(Math.random()))
     }
 
     return (
@@ -227,7 +230,7 @@ export default function MiniDrawer() {
                                 >
                                     {!open ? <Tooltip TransitionComponent={Zoom} title="Clear Logs" placement="right"><DeleteOutlineIcon /></Tooltip> : <DeleteOutlineIcon />}
                                 </ListItemIcon>
-                                <ListItemText primary={ClearText} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText primary={ClearLogs} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     </List>

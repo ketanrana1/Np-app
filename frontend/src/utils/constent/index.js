@@ -18,5 +18,5 @@ export const drawerWidth = 310;                                                 
 export const LogoutText = "Logout"
 export const AdminText = "Configure View"
 export const RefreshText = "Refresh Data"
-export const ClearText = "Clear Logs"
+export const ClearLogs = "Clear Logs"
 

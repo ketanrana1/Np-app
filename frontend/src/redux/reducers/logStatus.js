@@ -1,9 +1,10 @@
-import { LOG_STATUS } from "../constants/logStatusType";
+import { IS_LOG_CLEAR, LOG_STATUS } from "../constants/logStatusType";
 
 
 
 const initialState = {
     logsStatus: {},
+    isLoggedClear: null
 }
 
 export const logsStatusChanged = (state = initialState, { type, payload }) => {
@@ -11,7 +12,8 @@ export const logsStatusChanged = (state = initialState, { type, payload }) => {
 
         case LOG_STATUS:
             return { ...state, logsStatus: payload }
-
+        case IS_LOG_CLEAR:
+            return { ...state, isLoggedClear: payload }
         default:
             return state;
     }

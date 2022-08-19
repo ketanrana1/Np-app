@@ -4,27 +4,29 @@ const { v4: uuidv4 } = require('uuid')
 const { Schema } = mongoose;
 
 const taskStatusSchema = new Schema({
-  taskStatusId: {   
+  taskStatusId: {
     type: String,
-    default: uuidv4 
+    default: uuidv4
   },
-  startTime: String, 
+  startTime: String,
   endTime: String,
   ranAt: String,
   flowName: String,
   status: String,
-  flowId:{
+  flowId: {
     type: String,
     ref: 'Flow'
   },
   actions: [Object],
   taskLog: String,
   taskName: String,
+  taskType: String,
+  selectedMonthPeriod: String,
   isLogDeleted: Boolean,
 
 },
-{timestamps: true}  
-);    
+  { timestamps: true }
+);
 
 export default mongoose.model('TaskStatus', taskStatusSchema);
 

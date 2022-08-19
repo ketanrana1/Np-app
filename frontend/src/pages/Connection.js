@@ -71,14 +71,12 @@ const Connection = () => {
     }
   }
 
-
-
   const handleReadMoreClick = (index) => {
     const readMoreHandle = [...connection];
     readMoreHandle[index].readMore = "block";
     setConnection(readMoreHandle)
   }
- console.log("TESTING", loadInitialData)
+
   return (
     <>
       <div>

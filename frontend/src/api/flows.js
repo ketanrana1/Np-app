@@ -1,6 +1,6 @@
 import { http } from './https';
 
-export const getFlow = async (id) => {
-    const { data } = await http.get(`/api/get-flow/${id}`);
-    return data;
+export const getFlow = async () => {
+    const response = await http.get(`/get-flow`);
+    return response;
 };
