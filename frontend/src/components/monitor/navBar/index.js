@@ -128,10 +128,7 @@ export default function MiniDrawer() {
         taskType ? await clearTaskLogs(id) : await clearTaskActions(actionName, actionId)
     }
 
-    const handleRefreshData = async () => {
-        await getLogs()
-        dispatch(isLogClear(Math.random()))
-    }
+    const handleRefreshData = async () => { return [await getLogs(), dispatch(isLogClear(Math.random()))] }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -190,7 +187,7 @@ export default function MiniDrawer() {
                 <FlowList open={open} />
                 <Divider />
 
-                <div style={{ position: "absolute", bottom: "10px",width:"100%" }}>
+                <div style={{ position: "absolute", bottom: "10px", width: "100%" }}>
                     <List >
                         <ListItem disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
@@ -200,7 +197,7 @@ export default function MiniDrawer() {
                                     px: 2.5,
                                 }}
                             >
-                                <a href={`${REACT_APP_BACKEND_URL}/file-explorer/`} target="_blank" style={{ width:"100%",display: "flex" }}>
+                                <a href={`${REACT_APP_BACKEND_URL}/file-explorer/`} target="_blank" style={{ width: "100%", display: "flex" }}>
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 0,

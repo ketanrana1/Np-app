@@ -4,7 +4,7 @@ import AuthMiddleware from 'middlewares/AuthMiddleware';
 import RunStatus from 'models/runStatus';
 import TaskStatus from 'models/taskStatus'
 import Log from 'models/log';
-import { thirdPartyApi } from './thirdPartyApi';
+import { thirdPartyApiCases } from './thirdPartyApiCases';
 import flow from 'models/flow';
 
 // UPDATE 
@@ -85,13 +85,8 @@ export class RunStatusController {
   @Post('/add-task-status')
   @UseBefore(AuthMiddleware)
   async addTaskStatus(@Body() body: any) {
-    const { taskType, selectedMonthPeriod } = body // selectedMonthPeriod: '08' Means => Aug
-    const runningApi = thirdPartyApi(taskType)     // runningApi will be according To Task type  
-
-    const { data: { body: logDec } }: any = await axios({
-      method: 'get',
-      url: `${runningApi}`,
-    });
+    const { taskType, selectedMonthPeriod } = body                                // selectedMonthPeriod: '08' Means => Aug
+    const { data: { body: logDec } }: any = await thirdPartyApiCases(taskType)         // runningApi will be according To Task type  
 
     const newBody = {
       ...body,
