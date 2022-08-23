@@ -23,7 +23,9 @@ import ViewDetails from './pages/ViewDetails';
 import ConnectionType from './pages/ConnectionType';
 import EditConnectionType from './components/connectionType/EditConnectionType';
 import Monitor from './components/monitor/monitor';
-
+import TaskType from './pages/TaskType';
+import EditTaskType from './components/taskType/EditTaskType';
+import AddTaskType from './components/taskType/AddTaskType';
 function App() {
 
   useEffect(() => {
@@ -58,7 +60,12 @@ function App() {
       <Route path='/schedule/view-schedule/:id' element={<Layout><ViewDetails /></Layout>} />
       <Route path='/schedule/:edit-schedule/:id' element={<Layout><EditSchedule /></Layout>} />
 
-      <Route path='*' element={<MonitorLayout><NotFound /></MonitorLayout>} />
+      <Route path='/task-type' element={<Layout><TaskType /></Layout>} />
+      <Route path='/task-type/:add-task-type' element={<Layout><AddTaskType /></Layout>} />
+      <Route path='/task-type/view-task-type/:id' element={<Layout><ViewDetails /></Layout>} />
+      <Route path='/task-type/edit-task-type/:id' element={<Layout><EditTaskType /></Layout>} />
+
+      <Route path='*' element={<Layout><NotFound /></Layout>} />
       <Route path='/login' element={<LoginLayout><Login /></LoginLayout>} />
       <Route path='/register' element={<LoginLayout><Register /></LoginLayout>} />
 

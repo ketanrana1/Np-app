@@ -48,11 +48,11 @@ const MainNavigation = () => {
                 <img src={require('../../assets/images/connection.png')} alt="connection" />Connection type
               </NavLink>
             </li>
-            {/* <li className="nav-item">
+            <li className="nav-item">
               <NavLink to='/task-type' className={navData => navData.isActive ? 'active' : ''}>
                 <img src={require('../../assets/images/task-list.png')} alt="connection" />Task Type
               </NavLink>
-            </li> */}
+            </li>
             <li className="nav-item">
               <NavLink to='/register-user' className={navData => navData.isActive ? 'active' : ''}>
                 <img src={require('../../assets/images/user.png')} alt="connection" />Add User

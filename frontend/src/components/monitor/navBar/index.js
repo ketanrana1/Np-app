@@ -197,7 +197,7 @@ export default function MiniDrawer() {
                                     px: 2.5,
                                 }}
                             >
-                                <a href={`${REACT_APP_BACKEND_URL}/file-explorer/`} target="_blank" style={{ width: "100%", display: "flex" }}>
+                                <a href={`${REACT_APP_BACKEND_URL}/api/file-explorer/`} target="_blank" style={{ width: "100%", display: "flex" }}>
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 0,

@@ -20,7 +20,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/file-explorer', express.static('public'), serveIndex('public', { 'icons': true }))
+app.use('/api/file-explorer', express.static('public'), serveIndex('public', { 'icons': true }))
 app.use(cors())
 useExpressServer(app,
   {

@@ -1,5 +1,4 @@
 import { Controller, Param, Body, Get, Post, Put, Delete, UseBefore } from 'routing-controllers';
-import axios from 'axios'
 import AuthMiddleware from 'middlewares/AuthMiddleware';
 import RunStatus from 'models/runStatus';
 import TaskStatus from 'models/taskStatus'
@@ -85,14 +84,15 @@ export class RunStatusController {
   @Post('/add-task-status')
   @UseBefore(AuthMiddleware)
   async addTaskStatus(@Body() body: any) {
-    const { taskType, selectedMonthPeriod } = body                                // selectedMonthPeriod: '08' Means => Aug
-    const { data: { body: logDec } }: any = await thirdPartyApiCases(taskType)         // runningApi will be according To Task type  
+    const { taskType, selectedMonthPeriod } = body                                     // selectedMonthPeriod: '08' Means => Aug
+    const response = await thirdPartyApiCases(taskType)      // runningApi will be according To Task type  
 
     const newBody = {
       ...body,
-      "taskLog": logDec,
+      "taskLog": response ? response?.data?.body : `${taskType}, Function hasn't been created yet`,
       "isLogDeleted": false,
     }
+
     const newTaskStatus = new TaskStatus(newBody);
     const result = await newTaskStatus.save();
 
@@ -101,6 +101,13 @@ export class RunStatusController {
         success: false,
         message: "Task Status could not be added. Please try after some time."
       }
+
+    if (!response)
+      return {
+        success: true,
+        message: `${taskType}, Function hasn't been created yet`
+      }
+
     return {
       success: true,
       message: "Task Status is added."

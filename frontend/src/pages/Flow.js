@@ -8,7 +8,6 @@ import $ from "jquery";
 import Loader from '../components/field/loader';
 
 const Flow = () => {
-
   const [flow, setFlow] = useState([]);
   const [flowId, setFlowId] = useState("");
   const [loader, setLoader] = useState(false)
@@ -34,11 +33,8 @@ const Flow = () => {
         setLoader(false)
         console.log(error);
       }
-
     }
-
     getFlow();
-
   }, [])
 
   const handleDeleteClick = async (flowId) => {
